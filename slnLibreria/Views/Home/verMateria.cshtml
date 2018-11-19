@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "verMateria";
+}
+
+<h2>*Nombre de la Materia*</h2>
+
+<h4>Descripción: </h4>
+<h4>Sala: asdasd</h4>
+
+<div class="container">
+    <h4>Libros</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Autor</th>
+                <th>Sala</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a role="button" class="btn" href="@Url.Action("verLibro", "Home")">John</a></td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+            </tr>
+            <tr>
+                <td><a role="button" class="btn" href="@Url.Action("verLibro", "Home")">John</a></td>
+                <td>asd</td>
+                <td>mary@example.com</td>
+            </tr>
+            <tr>
+                <td><a role="button" class="btn" href="@Url.Action("verLibro", "Home")">John</a></td>
+                <td>basdd</td>
+                <td>july@example.com</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button type="button" class="btn btn-info">Editar Materia</button>
+<button type="button" class="btn btn-danger">Eliminar Materia</button>
+
+
+

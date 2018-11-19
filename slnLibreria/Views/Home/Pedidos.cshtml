@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Pedidos";
+}
+
+<h2>Pedidos</h2>
+
+<div class="container">
+    <h4>Libros</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Libro</th>
+                <th>Autor</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a role="button" class="btn" href="@Url.Action("verMateria", "Home")">John</a></td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+            </tr>
+            <tr>
+                <td><a role="button" class="btn" href="@Url.Action("verMateria", "Home")">John</a></td>
+                <td>asd</td>
+                <td>mary@example.com</td>
+            </tr>
+            <tr>
+                <td><a role="button" class="btn" href="@Url.Action("verMateria", "Home")">John</a></td>
+                <td>basdd</td>
+                <td>july@example.com</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="well">Total: ####</div>
