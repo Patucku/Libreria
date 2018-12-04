@@ -1,13 +1,40 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿﻿@model slnLibreria.ViewModels.ClientesView
+@{
+    ViewBag.Title = "Inicio";
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(10000).fadeOut();
+    });
+</script>
+
+
 
 <div class="jumbotron">
-    <h1>Feria del Libro</h1>
+    <h1>Bienvenido a la feria del libro</h1>
 </div>
-
-<div class="form-group">
-    <label for="usr">Número de identificación:</label>
-    <input type="text" class="form-control" id="usr">
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorCedula))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorCedula.Replace("\n", "</br>"))
+        </div>
+    }
 </div>
-<p><button type="button" class="btn btn-success">Ingresar</button></p>
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.CodigoUsuario))
+    {
+        <div class="alert alert-success" role="alert">
+            @MvcHtmlString.Create(ViewBag.CodigoUsuario.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+@using (Html.BeginForm("Index", "Home"))
+{
+    <div class="form-group">
+        <h4>Registro</h4>
+        <label for="txtUsrCIRUC" class="">Ingrese su número de cédula: </label>
+        @Html.TextBoxFor(model => model.clienteCI_RUC, new { @class = "form-control", @id = "txtUsrCIRUC" })
+        <input type="submit" value="Registrarse" class="btn btn-outline-success" />
+    </div>
+}
