@@ -75,5 +75,47 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Libreria">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.Libreria">
+        <MappingFragment StoreEntitySet="Libreria">
+          <ScalarProperty Name="libreriaTelefono" ColumnName="libreriaTelefono" />
+          <ScalarProperty Name="libreriaDireccion" ColumnName="libreriaDireccion" />
+          <ScalarProperty Name="libreriaRUC" ColumnName="libreriaRUC" />
+          <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
+          <ScalarProperty Name="libreriaID" ColumnName="libreriaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Libro">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.Libro">
+        <MappingFragment StoreEntitySet="Libro">
+          <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
+          <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
+          <ScalarProperty Name="libroPrecio" ColumnName="libroPrecio" />
+          <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
+          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
+          <ScalarProperty Name="libroMateria" ColumnName="libroMateria" />
+          <ScalarProperty Name="libroSala" ColumnName="libroSala" />
+          <ScalarProperty Name="libroID" ColumnName="libroID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Materia">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.Materia">
+        <MappingFragment StoreEntitySet="Materia">
+          <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
+          <ScalarProperty Name="materiaID" ColumnName="materiaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sala">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.Sala">
+        <MappingFragment StoreEntitySet="Sala">
+          <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+          <ScalarProperty Name="salaLibreria" ColumnName="salaLibreria" />
+          <ScalarProperty Name="salaID" ColumnName="salaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -70,6 +70,44 @@
     <Property Name="clienteferialibro_clienteID" Type="int" Nullable="false" />
     <Property Name="clienteferialibroFechaCreacion" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Libreria">
+    <Key>
+      <PropertyRef Name="libreriaID" />
+    </Key>
+    <Property Name="libreriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="libreriaNombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="libreriaRUC" Type="char" MaxLength="13" Nullable="false" />
+    <Property Name="libreriaDireccion" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="libreriaTelefono" Type="char" MaxLength="8" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Libro">
+    <Key>
+      <PropertyRef Name="libroID" />
+    </Key>
+    <Property Name="libroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="libroSala" Type="int" Nullable="false" />
+    <Property Name="libroMateria" Type="int" Nullable="false" />
+    <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="libroPrecio" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
+    <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Materia">
+    <Key>
+      <PropertyRef Name="materiaID" />
+    </Key>
+    <Property Name="materiaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="materiaNombre" Type="varchar" MaxLength="75" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sala">
+    <Key>
+      <PropertyRef Name="salaID" />
+    </Key>
+    <Property Name="salaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="salaLibreria" Type="int" Nullable="false" />
+    <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <Association Name="FK_ClienteFeriaLibro_Cliente">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
     <End Role="ClienteFeriaLibro" Type="Self.ClienteFeriaLibro" Multiplicity="*" />
@@ -138,6 +176,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Libro_Materia">
+    <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
+    <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materia">
+        <PropertyRef Name="materiaID" />
+      </Principal>
+      <Dependent Role="Libro">
+        <PropertyRef Name="libroMateria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Libro_Sala">
+    <End Role="Sala" Type="Self.Sala" Multiplicity="1" />
+    <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sala">
+        <PropertyRef Name="salaID" />
+      </Principal>
+      <Dependent Role="Libro">
+        <PropertyRef Name="libroSala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sala_Libreria">
+    <End Role="Libreria" Type="Self.Libreria" Multiplicity="1" />
+    <End Role="Sala" Type="Self.Sala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libreria">
+        <PropertyRef Name="libreriaID" />
+      </Principal>
+      <Dependent Role="Sala">
+        <PropertyRef Name="salaLibreria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="dbFeriaLibroModelStoreContainer">
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -146,6 +220,10 @@
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ClienteFeriaLibro" EntityType="Self.ClienteFeriaLibro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Libreria" EntityType="Self.Libreria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Materia" EntityType="Self.Materia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sala" EntityType="Self.Sala" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_ClienteFeriaLibro_Cliente" Association="Self.FK_ClienteFeriaLibro_Cliente">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="ClienteFeriaLibro" EntitySet="ClienteFeriaLibro" />
@@ -165,6 +243,18 @@
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Libro_Materia" Association="Self.FK_Libro_Materia">
+      <End Role="Materia" EntitySet="Materia" />
+      <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Libro_Sala" Association="Self.FK_Libro_Sala">
+      <End Role="Sala" EntitySet="Sala" />
+      <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sala_Libreria" Association="Self.FK_Sala_Libreria">
+      <End Role="Libreria" EntitySet="Libreria" />
+      <End Role="Sala" EntitySet="Sala" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

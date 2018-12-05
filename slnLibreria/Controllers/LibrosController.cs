@@ -24,6 +24,7 @@ namespace slnLibreria.Controllers
 
             var getMateria = db.Materia.OrderBy(n => n.materiaNombre).ToList();
             objLibro.listaMaterias = new SelectList(getMateria, "materiaID", "materiaNombre");
+
             return View(objLibro);
         }
 

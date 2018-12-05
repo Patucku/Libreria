@@ -23,6 +23,22 @@
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="ClienteFeriaLibro" EntitySet="ClienteFeriaLibro" />
     </AssociationSet>
+    <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
+    <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
+    <EntitySet Name="Materia" EntityType="dbFeriaLibroModel.Materia" />
+    <EntitySet Name="Sala" EntityType="dbFeriaLibroModel.Sala" />
+    <AssociationSet Name="FK_Sala_Libreria" Association="dbFeriaLibroModel.FK_Sala_Libreria">
+      <End Role="Libreria" EntitySet="Libreria" />
+      <End Role="Sala" EntitySet="Sala" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Libro_Materia" Association="dbFeriaLibroModel.FK_Libro_Materia">
+      <End Role="Materia" EntitySet="Materia" />
+      <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Libro_Sala" Association="dbFeriaLibroModel.FK_Libro_Sala">
+      <End Role="Sala" EntitySet="Sala" />
+      <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="AspNetRoles">
     <Key>
@@ -135,6 +151,86 @@
       </Principal>
       <Dependent Role="ClienteFeriaLibro">
         <PropertyRef Name="clienteferialibro_clienteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Libreria">
+    <Key>
+      <PropertyRef Name="libreriaID" />
+    </Key>
+    <Property Name="libreriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="libreriaRUC" Type="String" Nullable="false" MaxLength="13" FixedLength="true" Unicode="false" />
+    <Property Name="libreriaDireccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Sala" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Libreria" ToRole="Sala" />
+  </EntityType>
+  <EntityType Name="Libro">
+    <Key>
+      <PropertyRef Name="libroID" />
+    </Key>
+    <Property Name="libroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="libroSala" Type="Int32" Nullable="false" />
+    <Property Name="libroMateria" Type="Int32" Nullable="false" />
+    <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="libroPrecio" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+    <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Materia" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Libro" ToRole="Materia" />
+    <NavigationProperty Name="Sala" Relationship="dbFeriaLibroModel.FK_Libro_Sala" FromRole="Libro" ToRole="Sala" />
+  </EntityType>
+  <EntityType Name="Materia">
+    <Key>
+      <PropertyRef Name="materiaID" />
+    </Key>
+    <Property Name="materiaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="materiaNombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Materia" ToRole="Libro" />
+  </EntityType>
+  <EntityType Name="Sala">
+    <Key>
+      <PropertyRef Name="salaID" />
+    </Key>
+    <Property Name="salaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="salaLibreria" Type="Int32" Nullable="false" />
+    <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Libreria" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Sala" ToRole="Libreria" />
+    <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Libro_Sala" FromRole="Sala" ToRole="Libro" />
+  </EntityType>
+  <Association Name="FK_Sala_Libreria">
+    <End Type="dbFeriaLibroModel.Libreria" Role="Libreria" Multiplicity="1" />
+    <End Type="dbFeriaLibroModel.Sala" Role="Sala" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libreria">
+        <PropertyRef Name="libreriaID" />
+      </Principal>
+      <Dependent Role="Sala">
+        <PropertyRef Name="salaLibreria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Libro_Materia">
+    <End Type="dbFeriaLibroModel.Materia" Role="Materia" Multiplicity="1" />
+    <End Type="dbFeriaLibroModel.Libro" Role="Libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materia">
+        <PropertyRef Name="materiaID" />
+      </Principal>
+      <Dependent Role="Libro">
+        <PropertyRef Name="libroMateria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Libro_Sala">
+    <End Type="dbFeriaLibroModel.Sala" Role="Sala" Multiplicity="1" />
+    <End Type="dbFeriaLibroModel.Libro" Role="Libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sala">
+        <PropertyRef Name="salaID" />
+      </Principal>
+      <Dependent Role="Libro">
+        <PropertyRef Name="libroSala" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

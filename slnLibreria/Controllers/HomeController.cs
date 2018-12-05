@@ -45,9 +45,10 @@ namespace slnLibreria.Controllers
                             {
                                 try
                                 {
-                                    objCliente.clienteFeriaLibro.clienteferialibroFechaCreacion = DateTime.Now;
-                                    objCliente.clienteFeriaLibro.clienteferialibro_clienteID = objCliente.cliente.clienteID;
-                                    db.ClienteFeriaLibro.Add(objCliente.clienteFeriaLibro);
+                                    ClienteFeriaLibro objClienteFeriaLibro = new ClienteFeriaLibro();
+                                    objClienteFeriaLibro.clienteferialibroFechaCreacion = DateTime.Now;
+                                    objClienteFeriaLibro.clienteferialibro_clienteID = objCliente.cliente.clienteID;
+                                    db.ClienteFeriaLibro.Add(objClienteFeriaLibro);
                                     db.SaveChanges();
 
                                     objCliente.clienteFeriaLibro = db.ClienteFeriaLibro.Where(n => n.clienteferialibro_clienteID == objCliente.cliente.clienteID).FirstOrDefault();
@@ -56,7 +57,7 @@ namespace slnLibreria.Controllers
                                         "\n Su código identificador es: " + objCliente.clienteFeriaLibro.clienteferialibroID + " Anótelo o memorizelo, el mismo le servirá para reservar y comprar libros";
 
                                     Session["ClienteIngresado"] = objCliente;
-                                    return RedirectToAction("BuscarLibro", "Libros", objCliente);
+                                    return RedirectToAction("Index", "Libros");
                                 }
                                 catch (Exception ex)
                                 {

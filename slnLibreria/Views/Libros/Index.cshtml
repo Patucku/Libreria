@@ -1,8 +1,22 @@
 ﻿﻿@model slnLibreria.ViewModels.LibrosView
 @{
+    /**/
+
     ViewBag.Title = "Libros";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Buscar Libros</h2>
+
+@using (Html.BeginForm("Index", "Libros"))
+{
+    <div class="form-inline">
+        <label for="txtSala" class="mr-1 font-weight-light">Sala: </label>
+        @Html.DropDownListFor(model => model.selectedSala, Model.listaSalas, "Seleccione una sala", new { @class = "form-control form-control-sm m-2", @id = "txtSala" })
+        <label for="txtMateria" class="mr-1 font-weight-light">Sala: </label>
+        @Html.DropDownListFor(model => model.selectedSala, Model.listaMaterias, "Seleccione una materia", new { @class = "form-control form-control-sm m-2", @id = "txtMateria" })
+        <input type="submit" value="Buscar" class="btn btn-sm btn-outline-success" />
+    </div>
+}
+
 
