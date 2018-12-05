@@ -7,6 +7,10 @@
     <EntitySet Name="AspNetUsers" EntityType="dbFeriaLibroModel.AspNetUsers" />
     <EntitySet Name="Cliente" EntityType="dbFeriaLibroModel.Cliente" />
     <EntitySet Name="ClienteFeriaLibro" EntityType="dbFeriaLibroModel.ClienteFeriaLibro" />
+    <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
+    <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
+    <EntitySet Name="Materia" EntityType="dbFeriaLibroModel.Materia" />
+    <EntitySet Name="Sala" EntityType="dbFeriaLibroModel.Sala" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dbFeriaLibroModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -15,18 +19,10 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
     </AssociationSet>
-    <AssociationSet Name="AspNetUserRoles" Association="dbFeriaLibroModel.AspNetUserRoles">
-      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-    </AssociationSet>
     <AssociationSet Name="FK_ClienteFeriaLibro_Cliente" Association="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="ClienteFeriaLibro" EntitySet="ClienteFeriaLibro" />
     </AssociationSet>
-    <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
-    <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
-    <EntitySet Name="Materia" EntityType="dbFeriaLibroModel.Materia" />
-    <EntitySet Name="Sala" EntityType="dbFeriaLibroModel.Sala" />
     <AssociationSet Name="FK_Sala_Libreria" Association="dbFeriaLibroModel.FK_Sala_Libreria">
       <End Role="Libreria" EntitySet="Libreria" />
       <End Role="Sala" EntitySet="Sala" />
@@ -38,6 +34,10 @@
     <AssociationSet Name="FK_Libro_Sala" Association="dbFeriaLibroModel.FK_Libro_Sala">
       <End Role="Sala" EntitySet="Sala" />
       <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="dbFeriaLibroModel.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="AspNetRoles">
@@ -105,55 +105,11 @@
     <Key>
       <PropertyRef Name="clienteferialibroID" />
     </Key>
-    <Property Name="clienteferialibroID" Type="Int32" Nullable="false" />
+    <Property Name="clienteferialibroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="clienteferialibro_clienteID" Type="Int32" Nullable="false" />
     <Property Name="clienteferialibroFechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Cliente" Relationship="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente" FromRole="ClienteFeriaLibro" ToRole="Cliente" />
   </EntityType>
-  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-    <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="dbFeriaLibroModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserClaims">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-    <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="dbFeriaLibroModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserLogins">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="AspNetUserRoles">
-    <End Type="dbFeriaLibroModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
-    <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
-  </Association>
-  <Association Name="FK_ClienteFeriaLibro_Cliente">
-    <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="1" />
-    <End Type="dbFeriaLibroModel.ClienteFeriaLibro" Role="ClienteFeriaLibro" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Cliente">
-        <PropertyRef Name="clienteID" />
-      </Principal>
-      <Dependent Role="ClienteFeriaLibro">
-        <PropertyRef Name="clienteferialibro_clienteID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Libreria">
     <Key>
       <PropertyRef Name="libreriaID" />
@@ -198,6 +154,46 @@
     <NavigationProperty Name="Libreria" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Sala" ToRole="Libreria" />
     <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Libro_Sala" FromRole="Sala" ToRole="Libro" />
   </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dbFeriaLibroModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dbFeriaLibroModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClienteFeriaLibro_Cliente">
+    <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="1" />
+    <End Type="dbFeriaLibroModel.ClienteFeriaLibro" Role="ClienteFeriaLibro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="clienteID" />
+      </Principal>
+      <Dependent Role="ClienteFeriaLibro">
+        <PropertyRef Name="clienteferialibro_clienteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Sala_Libreria">
     <End Type="dbFeriaLibroModel.Libreria" Role="Libreria" Multiplicity="1" />
     <End Type="dbFeriaLibroModel.Sala" Role="Sala" Multiplicity="*" />
@@ -233,5 +229,9 @@
         <PropertyRef Name="libroSala" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="dbFeriaLibroModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+    <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
   </Association>
 </Schema>

@@ -9,19 +9,19 @@
         <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" />
         <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Cliente" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.ClienteFeriaLibro" Width="1.5" PointX="3.75" PointY="6.875" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Cliente" Width="1.5" PointX="7.75" PointY="1" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.ClienteFeriaLibro" Width="1.5" PointX="10" PointY="1.25" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Libreria" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Libro" Width="1.5" PointX="5.25" PointY="7" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Materia" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Sala" Width="1.5" PointX="3" PointY="7.5" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="dbFeriaLibroModel.AspNetUserRoles" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Libreria" Width="1.5" PointX="6.375" PointY="7.375" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Libro" Width="1.5" PointX="10.875" PointY="7" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Materia" Width="1.5" PointX="8.625" PointY="4.625" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Sala" Width="1.5" PointX="8.625" PointY="7.5" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_Sala_Libreria" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_Libro_Materia" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_Libro_Sala" />
+        <AssociationConnector Association="dbFeriaLibroModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
