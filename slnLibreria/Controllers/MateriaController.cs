@@ -145,7 +145,7 @@ namespace slnLibreria.Models
                 List<Libro> objLibros = db.Libro.Where(n => n.libroMateria == objMateria.materiaID).ToList();
                 int librosAfectados = objLibros.Count();
                 if(librosAfectados != 0)
-                    ViewBag.ErrorEliminarMateria = "La materia tiene: "+ librosAfectados + "No se puede borrar la materia";
+                    ViewBag.ErrorEliminarMateriaRelacion = "La materia tiene: "+ librosAfectados + " libros relacionados, no se puede borrar la materia";
             }
             return View(objMateria);
         }
@@ -165,11 +165,11 @@ namespace slnLibreria.Models
                         ViewBag.ErrorMateria = "No se ha encuentra esa materia";
                         return RedirectToAction("Index");
                     }
-                    List<Libro> objLibros = db.Libro.Where(n => n.libroMateria == objMateria.materiaID).ToList();
+                    List<Libro> objLibros = db.Libro.Where(n => n.libroMateria == materiaEliminar.materiaID).ToList();
                     int librosAfectados = objLibros.Count();
                     if (librosAfectados != 0)
                     {
-                        ViewBag.ErrorEliminarMateria = "La materia tiene: " + librosAfectados + "No se puede borrar la materia";
+                        ViewBag.ErrorEliminarMateriaRelacion = "La materia tiene: " + librosAfectados + "No se puede borrar la materia";
                         return View(objMateria);
                     }
                     else

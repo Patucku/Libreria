@@ -37,7 +37,7 @@
 
     </dl>
 
-    @if (string.IsNullOrEmpty(ViewBag.ErrorEliminarMateria))
+    @if (string.IsNullOrEmpty(ViewBag.ErrorEliminarMateriaRelacion))
     {
         using (Html.BeginForm())
         {
@@ -52,10 +52,10 @@
     else
     {
         <div class="m-1">
-            @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarMateria))
+            @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarMateriaRelacion))
             {
                 <div class="alert alert-danger">
-                    @MvcHtmlString.Create(ViewBag.ErrorEliminarMateria.Replace("\n", "</br>"))
+                    @MvcHtmlString.Create(ViewBag.ErrorEliminarMateriaRelacion.Replace("\n", "</br>"))
                 </div>
                 @Html.ActionLink("Ver detalle", "librosRelacionados", new { id = Model.materiaID })
             }
