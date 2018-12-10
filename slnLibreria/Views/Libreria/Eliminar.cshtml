@@ -1,0 +1,90 @@
+﻿@model slnLibreria.Models.Libreria
+
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(6000).fadeOut();
+    });
+
+</script>
+
+<h2>Eliminar</h2>
+
+<h3>Está seguro de eliminar esta libreria?</h3>
+<div>
+
+    <div class="m-1">
+        @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarLibreria))
+        {
+            <div class="alert alert-warning" role="alert">
+                @MvcHtmlString.Create(ViewBag.ErrorEliminarLibreria.Replace("\n", "</br>"))
+            </div>
+        }
+    </div>
+    <h4>Libreria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaNombre)
+        </dd>
+
+        <dt>
+            RUC:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaRUC)
+        </dd>
+
+        <dt>
+            Dirección:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaDireccion)
+        </dd>
+
+        <dt>
+            Teléfono:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaTelefono)
+        </dd>
+
+    </dl>
+
+    @if (string.IsNullOrEmpty(ViewBag.ErrorEliminarLibreriaRelacion))
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-default" /> |
+                @Html.ActionLink("Regresar", "Index")
+            </div>
+        }
+    }
+    else
+    {
+        <div class="m-1">
+            @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarLibreriaRelacion))
+            {
+                <div class="alert alert-danger">
+                    @MvcHtmlString.Create(ViewBag.ErrorEliminarLibreriaRelacion.Replace("\n", "</br>"))
+                </div>
+                @Html.ActionLink("Ver detalle", "salasRelacionados", new { id = Model.libreriaID })
+            }
+        </div>
+
+    }
+</div>

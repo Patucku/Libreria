@@ -1,0 +1,58 @@
+﻿@model slnLibreria.Models.Libreria
+
+@{
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Libreria</h2>
+
+<div>
+    <h4>Detalles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Id:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaID)
+        </dd>
+        <dt>
+            Nombre:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaNombre)
+        </dd>
+
+        <dt>
+            RUC:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaRUC)
+        </dd>
+
+        <dt>
+            Dirección
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaDireccion)
+        </dd>
+
+        <dt>
+            Teléfono:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.libreriaTelefono)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Editar", new { id = Model.libreriaID }) |
+    @Html.ActionLink("Regresar", "Index")
+</p>

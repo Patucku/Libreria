@@ -202,6 +202,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibreriaController.cs" />
     <Compile Include="Controllers\LibrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -255,8 +256,20 @@
     <Compile Include="Models\Materia.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MateriaController.cs" />
+    <Compile Include="Controllers\MateriaController.cs" />
     <Compile Include="Models\Sala.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Libros_Materia.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Libros_Materia_Sala_Libreria.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Libros_Sala.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Sala_Libreria.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -399,6 +412,11 @@
     <Content Include="Views\Materia\Crear.cshtml" />
     <Content Include="Views\Materia\Editar.cshtml" />
     <Content Include="Views\Materia\Eliminar.cshtml" />
+    <Content Include="Views\Libreria\Index.cshtml" />
+    <Content Include="Views\Libreria\Detalles.cshtml" />
+    <Content Include="Views\Libreria\Crear.cshtml" />
+    <Content Include="Views\Libreria\Editar.cshtml" />
+    <Content Include="Views\Libreria\Eliminar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

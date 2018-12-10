@@ -25,6 +25,10 @@
         <AssociationConnector Association="dbFeriaLibroModel.FK_Sala_Libreria" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_Libro_Materia" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_Libro_Sala" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Sala" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Sala_Libreria" Width="1.5" PointX="6.75" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

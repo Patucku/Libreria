@@ -1,0 +1,71 @@
+﻿@model IEnumerable<slnLibreria.Models.Libreria>
+
+@{
+    ViewBag.Title = "Librerias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(6000).fadeOut();
+    });
+
+</script>
+<h2>Librerias</h2>
+
+<p>
+    @Html.ActionLink("Nueva", "Crear")
+</p>
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorLibreria))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorLibreria.Replace("\n", "</br>"))
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(@ViewBag.Libreria))
+    {
+        <div class="alert alert-success" role="alert">
+            @MvcHtmlString.Create(ViewBag.Libreria.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Ruc
+        </th>
+        <th>
+            Dirección
+        </th>
+        <th>
+            Teléfono
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.libreriaNombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.libreriaRUC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.libreriaDireccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.libreriaTelefono)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Editar", new { id=item.libreriaID }) |
+            @Html.ActionLink("Detalles", "Detalles", new { id=item.libreriaID }) |
+            @Html.ActionLink("Eliminar", "Eliminar", new { id=item.libreriaID })
+        </td>
+    </tr>
+}
+
+</table>
