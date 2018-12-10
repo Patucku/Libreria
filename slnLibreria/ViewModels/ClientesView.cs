@@ -13,6 +13,8 @@ namespace slnLibreria.ViewModels
         public Cliente cliente {get; set;}
 
         public ClienteFeriaLibro clienteFeriaLibro { get; set; }
+
+        public string codigoUsuario { get; set; }
        
     }
 }

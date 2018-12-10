@@ -38,3 +38,22 @@
         <input type="submit" value="Registrarse" class="btn btn-outline-success" />
     </div>
 }
+
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorIngresar))
+    {
+        <div class="alert alert-success" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorIngresar.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+
+@using (Html.BeginForm("IngresarCliente", "Home"))
+{
+    <div class="form-group">
+        <h4>Ingresar</h4>
+        <label for="txtUsrCodigo" class="">Ingrese su código: </label>
+        @Html.TextBoxFor(model => model.codigoUsuario, new { @class = "form-control", @id = "txtUsrCodigo" })
+        <input type="submit" value="Ingresar" class="btn btn-outline-success" />
+    </div>
+}

@@ -71,6 +71,18 @@ namespace slnLibreria.Controllers
             return View(objCliente);
         }
 
+        public ActionResult IngresarClientes(ClientesView cv)
+        {
+            ClienteFeriaLibro objClienteFeriaLibro = new ClienteFeriaLibro();
+            if (string.IsNullOrEmpty(cv.codigoUsuario))
+                ViewBag.ErrorIngresar = "Ingrese un código";
+            else
+            {
+                int codigoCliente;
+                codigoCliente = Int32.TryParse(cv.codigoUsuario, out 0);
+            }
+        }
+
 
         public ActionResult About()
         {

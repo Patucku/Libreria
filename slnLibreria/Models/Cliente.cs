@@ -18,6 +18,7 @@ namespace slnLibreria.Models
         public Cliente()
         {
             this.ClienteFeriaLibro = new HashSet<ClienteFeriaLibro>();
+            this.ClienteLibreria = new HashSet<ClienteLibreria>();
         }
     
         public int clienteID { get; set; }
@@ -29,5 +30,7 @@ namespace slnLibreria.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClienteFeriaLibro> ClienteFeriaLibro { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClienteLibreria> ClienteLibreria { get; set; }
     }
 }

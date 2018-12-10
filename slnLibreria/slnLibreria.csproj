@@ -226,6 +226,9 @@
     <Compile Include="Models\ClienteFeriaLibro.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClienteLibreria.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FeriaLibros.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -252,6 +255,7 @@
     <Compile Include="Models\Materia.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MateriaController.cs" />
     <Compile Include="Models\Sala.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
@@ -390,6 +394,11 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Libros\BuscarLibros.cshtml" />
     <Content Include="Views\Libros\Index.cshtml" />
+    <Content Include="Views\Materia\Index.cshtml" />
+    <Content Include="Views\Materia\Detalles.cshtml" />
+    <Content Include="Views\Materia\Crear.cshtml" />
+    <Content Include="Views\Materia\Editar.cshtml" />
+    <Content Include="Views\Materia\Eliminar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

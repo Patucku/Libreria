@@ -1,0 +1,65 @@
+﻿@model slnLibreria.Models.Materia
+
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(6000).fadeOut();
+    });
+
+</script>
+
+
+<h2>Eliminar Materia</h2>
+
+<h3>Está seguro de eliminar esta materia?</h3>
+<div>
+    <div class="m-1">
+        @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarMateria))
+        {
+            <div class="alert alert-warning" role="alert">
+                @MvcHtmlString.Create(ViewBag.ErrorEliminarMateria.Replace("\n", "</br>"))
+            </div>
+        }
+    </div>
+    <h4>Detalles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.materiaNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.materiaNombre)
+        </dd>
+
+    </dl>
+
+    @if (string.IsNullOrEmpty(ViewBag.ErrorEliminarMateria))
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-default" /> |
+                @Html.ActionLink("Regresar", "Index")
+            </div>
+        }
+    }
+    else
+    {
+        <div class="m-1">
+            @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarMateria))
+            {
+                <div class="alert alert-danger">
+                    @MvcHtmlString.Create(ViewBag.ErrorEliminarMateria.Replace("\n", "</br>"))
+                </div>
+                @Html.ActionLink("Ver detalle", "librosRelacionados", new { id = Model.materiaID })
+            }
+        </div>
+
+    }
+</div>

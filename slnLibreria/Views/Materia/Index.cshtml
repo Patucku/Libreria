@@ -1,0 +1,58 @@
+﻿@model IEnumerable<slnLibreria.Models.Materia>
+
+@{
+    ViewBag.Title = "Materias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(6000).fadeOut();
+    });
+
+</script>
+
+<h2>Materias</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Crear")
+</p>
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorMateria))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorMateria.Replace("\n", "</br>"))
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(@ViewBag.Materia))
+    {
+        <div class="alert alert-success" role="alert">
+            @MvcHtmlString.Create(ViewBag.Materia.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.materiaNombre)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = item.materiaID }) |
+                @Html.ActionLink("Detalles", "Detalles", new { id = item.materiaID }) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.materiaID })
+            </td>
+        </tr>
+    }
+
+</table>

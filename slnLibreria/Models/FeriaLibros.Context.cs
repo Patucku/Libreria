@@ -31,6 +31,7 @@ namespace slnLibreria.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<ClienteFeriaLibro> ClienteFeriaLibro { get; set; }
+        public virtual DbSet<ClienteLibreria> ClienteLibreria { get; set; }
         public virtual DbSet<Libreria> Libreria { get; set; }
         public virtual DbSet<Libro> Libro { get; set; }
         public virtual DbSet<Materia> Materia { get; set; }
