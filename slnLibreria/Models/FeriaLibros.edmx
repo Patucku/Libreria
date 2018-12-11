@@ -60,29 +60,21 @@
           <Key>
             <PropertyRef Name="clienteID" />
           </Key>
-          <Property Name="clienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="clienteCodigo" Type="int" />
           <Property Name="clienteCI_RUC" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="clienteNombre" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="clienteApellido" Type="varchar" MaxLength="25" />
           <Property Name="clienteCorreo" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="clienteTelefono" Type="nchar" MaxLength="10" />
+          <Property Name="clienteFechaRegistro" Type="datetime" />
         </EntityType>
-        <EntityType Name="ClienteFeriaLibro">
+        <EntityType Name="EstadoPedido">
           <Key>
-            <PropertyRef Name="clienteferialibroID" />
-            <PropertyRef Name="clienteferialibro_clienteID" />
+            <PropertyRef Name="estadopedidoID" />
           </Key>
-          <Property Name="clienteferialibroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="clienteferialibro_clienteID" Type="int" Nullable="false" />
-          <Property Name="clienteferialibroFechaCreacion" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ClienteLibreria">
-          <Key>
-            <PropertyRef Name="clientelibreria_clienteID" />
-            <PropertyRef Name="clientelibreria_libreriaID" />
-          </Key>
-          <Property Name="clientelibreria_clienteID" Type="int" Nullable="false" />
-          <Property Name="clientelibreria_libreriaID" Type="int" Nullable="false" />
+          <Property Name="estadopedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estadopedidoNombre" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Libreria">
           <Key>
@@ -99,13 +91,23 @@
             <PropertyRef Name="libroID" />
           </Key>
           <Property Name="libroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="libroSala" Type="int" Nullable="false" />
           <Property Name="libroMateria" Type="int" Nullable="false" />
           <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
-          <Property Name="libroPrecio" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="libroIVA" Type="bit" />
           <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LibroSala">
+          <Key>
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="libroID" />
+          </Key>
+          <Property Name="salaID" Type="int" Nullable="false" />
+          <Property Name="libroID" Type="int" Nullable="false" />
+          <Property Name="cantidadLibroSala" Type="int" Nullable="false" />
+          <Property Name="precioLibroSala" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="estadoLibroSala" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Materia">
           <Key>
@@ -114,6 +116,25 @@
           <Property Name="materiaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="materiaNombre" Type="varchar" MaxLength="75" Nullable="false" />
         </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="pedidoID" />
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="libroID" />
+          </Key>
+          <Property Name="pedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="salaID" Type="int" Nullable="false" />
+          <Property Name="libroID" Type="int" Nullable="false" />
+          <Property Name="clienteID" Type="int" />
+          <Property Name="vendedorID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="estadopedidoID" Type="int" Nullable="false" />
+          <Property Name="cantidadPedido" Type="int" Nullable="false" />
+          <Property Name="subTotalPedido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ivaPedido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="totalPedido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="fechaInicioPedido" Type="datetime" Nullable="false" />
+          <Property Name="fechaFinPedido" Type="datetime" />
+        </EntityType>
         <EntityType Name="Sala">
           <Key>
             <PropertyRef Name="salaID" />
@@ -121,6 +142,14 @@
           <Property Name="salaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="salaLibreria" Type="int" Nullable="false" />
           <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendedor">
+          <Key>
+            <PropertyRef Name="aspUserID" />
+          </Key>
+          <Property Name="vendedorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aspUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="vendedorNombre" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Materia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -139,6 +168,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Materia'
           <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="libroIVA" Type="bit" />
           <Property Name="materiaID" Type="int" Nullable="false" />
           <Property Name="materiaNombre" Type="varchar" MaxLength="75" Nullable="false" />
         </EntityType>
@@ -157,6 +187,9 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Materia_
             <PropertyRef Name="salaNombre" />
             <PropertyRef Name="libreriaID" />
             <PropertyRef Name="libreriaNombre" />
+            <PropertyRef Name="cantidadLibroSala" />
+            <PropertyRef Name="precioLibroSala" />
+            <PropertyRef Name="estadoLibroSala" />
           </Key>
           <Property Name="libroID" Type="int" Nullable="false" />
           <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
@@ -169,26 +202,35 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Materia_
           <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="libreriaID" Type="int" Nullable="false" />
           <Property Name="libreriaNombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cantidadLibroSala" Type="int" Nullable="false" />
+          <Property Name="precioLibroSala" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="estadoLibroSala" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Sala' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="View_Listar_Libros_Sala">
           <Key>
+            <PropertyRef Name="cantidadLibroSala" />
+            <PropertyRef Name="precioLibroSala" />
+            <PropertyRef Name="estadoLibroSala" />
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="salaNombre" />
             <PropertyRef Name="libroID" />
-            <PropertyRef Name="libroNombre" />
             <PropertyRef Name="libroAutor" />
             <PropertyRef Name="libroISBN" />
             <PropertyRef Name="libroSinopsis" />
-            <PropertyRef Name="salaID" />
-            <PropertyRef Name="salaNombre" />
+            <PropertyRef Name="libroNombre" />
           </Key>
+          <Property Name="cantidadLibroSala" Type="int" Nullable="false" />
+          <Property Name="precioLibroSala" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="estadoLibroSala" Type="bit" Nullable="false" />
+          <Property Name="salaID" Type="int" Nullable="false" />
+          <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="libroID" Type="int" Nullable="false" />
-          <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
           <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="salaID" Type="int" Nullable="false" />
-          <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -210,42 +252,6 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <Property Name="libreriaTelefono" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="libreriaDireccion" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
-        <Association Name="FK_ClienteFeriaLibro_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="ClienteFeriaLibro" Type="Self.ClienteFeriaLibro" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="clienteID" />
-            </Principal>
-            <Dependent Role="ClienteFeriaLibro">
-              <PropertyRef Name="clienteferialibro_clienteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClienteLibreria_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="ClienteLibreria" Type="Self.ClienteLibreria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="clienteID" />
-            </Principal>
-            <Dependent Role="ClienteLibreria">
-              <PropertyRef Name="clientelibreria_clienteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClienteLibreria_Libreria">
-          <End Role="Libreria" Type="Self.Libreria" Multiplicity="1" />
-          <End Role="ClienteLibreria" Type="Self.ClienteLibreria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Libreria">
-              <PropertyRef Name="libreriaID" />
-            </Principal>
-            <Dependent Role="ClienteLibreria">
-              <PropertyRef Name="clientelibreria_clienteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -314,15 +320,77 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Libro_Sala">
+        <Association Name="FK_LibroSala_Libro">
+          <End Role="Libro" Type="Self.Libro" Multiplicity="1" />
+          <End Role="LibroSala" Type="Self.LibroSala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
+              <PropertyRef Name="libroID" />
+            </Principal>
+            <Dependent Role="LibroSala">
+              <PropertyRef Name="libroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LibroSala_Sala">
           <End Role="Sala" Type="Self.Sala" Multiplicity="1" />
-          <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+          <End Role="LibroSala" Type="Self.LibroSala" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sala">
               <PropertyRef Name="salaID" />
             </Principal>
-            <Dependent Role="Libro">
-              <PropertyRef Name="libroSala" />
+            <Dependent Role="LibroSala">
+              <PropertyRef Name="salaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="clienteID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="clienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_EstadoPedido">
+          <End Role="EstadoPedido" Type="Self.EstadoPedido" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoPedido">
+              <PropertyRef Name="estadopedidoID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="estadopedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_LibroSala">
+          <End Role="LibroSala" Type="Self.LibroSala" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LibroSala">
+              <PropertyRef Name="salaID" />
+              <PropertyRef Name="libroID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="salaID" />
+              <PropertyRef Name="libroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Vendedor">
+          <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedor">
+              <PropertyRef Name="aspUserID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="vendedorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -338,6 +406,18 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Vendedor_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendedor">
+              <PropertyRef Name="aspUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="dbFeriaLibroModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -345,12 +425,14 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ClienteFeriaLibro" EntityType="Self.ClienteFeriaLibro" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ClienteLibreria" EntityType="Self.ClienteLibreria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoPedido" EntityType="Self.EstadoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libreria" EntityType="Self.Libreria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LibroSala" EntityType="Self.LibroSala" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materia" EntityType="Self.Materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sala" EntityType="Self.Sala" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendedor" EntityType="Self.Vendedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="View_Listar_Libros_Materia" EntityType="Self.View_Listar_Libros_Materia" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [View_Listar_Libros_Materia].[libroID] AS [libroID], 
@@ -358,6 +440,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     [View_Listar_Libros_Materia].[libroAutor] AS [libroAutor], 
     [View_Listar_Libros_Materia].[libroISBN] AS [libroISBN], 
     [View_Listar_Libros_Materia].[libroSinopsis] AS [libroSinopsis], 
+    [View_Listar_Libros_Materia].[libroIVA] AS [libroIVA], 
     [View_Listar_Libros_Materia].[materiaID] AS [materiaID], 
     [View_Listar_Libros_Materia].[materiaNombre] AS [materiaNombre]
     FROM [dbo].[View_Listar_Libros_Materia] AS [View_Listar_Libros_Materia]</DefiningQuery>
@@ -374,18 +457,24 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     [View_Listar_Libros_Materia_Sala_Libreria].[salaID] AS [salaID], 
     [View_Listar_Libros_Materia_Sala_Libreria].[salaNombre] AS [salaNombre], 
     [View_Listar_Libros_Materia_Sala_Libreria].[libreriaID] AS [libreriaID], 
-    [View_Listar_Libros_Materia_Sala_Libreria].[libreriaNombre] AS [libreriaNombre]
+    [View_Listar_Libros_Materia_Sala_Libreria].[libreriaNombre] AS [libreriaNombre], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[cantidadLibroSala] AS [cantidadLibroSala], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[precioLibroSala] AS [precioLibroSala], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[estadoLibroSala] AS [estadoLibroSala]
     FROM [dbo].[View_Listar_Libros_Materia_Sala_Libreria] AS [View_Listar_Libros_Materia_Sala_Libreria]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="View_Listar_Libros_Sala" EntityType="Self.View_Listar_Libros_Sala" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [View_Listar_Libros_Sala].[cantidadLibroSala] AS [cantidadLibroSala], 
+    [View_Listar_Libros_Sala].[precioLibroSala] AS [precioLibroSala], 
+    [View_Listar_Libros_Sala].[estadoLibroSala] AS [estadoLibroSala], 
+    [View_Listar_Libros_Sala].[salaID] AS [salaID], 
+    [View_Listar_Libros_Sala].[salaNombre] AS [salaNombre], 
     [View_Listar_Libros_Sala].[libroID] AS [libroID], 
-    [View_Listar_Libros_Sala].[libroNombre] AS [libroNombre], 
     [View_Listar_Libros_Sala].[libroAutor] AS [libroAutor], 
     [View_Listar_Libros_Sala].[libroISBN] AS [libroISBN], 
     [View_Listar_Libros_Sala].[libroSinopsis] AS [libroSinopsis], 
-    [View_Listar_Libros_Sala].[salaID] AS [salaID], 
-    [View_Listar_Libros_Sala].[salaNombre] AS [salaNombre]
+    [View_Listar_Libros_Sala].[libroNombre] AS [libroNombre]
     FROM [dbo].[View_Listar_Libros_Sala] AS [View_Listar_Libros_Sala]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="View_Listar_Sala_Libreria" EntityType="Self.View_Listar_Sala_Libreria" store:Type="Views" store:Schema="dbo">
@@ -399,18 +488,6 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     [View_Listar_Sala_Libreria].[libreriaDireccion] AS [libreriaDireccion]
     FROM [dbo].[View_Listar_Sala_Libreria] AS [View_Listar_Sala_Libreria]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_ClienteFeriaLibro_Cliente" Association="Self.FK_ClienteFeriaLibro_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="ClienteFeriaLibro" EntitySet="ClienteFeriaLibro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClienteLibreria_Cliente" Association="Self.FK_ClienteLibreria_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClienteLibreria_Libreria" Association="Self.FK_ClienteLibreria_Libreria">
-            <End Role="Libreria" EntitySet="Libreria" />
-            <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -431,13 +508,37 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             <End Role="Materia" EntitySet="Materia" />
             <End Role="Libro" EntitySet="Libro" />
           </AssociationSet>
-          <AssociationSet Name="FK_Libro_Sala" Association="Self.FK_Libro_Sala">
-            <End Role="Sala" EntitySet="Sala" />
+          <AssociationSet Name="FK_LibroSala_Libro" Association="Self.FK_LibroSala_Libro">
             <End Role="Libro" EntitySet="Libro" />
+            <End Role="LibroSala" EntitySet="LibroSala" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LibroSala_Sala" Association="Self.FK_LibroSala_Sala">
+            <End Role="Sala" EntitySet="Sala" />
+            <End Role="LibroSala" EntitySet="LibroSala" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_EstadoPedido" Association="Self.FK_Pedido_EstadoPedido">
+            <End Role="EstadoPedido" EntitySet="EstadoPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_LibroSala" Association="Self.FK_Pedido_LibroSala">
+            <End Role="LibroSala" EntitySet="LibroSala" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Vendedor" Association="Self.FK_Pedido_Vendedor">
+            <End Role="Vendedor" EntitySet="Vendedor" />
+            <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
           <AssociationSet Name="FK_Sala_Libreria" Association="Self.FK_Sala_Libreria">
             <End Role="Libreria" EntitySet="Libreria" />
             <End Role="Sala" EntitySet="Sala" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vendedor_AspNetUsers" Association="Self.FK_Vendedor_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Vendedor" EntitySet="Vendedor" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -450,8 +551,14 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <EntitySet Name="AspNetUserLogins" EntityType="dbFeriaLibroModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="dbFeriaLibroModel.AspNetUsers" />
           <EntitySet Name="Cliente" EntityType="dbFeriaLibroModel.Cliente" />
-          <EntitySet Name="ClienteFeriaLibro" EntityType="dbFeriaLibroModel.ClienteFeriaLibro" />
-          <EntitySet Name="ClienteLibreria" EntityType="dbFeriaLibroModel.ClienteLibreria" />
+          <EntitySet Name="EstadoPedido" EntityType="dbFeriaLibroModel.EstadoPedido" />
+          <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
+          <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
+          <EntitySet Name="LibroSala" EntityType="dbFeriaLibroModel.LibroSala" />
+          <EntitySet Name="Materia" EntityType="dbFeriaLibroModel.Materia" />
+          <EntitySet Name="Pedido" EntityType="dbFeriaLibroModel.Pedido" />
+          <EntitySet Name="Sala" EntityType="dbFeriaLibroModel.Sala" />
+          <EntitySet Name="Vendedor" EntityType="dbFeriaLibroModel.Vendedor" />
           <EntitySet Name="View_Listar_Libros_Materia" EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia" />
           <EntitySet Name="View_Listar_Libros_Materia_Sala_Libreria" EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria" />
           <EntitySet Name="View_Listar_Libros_Sala" EntityType="dbFeriaLibroModel.View_Listar_Libros_Sala" />
@@ -464,25 +571,17 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_ClienteFeriaLibro_Cliente" Association="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="ClienteFeriaLibro" EntitySet="ClienteFeriaLibro" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClienteLibreria_Cliente" Association="dbFeriaLibroModel.FK_ClienteLibreria_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="dbFeriaLibroModel.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+          <AssociationSet Name="FK_Vendedor_AspNetUsers" Association="dbFeriaLibroModel.FK_Vendedor_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Vendedor" EntitySet="Vendedor" />
           </AssociationSet>
-          <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
-          <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
-          <EntitySet Name="Materia" EntityType="dbFeriaLibroModel.Materia" />
-          <EntitySet Name="Sala" EntityType="dbFeriaLibroModel.Sala" />
-          <AssociationSet Name="FK_ClienteLibreria_Libreria" Association="dbFeriaLibroModel.FK_ClienteLibreria_Libreria">
-            <End Role="Libreria" EntitySet="Libreria" />
-            <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
+          <AssociationSet Name="FK_Pedido_Cliente" Association="dbFeriaLibroModel.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_EstadoPedido" Association="dbFeriaLibroModel.FK_Pedido_EstadoPedido">
+            <End Role="EstadoPedido" EntitySet="EstadoPedido" />
+            <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
           <AssociationSet Name="FK_Sala_Libreria" Association="dbFeriaLibroModel.FK_Sala_Libreria">
             <End Role="Libreria" EntitySet="Libreria" />
@@ -492,9 +591,25 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             <End Role="Materia" EntitySet="Materia" />
             <End Role="Libro" EntitySet="Libro" />
           </AssociationSet>
-          <AssociationSet Name="FK_Libro_Sala" Association="dbFeriaLibroModel.FK_Libro_Sala">
-            <End Role="Sala" EntitySet="Sala" />
+          <AssociationSet Name="FK_LibroSala_Libro" Association="dbFeriaLibroModel.FK_LibroSala_Libro">
             <End Role="Libro" EntitySet="Libro" />
+            <End Role="LibroSala" EntitySet="LibroSala" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LibroSala_Sala" Association="dbFeriaLibroModel.FK_LibroSala_Sala">
+            <End Role="Sala" EntitySet="Sala" />
+            <End Role="LibroSala" EntitySet="LibroSala" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_LibroSala" Association="dbFeriaLibroModel.FK_Pedido_LibroSala">
+            <End Role="LibroSala" EntitySet="LibroSala" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Vendedor" Association="dbFeriaLibroModel.FK_Pedido_Vendedor">
+            <End Role="Vendedor" EntitySet="Vendedor" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="dbFeriaLibroModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRoles">
@@ -544,40 +659,120 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="dbFeriaLibroModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="dbFeriaLibroModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Vendedor" Relationship="dbFeriaLibroModel.FK_Vendedor_AspNetUsers" FromRole="AspNetUsers" ToRole="Vendedor" />
           <NavigationProperty Name="AspNetRoles" Relationship="dbFeriaLibroModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="clienteID" />
           </Key>
-          <Property Name="clienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="clienteCodigo" Type="Int32" />
           <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="clienteCorreo" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
           <Property Name="clienteTelefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="ClienteFeriaLibro" Relationship="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente" FromRole="Cliente" ToRole="ClienteFeriaLibro" />
-          <NavigationProperty Name="ClienteLibreria" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Cliente" FromRole="Cliente" ToRole="ClienteLibreria" />
+          <Property Name="clienteFechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_Cliente" FromRole="Cliente" ToRole="Pedido" />
         </EntityType>
-        <EntityType Name="ClienteFeriaLibro">
+        <EntityType Name="EstadoPedido">
           <Key>
-            <PropertyRef Name="clienteferialibroID" />
-            <PropertyRef Name="clienteferialibro_clienteID" />
+            <PropertyRef Name="estadopedidoID" />
           </Key>
-          <Property Name="clienteferialibroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="clienteferialibro_clienteID" Type="Int32" Nullable="false" />
-          <Property Name="clienteferialibroFechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Cliente" Relationship="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente" FromRole="ClienteFeriaLibro" ToRole="Cliente" />
+          <Property Name="estadopedidoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estadopedidoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_EstadoPedido" FromRole="EstadoPedido" ToRole="Pedido" />
         </EntityType>
-        <EntityType Name="ClienteLibreria">
+        <EntityType Name="Libreria">
           <Key>
-            <PropertyRef Name="clientelibreria_clienteID" />
-            <PropertyRef Name="clientelibreria_libreriaID" />
+            <PropertyRef Name="libreriaID" />
           </Key>
-          <Property Name="clientelibreria_clienteID" Type="Int32" Nullable="false" />
-          <Property Name="clientelibreria_libreriaID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cliente" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Cliente" FromRole="ClienteLibreria" ToRole="Cliente" />
-          <NavigationProperty Name="Libreria" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Libreria" FromRole="ClienteLibreria" ToRole="Libreria" />
+          <Property Name="libreriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="libreriaRUC" Type="String" Nullable="false" MaxLength="13" FixedLength="true" Unicode="false" />
+          <Property Name="libreriaDireccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Sala" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Libreria" ToRole="Sala" />
+        </EntityType>
+        <EntityType Name="Libro">
+          <Key>
+            <PropertyRef Name="libroID" />
+          </Key>
+          <Property Name="libroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="libroMateria" Type="Int32" Nullable="false" />
+          <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="libroIVA" Type="Boolean" />
+          <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Materia" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Libro" ToRole="Materia" />
+          <NavigationProperty Name="LibroSala" Relationship="dbFeriaLibroModel.FK_LibroSala_Libro" FromRole="Libro" ToRole="LibroSala" />
+        </EntityType>
+        <EntityType Name="LibroSala">
+          <Key>
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="libroID" />
+          </Key>
+          <Property Name="salaID" Type="Int32" Nullable="false" />
+          <Property Name="libroID" Type="Int32" Nullable="false" />
+          <Property Name="cantidadLibroSala" Type="Int32" Nullable="false" />
+          <Property Name="precioLibroSala" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="estadoLibroSala" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_LibroSala_Libro" FromRole="LibroSala" ToRole="Libro" />
+          <NavigationProperty Name="Sala" Relationship="dbFeriaLibroModel.FK_LibroSala_Sala" FromRole="LibroSala" ToRole="Sala" />
+          <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_LibroSala" FromRole="LibroSala" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="materiaID" />
+          </Key>
+          <Property Name="materiaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="materiaNombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Materia" ToRole="Libro" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="pedidoID" />
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="libroID" />
+          </Key>
+          <Property Name="pedidoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salaID" Type="Int32" Nullable="false" />
+          <Property Name="libroID" Type="Int32" Nullable="false" />
+          <Property Name="clienteID" Type="Int32" />
+          <Property Name="vendedorID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="estadopedidoID" Type="Int32" Nullable="false" />
+          <Property Name="cantidadPedido" Type="Int32" Nullable="false" />
+          <Property Name="subTotalPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ivaPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="totalPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="fechaInicioPedido" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fechaFinPedido" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="dbFeriaLibroModel.FK_Pedido_Cliente" FromRole="Pedido" ToRole="Cliente" />
+          <NavigationProperty Name="EstadoPedido" Relationship="dbFeriaLibroModel.FK_Pedido_EstadoPedido" FromRole="Pedido" ToRole="EstadoPedido" />
+          <NavigationProperty Name="LibroSala" Relationship="dbFeriaLibroModel.FK_Pedido_LibroSala" FromRole="Pedido" ToRole="LibroSala" />
+          <NavigationProperty Name="Vendedor" Relationship="dbFeriaLibroModel.FK_Pedido_Vendedor" FromRole="Pedido" ToRole="Vendedor" />
+        </EntityType>
+        <EntityType Name="Sala">
+          <Key>
+            <PropertyRef Name="salaID" />
+          </Key>
+          <Property Name="salaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salaLibreria" Type="Int32" Nullable="false" />
+          <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Libreria" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Sala" ToRole="Libreria" />
+          <NavigationProperty Name="LibroSala" Relationship="dbFeriaLibroModel.FK_LibroSala_Sala" FromRole="Sala" ToRole="LibroSala" />
+        </EntityType>
+        <EntityType Name="Vendedor">
+          <Key>
+            <PropertyRef Name="aspUserID" />
+          </Key>
+          <Property Name="vendedorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aspUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="vendedorNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="dbFeriaLibroModel.FK_Vendedor_AspNetUsers" FromRole="Vendedor" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_Vendedor" FromRole="Vendedor" ToRole="Pedido" />
         </EntityType>
         <EntityType Name="View_Listar_Libros_Materia">
           <Key>
@@ -594,6 +789,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
           <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="libroIVA" Type="Boolean" />
           <Property Name="materiaID" Type="Int32" Nullable="false" />
           <Property Name="materiaNombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -610,6 +806,9 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             <PropertyRef Name="salaNombre" />
             <PropertyRef Name="libreriaID" />
             <PropertyRef Name="libreriaNombre" />
+            <PropertyRef Name="cantidadLibroSala" />
+            <PropertyRef Name="precioLibroSala" />
+            <PropertyRef Name="estadoLibroSala" />
           </Key>
           <Property Name="libroID" Type="Int32" Nullable="false" />
           <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -622,24 +821,33 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="libreriaID" Type="Int32" Nullable="false" />
           <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cantidadLibroSala" Type="Int32" Nullable="false" />
+          <Property Name="precioLibroSala" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="estadoLibroSala" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="View_Listar_Libros_Sala">
           <Key>
+            <PropertyRef Name="cantidadLibroSala" />
+            <PropertyRef Name="precioLibroSala" />
+            <PropertyRef Name="estadoLibroSala" />
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="salaNombre" />
             <PropertyRef Name="libroID" />
-            <PropertyRef Name="libroNombre" />
             <PropertyRef Name="libroAutor" />
             <PropertyRef Name="libroISBN" />
             <PropertyRef Name="libroSinopsis" />
-            <PropertyRef Name="salaID" />
-            <PropertyRef Name="salaNombre" />
+            <PropertyRef Name="libroNombre" />
           </Key>
+          <Property Name="cantidadLibroSala" Type="Int32" Nullable="false" />
+          <Property Name="precioLibroSala" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="estadoLibroSala" Type="Boolean" Nullable="false" />
+          <Property Name="salaID" Type="Int32" Nullable="false" />
+          <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="libroID" Type="Int32" Nullable="false" />
-          <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
           <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="salaID" Type="Int32" Nullable="false" />
-          <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="View_Listar_Sala_Libreria">
           <Key>
@@ -687,88 +895,39 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ClienteFeriaLibro_Cliente">
-          <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="dbFeriaLibroModel.ClienteFeriaLibro" Role="ClienteFeriaLibro" Multiplicity="*" />
+        <Association Name="FK_Vendedor_AspNetUsers">
+          <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="dbFeriaLibroModel.Vendedor" Role="Vendedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendedor">
+              <PropertyRef Name="aspUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="dbFeriaLibroModel.Pedido" Role="Pedido" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="clienteID" />
             </Principal>
-            <Dependent Role="ClienteFeriaLibro">
-              <PropertyRef Name="clienteferialibro_clienteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClienteLibreria_Cliente">
-          <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="dbFeriaLibroModel.ClienteLibreria" Role="ClienteLibreria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Dependent Role="Pedido">
               <PropertyRef Name="clienteID" />
-            </Principal>
-            <Dependent Role="ClienteLibreria">
-              <PropertyRef Name="clientelibreria_clienteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="dbFeriaLibroModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
-          <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
-        </Association>
-        <EntityType Name="Libreria">
-          <Key>
-            <PropertyRef Name="libreriaID" />
-          </Key>
-          <Property Name="libreriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="libreriaRUC" Type="String" Nullable="false" MaxLength="13" FixedLength="true" Unicode="false" />
-          <Property Name="libreriaDireccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="ClienteLibreria" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Libreria" FromRole="Libreria" ToRole="ClienteLibreria" />
-          <NavigationProperty Name="Sala" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Libreria" ToRole="Sala" />
-        </EntityType>
-        <EntityType Name="Libro">
-          <Key>
-            <PropertyRef Name="libroID" />
-          </Key>
-          <Property Name="libroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="libroSala" Type="Int32" Nullable="false" />
-          <Property Name="libroMateria" Type="Int32" Nullable="false" />
-          <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
-          <Property Name="libroPrecio" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Materia" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Libro" ToRole="Materia" />
-          <NavigationProperty Name="Sala" Relationship="dbFeriaLibroModel.FK_Libro_Sala" FromRole="Libro" ToRole="Sala" />
-        </EntityType>
-        <EntityType Name="Materia">
-          <Key>
-            <PropertyRef Name="materiaID" />
-          </Key>
-          <Property Name="materiaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="materiaNombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Materia" ToRole="Libro" />
-        </EntityType>
-        <EntityType Name="Sala">
-          <Key>
-            <PropertyRef Name="salaID" />
-          </Key>
-          <Property Name="salaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="salaLibreria" Type="Int32" Nullable="false" />
-          <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Libreria" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Sala" ToRole="Libreria" />
-          <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Libro_Sala" FromRole="Sala" ToRole="Libro" />
-        </EntityType>
-        <Association Name="FK_ClienteLibreria_Libreria">
-          <End Type="dbFeriaLibroModel.Libreria" Role="Libreria" Multiplicity="1" />
-          <End Type="dbFeriaLibroModel.ClienteLibreria" Role="ClienteLibreria" Multiplicity="*" />
+        <Association Name="FK_Pedido_EstadoPedido">
+          <End Type="dbFeriaLibroModel.EstadoPedido" Role="EstadoPedido" Multiplicity="1" />
+          <End Type="dbFeriaLibroModel.Pedido" Role="Pedido" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Libreria">
-              <PropertyRef Name="libreriaID" />
+            <Principal Role="EstadoPedido">
+              <PropertyRef Name="estadopedidoID" />
             </Principal>
-            <Dependent Role="ClienteLibreria">
-              <PropertyRef Name="clientelibreria_clienteID" />
+            <Dependent Role="Pedido">
+              <PropertyRef Name="estadopedidoID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -796,17 +955,59 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Libro_Sala">
+        <Association Name="FK_LibroSala_Libro">
+          <End Type="dbFeriaLibroModel.Libro" Role="Libro" Multiplicity="1" />
+          <End Type="dbFeriaLibroModel.LibroSala" Role="LibroSala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
+              <PropertyRef Name="libroID" />
+            </Principal>
+            <Dependent Role="LibroSala">
+              <PropertyRef Name="libroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LibroSala_Sala">
           <End Type="dbFeriaLibroModel.Sala" Role="Sala" Multiplicity="1" />
-          <End Type="dbFeriaLibroModel.Libro" Role="Libro" Multiplicity="*" />
+          <End Type="dbFeriaLibroModel.LibroSala" Role="LibroSala" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sala">
               <PropertyRef Name="salaID" />
             </Principal>
-            <Dependent Role="Libro">
-              <PropertyRef Name="libroSala" />
+            <Dependent Role="LibroSala">
+              <PropertyRef Name="salaID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_LibroSala">
+          <End Type="dbFeriaLibroModel.LibroSala" Role="LibroSala" Multiplicity="1" />
+          <End Type="dbFeriaLibroModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LibroSala">
+              <PropertyRef Name="salaID" />
+              <PropertyRef Name="libroID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="salaID" />
+              <PropertyRef Name="libroID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Vendedor">
+          <End Type="dbFeriaLibroModel.Vendedor" Role="Vendedor" Multiplicity="1" />
+          <End Type="dbFeriaLibroModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedor">
+              <PropertyRef Name="aspUserID" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="vendedorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="dbFeriaLibroModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="dbFeriaLibroModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -862,29 +1063,101 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="dbFeriaLibroModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="clienteFechaRegistro" ColumnName="clienteFechaRegistro" />
                 <ScalarProperty Name="clienteTelefono" ColumnName="clienteTelefono" />
                 <ScalarProperty Name="clienteCorreo" ColumnName="clienteCorreo" />
                 <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
                 <ScalarProperty Name="clienteNombre" ColumnName="clienteNombre" />
                 <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
+                <ScalarProperty Name="clienteCodigo" ColumnName="clienteCodigo" />
                 <ScalarProperty Name="clienteID" ColumnName="clienteID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ClienteFeriaLibro">
-            <EntityTypeMapping TypeName="dbFeriaLibroModel.ClienteFeriaLibro">
-              <MappingFragment StoreEntitySet="ClienteFeriaLibro">
-                <ScalarProperty Name="clienteferialibroFechaCreacion" ColumnName="clienteferialibroFechaCreacion" />
-                <ScalarProperty Name="clienteferialibro_clienteID" ColumnName="clienteferialibro_clienteID" />
-                <ScalarProperty Name="clienteferialibroID" ColumnName="clienteferialibroID" />
+          <EntitySetMapping Name="EstadoPedido">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.EstadoPedido">
+              <MappingFragment StoreEntitySet="EstadoPedido">
+                <ScalarProperty Name="estadopedidoNombre" ColumnName="estadopedidoNombre" />
+                <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ClienteLibreria">
-            <EntityTypeMapping TypeName="dbFeriaLibroModel.ClienteLibreria">
-              <MappingFragment StoreEntitySet="ClienteLibreria">
-                <ScalarProperty Name="clientelibreria_libreriaID" ColumnName="clientelibreria_libreriaID" />
-                <ScalarProperty Name="clientelibreria_clienteID" ColumnName="clientelibreria_clienteID" />
+          <EntitySetMapping Name="Libreria">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.Libreria">
+              <MappingFragment StoreEntitySet="Libreria">
+                <ScalarProperty Name="libreriaTelefono" ColumnName="libreriaTelefono" />
+                <ScalarProperty Name="libreriaDireccion" ColumnName="libreriaDireccion" />
+                <ScalarProperty Name="libreriaRUC" ColumnName="libreriaRUC" />
+                <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
+                <ScalarProperty Name="libreriaID" ColumnName="libreriaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Libro">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.Libro">
+              <MappingFragment StoreEntitySet="Libro">
+                <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
+                <ScalarProperty Name="libroIVA" ColumnName="libroIVA" />
+                <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
+                <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
+                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
+                <ScalarProperty Name="libroMateria" ColumnName="libroMateria" />
+                <ScalarProperty Name="libroID" ColumnName="libroID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LibroSala">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.LibroSala">
+              <MappingFragment StoreEntitySet="LibroSala">
+                <ScalarProperty Name="estadoLibroSala" ColumnName="estadoLibroSala" />
+                <ScalarProperty Name="precioLibroSala" ColumnName="precioLibroSala" />
+                <ScalarProperty Name="cantidadLibroSala" ColumnName="cantidadLibroSala" />
+                <ScalarProperty Name="libroID" ColumnName="libroID" />
+                <ScalarProperty Name="salaID" ColumnName="salaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materia">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.Materia">
+              <MappingFragment StoreEntitySet="Materia">
+                <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
+                <ScalarProperty Name="materiaID" ColumnName="materiaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="fechaFinPedido" ColumnName="fechaFinPedido" />
+                <ScalarProperty Name="fechaInicioPedido" ColumnName="fechaInicioPedido" />
+                <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+                <ScalarProperty Name="ivaPedido" ColumnName="ivaPedido" />
+                <ScalarProperty Name="subTotalPedido" ColumnName="subTotalPedido" />
+                <ScalarProperty Name="cantidadPedido" ColumnName="cantidadPedido" />
+                <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+                <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="libroID" ColumnName="libroID" />
+                <ScalarProperty Name="salaID" ColumnName="salaID" />
+                <ScalarProperty Name="pedidoID" ColumnName="pedidoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sala">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.Sala">
+              <MappingFragment StoreEntitySet="Sala">
+                <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+                <ScalarProperty Name="salaLibreria" ColumnName="salaLibreria" />
+                <ScalarProperty Name="salaID" ColumnName="salaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendedor">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.Vendedor">
+              <MappingFragment StoreEntitySet="Vendedor">
+                <ScalarProperty Name="vendedorNombre" ColumnName="vendedorNombre" />
+                <ScalarProperty Name="aspUserID" ColumnName="aspUserID" />
+                <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -893,6 +1166,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
               <MappingFragment StoreEntitySet="View_Listar_Libros_Materia">
                 <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
                 <ScalarProperty Name="materiaID" ColumnName="materiaID" />
+                <ScalarProperty Name="libroIVA" ColumnName="libroIVA" />
                 <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
                 <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
                 <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
@@ -904,6 +1178,9 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <EntitySetMapping Name="View_Listar_Libros_Materia_Sala_Libreria">
             <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria">
               <MappingFragment StoreEntitySet="View_Listar_Libros_Materia_Sala_Libreria">
+                <ScalarProperty Name="estadoLibroSala" ColumnName="estadoLibroSala" />
+                <ScalarProperty Name="precioLibroSala" ColumnName="precioLibroSala" />
+                <ScalarProperty Name="cantidadLibroSala" ColumnName="cantidadLibroSala" />
                 <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
                 <ScalarProperty Name="libreriaID" ColumnName="libreriaID" />
                 <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
@@ -921,13 +1198,16 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <EntitySetMapping Name="View_Listar_Libros_Sala">
             <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Libros_Sala">
               <MappingFragment StoreEntitySet="View_Listar_Libros_Sala">
-                <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
-                <ScalarProperty Name="salaID" ColumnName="salaID" />
+                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
                 <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
                 <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
                 <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
-                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
                 <ScalarProperty Name="libroID" ColumnName="libroID" />
+                <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+                <ScalarProperty Name="salaID" ColumnName="salaID" />
+                <ScalarProperty Name="estadoLibroSala" ColumnName="estadoLibroSala" />
+                <ScalarProperty Name="precioLibroSala" ColumnName="precioLibroSala" />
+                <ScalarProperty Name="cantidadLibroSala" ColumnName="cantidadLibroSala" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -952,48 +1232,6 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Libreria">
-            <EntityTypeMapping TypeName="dbFeriaLibroModel.Libreria">
-              <MappingFragment StoreEntitySet="Libreria">
-                <ScalarProperty Name="libreriaTelefono" ColumnName="libreriaTelefono" />
-                <ScalarProperty Name="libreriaDireccion" ColumnName="libreriaDireccion" />
-                <ScalarProperty Name="libreriaRUC" ColumnName="libreriaRUC" />
-                <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
-                <ScalarProperty Name="libreriaID" ColumnName="libreriaID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Libro">
-            <EntityTypeMapping TypeName="dbFeriaLibroModel.Libro">
-              <MappingFragment StoreEntitySet="Libro">
-                <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
-                <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
-                <ScalarProperty Name="libroPrecio" ColumnName="libroPrecio" />
-                <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
-                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
-                <ScalarProperty Name="libroMateria" ColumnName="libroMateria" />
-                <ScalarProperty Name="libroSala" ColumnName="libroSala" />
-                <ScalarProperty Name="libroID" ColumnName="libroID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Materia">
-            <EntityTypeMapping TypeName="dbFeriaLibroModel.Materia">
-              <MappingFragment StoreEntitySet="Materia">
-                <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
-                <ScalarProperty Name="materiaID" ColumnName="materiaID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sala">
-            <EntityTypeMapping TypeName="dbFeriaLibroModel.Sala">
-              <MappingFragment StoreEntitySet="Sala">
-                <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
-                <ScalarProperty Name="salaLibreria" ColumnName="salaLibreria" />
-                <ScalarProperty Name="salaID" ColumnName="salaID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

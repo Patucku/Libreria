@@ -12,13 +12,13 @@
     @if (!string.IsNullOrEmpty(@ViewBag.ErrorLibreria))
     {
         <div class="alert alert-warning" role="alert">
-            @MvcHtmlString.Create(ViewBag.ErrorLibreria.Replace("\n", "</br>"))
+            @MvcHtmlString.Create(ViewBag.ErrorSala.Replace("\n", "</br>"))
         </div>
     }
     @if (!string.IsNullOrEmpty(@ViewBag.Libreria))
     {
         <div class="alert alert-success" role="alert">
-            @MvcHtmlString.Create(ViewBag.Libreria.Replace("\n", "</br>"))
+            @MvcHtmlString.Create(ViewBag.Sala.Replace("\n", "</br>"))
         </div>
     }
 </div>
@@ -31,7 +31,6 @@
             <th>
                 Libreria
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>

@@ -14,12 +14,15 @@ namespace slnLibreria.Models
     
     public partial class View_Listar_Libros_Sala
     {
+        public int cantidadLibroSala { get; set; }
+        public decimal precioLibroSala { get; set; }
+        public bool estadoLibroSala { get; set; }
+        public int salaID { get; set; }
+        public string salaNombre { get; set; }
         public int libroID { get; set; }
-        public string libroNombre { get; set; }
         public string libroAutor { get; set; }
         public string libroISBN { get; set; }
         public string libroSinopsis { get; set; }
-        public int salaID { get; set; }
-        public string salaNombre { get; set; }
+        public string libroNombre { get; set; }
     }
 }

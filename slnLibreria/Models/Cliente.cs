@@ -17,20 +17,19 @@ namespace slnLibreria.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
-            this.ClienteFeriaLibro = new HashSet<ClienteFeriaLibro>();
-            this.ClienteLibreria = new HashSet<ClienteLibreria>();
+            this.Pedido = new HashSet<Pedido>();
         }
     
         public int clienteID { get; set; }
+        public Nullable<int> clienteCodigo { get; set; }
         public string clienteCI_RUC { get; set; }
         public string clienteNombre { get; set; }
         public string clienteApellido { get; set; }
         public string clienteCorreo { get; set; }
         public string clienteTelefono { get; set; }
+        public Nullable<System.DateTime> clienteFechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClienteFeriaLibro> ClienteFeriaLibro { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClienteLibreria> ClienteLibreria { get; set; }
+        public virtual ICollection<Pedido> Pedido { get; set; }
     }
 }

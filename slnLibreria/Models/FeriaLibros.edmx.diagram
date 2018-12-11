@@ -4,31 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="91acd63e6fb54a04abbc56285284a094" Name="Diagram1" ZoomLevel="40" >
-        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="3.625" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Cliente" Width="1.5" PointX="0.75" PointY="7.875" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.ClienteFeriaLibro" Width="1.5" PointX="3" PointY="7" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.ClienteLibreria" Width="1.5" PointX="3" PointY="9.625" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia" Width="1.5" PointX="5.75" PointY="6.75" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Sala" Width="1.5" PointX="7.75" PointY="4.75" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Sala_Libreria" Width="1.5" PointX="7.75" PointY="8.75" />
+      <Diagram DiagramId="91acd63e6fb54a04abbc56285284a094" Name="Diagram1" ZoomLevel="20" >
+        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="12" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="19.125" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="8.5" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.AspNetUsers" Width="1.5" PointX="3" PointY="10.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Cliente" Width="1.5" PointX="5.25" PointY="14.625" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.EstadoPedido" Width="1.5" PointX="5.25" PointY="5.375" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Libreria" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Libro" Width="1.5" PointX="3" PointY="1.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.LibroSala" Width="1.5" PointX="5.25" PointY="1.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Materia" Width="1.5" PointX="0.75" PointY="2.25" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Pedido" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Sala" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.Vendedor" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia" Width="1.5" PointX="7.75" PointY="6.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Libros_Sala" Width="1.5" PointX="9.75" PointY="5.75" />
+        <EntityTypeShape EntityType="dbFeriaLibroModel.View_Listar_Sala_Libreria" Width="1.5" PointX="9.75" PointY="9.75" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente" />
-        <AssociationConnector Association="dbFeriaLibroModel.FK_ClienteLibreria_Cliente" />
-        <AssociationConnector Association="dbFeriaLibroModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Libreria" Width="1.5" PointX="0.75" PointY="11.375" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Libro" Width="1.5" PointX="5.25" PointY="12" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Materia" Width="1.5" PointX="3" PointY="15.75" />
-        <EntityTypeShape EntityType="dbFeriaLibroModel.Sala" Width="1.5" PointX="3" PointY="12.5" />
-        <AssociationConnector Association="dbFeriaLibroModel.FK_ClienteLibreria_Libreria" />
+        <AssociationConnector Association="dbFeriaLibroModel.FK_Vendedor_AspNetUsers" />
+        <AssociationConnector Association="dbFeriaLibroModel.FK_Pedido_Cliente" />
+        <AssociationConnector Association="dbFeriaLibroModel.FK_Pedido_EstadoPedido" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_Sala_Libreria" />
         <AssociationConnector Association="dbFeriaLibroModel.FK_Libro_Materia" />
-        <AssociationConnector Association="dbFeriaLibroModel.FK_Libro_Sala" />
+        <AssociationConnector Association="dbFeriaLibroModel.FK_LibroSala_Libro" />
+        <AssociationConnector Association="dbFeriaLibroModel.FK_LibroSala_Sala" />
+        <AssociationConnector Association="dbFeriaLibroModel.FK_Pedido_LibroSala" />
+        <AssociationConnector Association="dbFeriaLibroModel.FK_Pedido_Vendedor" />
+        <AssociationConnector Association="dbFeriaLibroModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

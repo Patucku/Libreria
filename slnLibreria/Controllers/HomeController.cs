@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity;
-using System.Web.Mvc;
+﻿using slnLibreria.Models;
 using slnLibreria.ViewModels;
-using slnLibreria.Models;
+using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace slnLibreria.Controllers
 {
@@ -38,26 +36,31 @@ namespace slnLibreria.Controllers
                             ViewBag.ErrorCedula = "Usted no es Cliente de ninguna libreria";
                         else
                         {
-                            objCliente.clienteFeriaLibro = db.ClienteFeriaLibro.Where(n => n.clienteferialibro_clienteID == objCliente.cliente.clienteID).FirstOrDefault();
-                            if (objCliente.clienteFeriaLibro != null)
-                                ViewBag.ErrorCedula = "Usted ya está registrado en el sistema \n Sú codigo es: " + objCliente.clienteFeriaLibro.clienteferialibroID;
+                            if (objCliente.cliente.clienteCodigo != null)
+                                ViewBag.ErrorCedula = "Usted ya está registrado en el sistema \n Sú codigo es: " + objCliente.cliente.clienteCodigo;
                             else
                             {
                                 try
                                 {
-                                    ClienteFeriaLibro objClienteFeriaLibro = new ClienteFeriaLibro();
-                                    objClienteFeriaLibro.clienteferialibroFechaCreacion = DateTime.Now;
-                                    objClienteFeriaLibro.clienteferialibro_clienteID = objCliente.cliente.clienteID;
-                                    db.ClienteFeriaLibro.Add(objClienteFeriaLibro);
+                                    Cliente objUltimoCliente = db.Cliente.Where(n => n.clienteCodigo != null).Last();
+                                    int codigoCliente = 100;
+                                    if (objUltimoCliente != null)
+                                        codigoCliente = objUltimoCliente.clienteCodigo.Value + 1;
+                                    Cliente objClienteFeriaLibro = new Cliente();
+                                    objClienteFeriaLibro.clienteFechaRegistro = DateTime.Now;
+                                    objClienteFeriaLibro.clienteCodigo = codigoCliente;
+                                    db.Entry(objClienteFeriaLibro).State = EntityState.Modified;
                                     db.SaveChanges();
 
-                                    objCliente.clienteFeriaLibro = db.ClienteFeriaLibro.Where(n => n.clienteferialibro_clienteID == objCliente.cliente.clienteID).FirstOrDefault();
+                                    objCliente.cliente = db.Cliente.Where(n => n.clienteCodigo == codigoCliente).FirstOrDefault();
                                     ViewBag.CodigoUsuario = "Se ha generado su código. " +
                                         "\n Cliente: " + objCliente.cliente.clienteNombre + " " + objCliente.cliente.clienteApellido +
-                                        "\n Su código identificador es: " + objCliente.clienteFeriaLibro.clienteferialibroID + " Anótelo o memorizelo, el mismo le servirá para reservar y comprar libros";
+                                        "\n Su código identificador es: " + objCliente.cliente.clienteCodigo + " Anótelo o memorizelo, el mismo le servirá para reservar y comprar libros";
 
-                                    Session["ClienteIngresado"] = objCliente;
-                                    return RedirectToAction("Index", "Libros");
+                                    PedidosView objPedido = new PedidosView();
+                                    Session["ClienteIngresado"] = objCliente.cliente;
+                                    objPedido.clienteFeriaLibro = objCliente.cliente;
+                                    return View("Index", "Pedidos", objPedido);
                                 }
                                 catch (Exception ex)
                                 {
@@ -73,16 +76,40 @@ namespace slnLibreria.Controllers
 
         public ActionResult IngresarClientes(ClientesView cv)
         {
-            ClienteFeriaLibro objClienteFeriaLibro = new ClienteFeriaLibro();
-            if (string.IsNullOrEmpty(cv.codigoUsuario))
-                ViewBag.ErrorIngresar = "Ingrese un código";
-            else
+            Cliente objClienteFeriaLibro = new Cliente();
+            try
             {
-                int salida;
-                int codigoCliente;
-                //codigoCliente = Int32.TryParse(cv.codigoUsuario, out salida);
+                if (string.IsNullOrEmpty(cv.codigoUsuario))
+                {
+                    ViewBag.ErrorIngresar = "Ingrese un código";
+                    return View();
+                }
+                else
+                {
+                    PedidosView objPedido = new PedidosView();
+                    int codigoUsuario = int.Parse(cv.codigoUsuario);
+                    using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+                    {
+                        objClienteFeriaLibro = db.Cliente.Where(n => n.clienteCodigo == codigoUsuario).FirstOrDefault();
+                        if (objClienteFeriaLibro == null)
+                        {
+                            ViewBag.ErrorIngresar = "Debe registrase primero";
+                            return View();
+                        }
+                        else
+                        {
+                            Session["ClienteIngresado"] = objClienteFeriaLibro;
+                            objPedido.clienteFeriaLibro = objClienteFeriaLibro;
+                        }
+                    }
+                    return RedirectToAction("Index", "Pedidos", objPedido);
+                }
             }
-            return View();
+            catch (Exception ex)
+            {
+                ViewBag.ErrorIngresar = "Ha ocurrido un error al momento de ingresar \n Error: " + ex.Message;
+                return View();
+            }
         }
 
 

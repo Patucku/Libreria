@@ -226,10 +226,7 @@
     <Compile Include="Models\Cliente.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClienteFeriaLibro.cs">
-      <DependentUpon>FeriaLibros.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ClienteLibreria.cs">
+    <Compile Include="Models\EstadoPedido.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FeriaLibros.Context.cs">
@@ -254,11 +251,20 @@
     <Compile Include="Models\Libro.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LibroSala.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Materia.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Pedido.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Sala.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vendedor.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\View_Listar_Libros_Materia.cs">
@@ -278,6 +284,7 @@
     <Compile Include="ViewModels\ClientesView.cs" />
     <Compile Include="ViewModels\LibrosView.cs" />
     <Compile Include="ViewModels\MateriaView.cs" />
+    <Compile Include="ViewModels\PedidosView.cs" />
     <Compile Include="ViewModels\SalaView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -428,6 +435,8 @@
     <Content Include="Views\Sala\Crear.cshtml" />
     <Content Include="Views\Sala\Editar.cshtml" />
     <Content Include="Views\Sala\Eliminar.cshtml" />
+    <Content Include="Views\Libros\Detalle.cshtml" />
+    <Content Include="Views\Libros\Crear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

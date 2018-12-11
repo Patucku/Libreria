@@ -14,16 +14,22 @@ namespace slnLibreria.Models
     
     public partial class Libro
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Libro()
+        {
+            this.LibroSala = new HashSet<LibroSala>();
+        }
+    
         public int libroID { get; set; }
-        public int libroSala { get; set; }
         public int libroMateria { get; set; }
         public string libroNombre { get; set; }
         public string libroAutor { get; set; }
-        public decimal libroPrecio { get; set; }
         public string libroISBN { get; set; }
+        public Nullable<bool> libroIVA { get; set; }
         public string libroSinopsis { get; set; }
     
         public virtual Materia Materia { get; set; }
-        public virtual Sala Sala { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LibroSala> LibroSala { get; set; }
     }
 }

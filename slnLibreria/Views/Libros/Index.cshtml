@@ -5,15 +5,61 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Buscar Libros</h2>
+<h2>Libros</h2>
+<p>
+    @Html.ActionLink("Nueva", "Crear")
+</p>
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorLibreria))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorLibro.Replace("\n", "</br>"))
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(@ViewBag.Libreria))
+    {
+        <div class="alert alert-success" role="alert">
+            @MvcHtmlString.Create(ViewBag.Libro.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Autor
+            </th>
+            <th>
+                ISBN
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.libros)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.libroNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.libroAutor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.libroISBN)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", "Sala", new { id = item.libroID }, new { @class = "btn btn-outline-success" }) |
+                @Html.ActionLink("Detalles", "Detalles", "Sala", new { id = item.libroID }, new { @class = "btn btn-outline-info" }) |
+                @Html.ActionLink("Eliminar", "Eliminar", "Sala", new { id = item.libroID }, new { @class = "btn btn-outline-danger" })
+            </td>
+        </tr>
+        }
+    </tbody>
 
-    <div class="form-inline">
-        <label for="txtSala" class="mr-1 font-weight-light">Sala: </label>
-        @Html.DropDownListFor(model => model.selectedSala, Model.listaSalas, "Seleccione una sala", new { @class = "form-control form-control-sm m-2", @id = "txtSala" })
-        <label for="txtMateria" class="mr-1 font-weight-light">Sala: </label>
-        @Html.DropDownListFor(model => model.selectedSala, Model.listaMaterias, "Seleccione una materia", new { @class = "form-control form-control-sm m-2", @id = "txtMateria" })
-        <input type="submit" value="Buscar" class="btn btn-sm btn-outline-success" />
-    </div>
-}
+</table>
+
 
 

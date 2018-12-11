@@ -86,7 +86,7 @@ namespace slnLibreria.Controllers
                         db.Sala.Add(nuevaSala);
                         db.SaveChanges();
                     }
-                    ViewBag.Sla = "Se creó una nueva sala";
+                    ViewBag.Sala = "Se creó una nueva sala";
                     return View("Index", cargarIndex());
                 }
 
@@ -145,7 +145,7 @@ namespace slnLibreria.Controllers
                         salaActualizar.salaLibreria = objSalaView.selectedLibreria;
                         db.Entry(salaActualizar).State = EntityState.Modified;
                         db.SaveChanges();
-                        ViewBag.Materia = "Se actualizó la sala";
+                        ViewBag.Sala = "Se actualizó la sala";
                         return View("Index", cargarIndex());
                     }
                 }
@@ -159,7 +159,7 @@ namespace slnLibreria.Controllers
         }
 
         // GET: Sala/Delete/5
-        public ActionResult Eliminar(int id)
+        public ActionResult Eliminar(int ?id)
         {
             SalaView objSalaView = new SalaView();
             using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
@@ -171,10 +171,10 @@ namespace slnLibreria.Controllers
                     ViewBag.ErrorSala = "No se encuentra esa sala";
                     return View("Index", cargarIndex());
                 }
-                List<Libro> objLibros = db.Libro.Where(n => n.libroSala == objSalaView.salaLibreria.salaID).ToList();
-                int librosAfectados = objLibros.Count();
+                List<LibroSala> objLibrosSala = db.LibroSala.Where(n => n.salaID == objSalaView.salaLibreria.salaID).ToList();
+                int librosAfectados = objLibrosSala.Count();
                 if (librosAfectados != 0)
-                    ViewBag.ErrorEliminarSalaRelacion = "La sala tiene: " + librosAfectados + " libros relacionados, no se puede borrar la materia";
+                    ViewBag.ErrorEliminarSalaRelacion = "La sala tiene: " + librosAfectados + " libros relacionados, no se puede borrar la sala";
 
             }
             return View(objSalaView);
@@ -182,7 +182,7 @@ namespace slnLibreria.Controllers
 
         // POST: Sala/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, SalaView objSalaView)
+        public ActionResult Eliminar(int ?id, SalaView objSalaView)
         {
             try
             {
@@ -195,11 +195,11 @@ namespace slnLibreria.Controllers
                         ViewBag.ErrorSala = "No se encuentra esa sala";
                         return View("Index", cargarIndex());
                     }
-                    List<Libro> objLibros = db.Libro.Where(n => n.libroSala == salaEliminar.salaID).ToList();
-                    int librosAfectados = objLibros.Count();
+                    List<LibroSala> objLibrosSala = db.LibroSala.Where(n => n.salaID == salaEliminar.salaID).ToList();
+                    int librosAfectados = objLibrosSala.Count();
                     if (librosAfectados != 0)
                     {
-                        ViewBag.ErrorEliminarSalaRelacion = "La sala tiene: " + librosAfectados + " libros relacionados, no se puede borrar la materia";
+                        ViewBag.ErrorEliminarSalaRelacion = "La sala tiene: " + librosAfectados + " libros relacionados, no se puede borrar la sala";
                         return View(objSalaView);
                     }
                     else

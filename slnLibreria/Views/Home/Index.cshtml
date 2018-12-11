@@ -8,8 +8,6 @@
     });
 </script>
 
-
-
 <div class="jumbotron">
     <h1>Bienvenido a la feria del libro</h1>
 </div>
@@ -34,7 +32,7 @@
     <div class="form-group">
         <h4>Registro</h4>
         <label for="txtUsrCIRUC" class="">Ingrese su número de cédula: </label>
-        @Html.TextBoxFor(model => model.clienteCI_RUC, new { @class = "form-control", @id = "txtUsrCIRUC" })
+        @Html.TextBoxFor(model => model.clienteCI_RUC, new { @class = "form-control", @id = "txtUsrCIRUC" , @type = "number" })
         <input type="submit" value="Registrarse" class="btn btn-outline-success m-2" />
     </div>
 }
@@ -54,7 +52,7 @@
     <div class="form-group">
         <h4>Ingresar</h4>
         <label for="txtUsrCodigo" class="">Ingrese su código: </label>
-        @Html.TextBoxFor(model => model.codigoUsuario, new { @class = "form-control", @id = "txtUsrCodigo" })
+        @Html.TextBoxFor(model => model.codigoUsuario, new { @class = "form-control", @id = "txtUsrCodigo", @type = "number" })
         <input type="submit" value="Ingresar" class="btn btn-outline-success m-2" />
     </div>
 }
