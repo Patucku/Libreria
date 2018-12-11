@@ -13,10 +13,10 @@
 
 <h2>Editar Libreria</h2>
 <div class="m-1">
-    @if (!string.IsNullOrEmpty(@ViewBag.ErrorActualizaLibreria))
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorActualizarLibreria))
     {
         <div class="alert alert-warning" role="alert">
-            @MvcHtmlString.Create(ViewBag.ErrorActualizaLibreria.Replace("\n", "</br>"))
+            @MvcHtmlString.Create(ViewBag.ErrorActualizarLibreria.Replace("\n", "</br>"))
         </div>
     }
 </div>

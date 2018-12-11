@@ -1,0 +1,57 @@
+﻿@model slnLibreria.ViewModels.SalaView
+@{
+    ViewBag.Title = "Salas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Salas</h2>
+<p>
+    @Html.ActionLink("Nueva", "Crear")
+</p>
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorLibreria))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorLibreria.Replace("\n", "</br>"))
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(@ViewBag.Libreria))
+    {
+        <div class="alert alert-success" role="alert">
+            @MvcHtmlString.Create(ViewBag.Libreria.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Libreria
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.salasLibreria)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.salaNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.libreriaNombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", "Sala", new { id = item.salaID }, new { @class = "btn btn-outline-success" }) |
+                    @Html.ActionLink("Detalles", "Detalles", "Sala", new { id = item.salaID }, new { @class = "btn btn-outline-info" }) |
+                    @Html.ActionLink("Eliminar", "Eliminar", "Sala", new { id = item.salaID }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+

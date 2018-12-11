@@ -205,6 +205,8 @@
     <Compile Include="Controllers\LibreriaController.cs" />
     <Compile Include="Controllers\LibrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MateriaController.cs" />
+    <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -256,7 +258,6 @@
     <Compile Include="Models\Materia.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\MateriaController.cs" />
     <Compile Include="Models\Sala.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
@@ -276,6 +277,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ClientesView.cs" />
     <Compile Include="ViewModels\LibrosView.cs" />
+    <Compile Include="ViewModels\MateriaView.cs" />
+    <Compile Include="ViewModels\SalaView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -329,13 +332,13 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
-    <Content Include="Scripts\jquery-3.0.0.js" />
-    <Content Include="Scripts\jquery-3.0.0.min.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
-    <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -417,6 +420,14 @@
     <Content Include="Views\Libreria\Crear.cshtml" />
     <Content Include="Views\Libreria\Editar.cshtml" />
     <Content Include="Views\Libreria\Eliminar.cshtml" />
+    <Content Include="Views\Sala\Index.cshtml" />
+    <Content Include="Views\Libreria\salasRelacionadas.cshtml" />
+    <Content Include="Views\Materia\librosRelacionados.cshtml" />
+    <Content Include="Views\Sala\librosRelacionados.cshtml" />
+    <Content Include="Views\Sala\Detalles.cshtml" />
+    <Content Include="Views\Sala\Crear.cshtml" />
+    <Content Include="Views\Sala\Editar.cshtml" />
+    <Content Include="Views\Sala\Eliminar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

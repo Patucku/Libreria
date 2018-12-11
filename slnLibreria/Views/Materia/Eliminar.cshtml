@@ -28,7 +28,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.materiaNombre)
+            Nombre:
         </dt>
 
         <dd>
@@ -44,8 +44,9 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Eliminar" class="btn btn-default" /> |
-                @Html.ActionLink("Regresar", "Index")
+                <input type="submit" value="Eliminar" class="btn btn-warning" /> |
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark m-1" })
+
             </div>
         }
     }

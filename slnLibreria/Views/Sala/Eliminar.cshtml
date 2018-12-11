@@ -1,0 +1,70 @@
+﻿@model slnLibreria.ViewModels.SalaView
+
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(6000).fadeOut();
+    });
+
+</script>
+
+
+<h2>Eliminar Sala</h2>
+
+<h3>Está seguro de eliminar esta sala?</h3>
+<div>
+    <div class="m-1">
+        @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarSala))
+        {
+            <div class="alert alert-warning" role="alert">
+                @MvcHtmlString.Create(ViewBag.ErrorEliminarSala.Replace("\n", "</br>"))
+            </div>
+        }
+    </div>
+    <h4>Detalles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.salaLibreria.salaNombre)
+        </dd>
+        <dt>
+            Libreria:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.salaLibreria.libreriaNombre)
+        </dd>
+
+    </dl>
+
+    @if (string.IsNullOrEmpty(ViewBag.ErrorEliminarMateriaRelacion))
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-warning" /> |
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark m-1" })
+            </div>
+        }
+    }
+    else
+    {
+        <div class="m-1">
+            @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarSalaRelacion))
+            {
+                <div class="alert alert-danger">
+                    @MvcHtmlString.Create(ViewBag.ErrorEliminarSalaRelacion.Replace("\n", "</br>"))
+                </div>
+                @Html.ActionLink("Ver detalle", "librosRelacionados", new { id = Model.salaLibreria.salaID })
+            }
+        </div>
+
+    }
+</div>

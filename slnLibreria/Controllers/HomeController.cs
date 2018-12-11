@@ -78,9 +78,11 @@ namespace slnLibreria.Controllers
                 ViewBag.ErrorIngresar = "Ingrese un código";
             else
             {
+                int salida;
                 int codigoCliente;
-                codigoCliente = Int32.TryParse(cv.codigoUsuario, out 0);
+                //codigoCliente = Int32.TryParse(cv.codigoUsuario, out salida);
             }
+            return View();
         }
 
 

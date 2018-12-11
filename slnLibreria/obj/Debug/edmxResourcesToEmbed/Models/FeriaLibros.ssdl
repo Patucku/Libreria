@@ -65,10 +65,19 @@
   <EntityType Name="ClienteFeriaLibro">
     <Key>
       <PropertyRef Name="clienteferialibroID" />
+      <PropertyRef Name="clienteferialibro_clienteID" />
     </Key>
     <Property Name="clienteferialibroID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="clienteferialibro_clienteID" Type="int" Nullable="false" />
     <Property Name="clienteferialibroFechaCreacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClienteLibreria">
+    <Key>
+      <PropertyRef Name="clientelibreria_clienteID" />
+      <PropertyRef Name="clientelibreria_libreriaID" />
+    </Key>
+    <Property Name="clientelibreria_clienteID" Type="int" Nullable="false" />
+    <Property Name="clientelibreria_libreriaID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Libreria">
     <Key>
@@ -108,6 +117,94 @@
     <Property Name="salaLibreria" Type="int" Nullable="false" />
     <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Materia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="View_Listar_Libros_Materia">
+    <Key>
+      <PropertyRef Name="libroID" />
+      <PropertyRef Name="libroNombre" />
+      <PropertyRef Name="libroAutor" />
+      <PropertyRef Name="libroISBN" />
+      <PropertyRef Name="libroSinopsis" />
+      <PropertyRef Name="materiaID" />
+      <PropertyRef Name="materiaNombre" />
+    </Key>
+    <Property Name="libroID" Type="int" Nullable="false" />
+    <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
+    <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="materiaID" Type="int" Nullable="false" />
+    <Property Name="materiaNombre" Type="varchar" MaxLength="75" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Materia_Sala_Libreria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="View_Listar_Libros_Materia_Sala_Libreria">
+    <Key>
+      <PropertyRef Name="libroID" />
+      <PropertyRef Name="libroNombre" />
+      <PropertyRef Name="libroAutor" />
+      <PropertyRef Name="libroISBN" />
+      <PropertyRef Name="libroSinopsis" />
+      <PropertyRef Name="materiaID" />
+      <PropertyRef Name="materiaNombre" />
+      <PropertyRef Name="salaID" />
+      <PropertyRef Name="salaNombre" />
+      <PropertyRef Name="libreriaID" />
+      <PropertyRef Name="libreriaNombre" />
+    </Key>
+    <Property Name="libroID" Type="int" Nullable="false" />
+    <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
+    <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="materiaID" Type="int" Nullable="false" />
+    <Property Name="materiaNombre" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="salaID" Type="int" Nullable="false" />
+    <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="libreriaID" Type="int" Nullable="false" />
+    <Property Name="libreriaNombre" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Sala' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="View_Listar_Libros_Sala">
+    <Key>
+      <PropertyRef Name="libroID" />
+      <PropertyRef Name="libroNombre" />
+      <PropertyRef Name="libroAutor" />
+      <PropertyRef Name="libroISBN" />
+      <PropertyRef Name="libroSinopsis" />
+      <PropertyRef Name="salaID" />
+      <PropertyRef Name="salaNombre" />
+    </Key>
+    <Property Name="libroID" Type="int" Nullable="false" />
+    <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
+    <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="salaID" Type="int" Nullable="false" />
+    <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="View_Listar_Sala_Libreria">
+    <Key>
+      <PropertyRef Name="salaID" />
+      <PropertyRef Name="salaNombre" />
+      <PropertyRef Name="libreriaID" />
+      <PropertyRef Name="libreriaNombre" />
+      <PropertyRef Name="libreriaRUC" />
+      <PropertyRef Name="libreriaTelefono" />
+      <PropertyRef Name="libreriaDireccion" />
+    </Key>
+    <Property Name="salaID" Type="int" Nullable="false" />
+    <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="libreriaID" Type="int" Nullable="false" />
+    <Property Name="libreriaNombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="libreriaRUC" Type="char" MaxLength="13" Nullable="false" />
+    <Property Name="libreriaTelefono" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="libreriaDireccion" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
   <Association Name="FK_ClienteFeriaLibro_Cliente">
     <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
     <End Role="ClienteFeriaLibro" Type="Self.ClienteFeriaLibro" Multiplicity="*" />
@@ -117,6 +214,30 @@
       </Principal>
       <Dependent Role="ClienteFeriaLibro">
         <PropertyRef Name="clienteferialibro_clienteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClienteLibreria_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="ClienteLibreria" Type="Self.ClienteLibreria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="clienteID" />
+      </Principal>
+      <Dependent Role="ClienteLibreria">
+        <PropertyRef Name="clientelibreria_clienteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClienteLibreria_Libreria">
+    <End Role="Libreria" Type="Self.Libreria" Multiplicity="1" />
+    <End Role="ClienteLibreria" Type="Self.ClienteLibreria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libreria">
+        <PropertyRef Name="libreriaID" />
+      </Principal>
+      <Dependent Role="ClienteLibreria">
+        <PropertyRef Name="clientelibreria_clienteID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -220,13 +341,70 @@
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ClienteFeriaLibro" EntityType="Self.ClienteFeriaLibro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClienteLibreria" EntityType="Self.ClienteLibreria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Libreria" EntityType="Self.Libreria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Materia" EntityType="Self.Materia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sala" EntityType="Self.Sala" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="View_Listar_Libros_Materia" EntityType="Self.View_Listar_Libros_Materia" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Listar_Libros_Materia].[libroID] AS [libroID], 
+    [View_Listar_Libros_Materia].[libroNombre] AS [libroNombre], 
+    [View_Listar_Libros_Materia].[libroAutor] AS [libroAutor], 
+    [View_Listar_Libros_Materia].[libroISBN] AS [libroISBN], 
+    [View_Listar_Libros_Materia].[libroSinopsis] AS [libroSinopsis], 
+    [View_Listar_Libros_Materia].[materiaID] AS [materiaID], 
+    [View_Listar_Libros_Materia].[materiaNombre] AS [materiaNombre]
+    FROM [dbo].[View_Listar_Libros_Materia] AS [View_Listar_Libros_Materia]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_Listar_Libros_Materia_Sala_Libreria" EntityType="Self.View_Listar_Libros_Materia_Sala_Libreria" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libroID] AS [libroID], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libroNombre] AS [libroNombre], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libroAutor] AS [libroAutor], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libroISBN] AS [libroISBN], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libroSinopsis] AS [libroSinopsis], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[materiaID] AS [materiaID], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[materiaNombre] AS [materiaNombre], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[salaID] AS [salaID], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[salaNombre] AS [salaNombre], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libreriaID] AS [libreriaID], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libreriaNombre] AS [libreriaNombre]
+    FROM [dbo].[View_Listar_Libros_Materia_Sala_Libreria] AS [View_Listar_Libros_Materia_Sala_Libreria]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_Listar_Libros_Sala" EntityType="Self.View_Listar_Libros_Sala" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Listar_Libros_Sala].[libroID] AS [libroID], 
+    [View_Listar_Libros_Sala].[libroNombre] AS [libroNombre], 
+    [View_Listar_Libros_Sala].[libroAutor] AS [libroAutor], 
+    [View_Listar_Libros_Sala].[libroISBN] AS [libroISBN], 
+    [View_Listar_Libros_Sala].[libroSinopsis] AS [libroSinopsis], 
+    [View_Listar_Libros_Sala].[salaID] AS [salaID], 
+    [View_Listar_Libros_Sala].[salaNombre] AS [salaNombre]
+    FROM [dbo].[View_Listar_Libros_Sala] AS [View_Listar_Libros_Sala]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="View_Listar_Sala_Libreria" EntityType="Self.View_Listar_Sala_Libreria" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [View_Listar_Sala_Libreria].[salaID] AS [salaID], 
+    [View_Listar_Sala_Libreria].[salaNombre] AS [salaNombre], 
+    [View_Listar_Sala_Libreria].[libreriaID] AS [libreriaID], 
+    [View_Listar_Sala_Libreria].[libreriaNombre] AS [libreriaNombre], 
+    [View_Listar_Sala_Libreria].[libreriaRUC] AS [libreriaRUC], 
+    [View_Listar_Sala_Libreria].[libreriaTelefono] AS [libreriaTelefono], 
+    [View_Listar_Sala_Libreria].[libreriaDireccion] AS [libreriaDireccion]
+    FROM [dbo].[View_Listar_Sala_Libreria] AS [View_Listar_Sala_Libreria]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_ClienteFeriaLibro_Cliente" Association="Self.FK_ClienteFeriaLibro_Cliente">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="ClienteFeriaLibro" EntitySet="ClienteFeriaLibro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClienteLibreria_Cliente" Association="Self.FK_ClienteLibreria_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClienteLibreria_Libreria" Association="Self.FK_ClienteLibreria_Libreria">
+      <End Role="Libreria" EntitySet="Libreria" />
+      <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

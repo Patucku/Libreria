@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-﻿@model slnLibreria.ViewModels.ClientesView
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -67,34 +66,10 @@
                     </li>
                     -->
                     <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Buscar Libro</a></li>
-                </ul>
-                <ul class="navbar-nav d-none d-lg-flex ml-2 order-3">
-                    @if (Model.clienteFeriaLibro != null)
-                    {
-                        <li class="nav-item" title="Hola: @Model.cliente.clienteNombre"></li>
-                        <li class="nav-item"><a class="nav-link">Salir</a></li>
-                    }
-                    else
-                    {
-                        <li class="nav-item"><a class="nav-link">Ingresar</a></li>
-                    }
-                    <li class="nav-item"><a class="nav-link">Sign in</a></li>
-                    <li class="nav-item"><a class="nav-link">Sign up</a></li>
-                </ul>
-                <ul class="navbar-nav d-lg-none">
-                    <li class="nav-item-divider"></li>
-                    @if (Model.clienteFeriaLibro != null)
-                    {
-                        <li class="nav-item" title="Hola: @Model.cliente.clienteNombre"></li>
-                        <li class="nav-item"><a class="nav-link">Salir</a></li>
-                    }
-                    else
-                    {
-                        <li class="nav-item"><a class="nav-link">Ingresar</a></li>
-                    }
-                    <li class="nav-item"><a class="nav-link">Sign in</a></li>
-                    <li class="nav-item"><a class="nav-link">Sign up</a></li>
-                </ul>
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Libreria")">Librerias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Sala")">Salas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Materia")">Materias</a></li>
+                </ul>                
             </div>
         </div>
     </nav>

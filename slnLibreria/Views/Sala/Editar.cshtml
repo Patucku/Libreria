@@ -1,0 +1,63 @@
+﻿@model slnLibreria.ViewModels.SalaView
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(6000).fadeOut();
+    });
+
+</script>
+
+<h2>Editar Sala</h2>
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorActualizarSala))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorActualizarSala.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Datos</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.sala.salaID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.sala.salaNombre, "Nombre: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sala.salaNombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sala.salaNombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.selectedLibreria, "Libreria: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.selectedLibreria, Model.librerias, null , new { @class = "form-control col-md-2" })
+                @Html.ValidationMessageFor(model => model.selectedLibreria, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark m-1" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

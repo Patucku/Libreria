@@ -1,0 +1,61 @@
+﻿@model slnLibreria.ViewModels.SalaView
+@{
+    ViewBag.Title = "salasRelacionadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Salas Relacionadas</h2>
+<hr />
+<div>
+    <h4>Libreria</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libreria.libreriaNombre)
+        </dd>
+        <dt>
+            RUC:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libreria.libreriaRUC)
+        </dd>
+    </dl>
+</div>
+<hr />
+<div>
+    <h4>Salas</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.salasLibreria)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.salaID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.salaNombre)
+                </td>
+                <td class="">
+                    @Html.ActionLink("Editar", "Editar", "Sala", new { id = item.salaID }, new { @class = "btn btn-outline-success" }) |
+                    @Html.ActionLink("Detalles", "Detalles", "Sala", new { id = item.salaID }, new { @class = "btn btn-outline-info" }) |
+                    @Html.ActionLink("Eliminar", "Eliminar", "Sala", new { id = item.salaID }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+

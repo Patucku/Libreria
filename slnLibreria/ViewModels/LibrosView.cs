@@ -22,5 +22,8 @@ namespace slnLibreria.ViewModels
         public List<Libro> libros { get; set; }
         public Libro libro { get; set; }
         public string selectedLibro { get; set; }
+
+        public List<View_Listar_Libros_Materia_Sala_Libreria> listaLibrosMateriSalaLibreria { get; set; }
+        public List<View_Listar_Libros_Materia> librosMateria { get; set; }
     }
 }

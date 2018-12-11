@@ -1,0 +1,121 @@
+﻿@model slnLibreria.ViewModels.SalaView
+@{
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sala</h2>
+<hr />
+<div>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Id:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.sala.salaID)
+            </dd>
+            <dt>
+                Nombre:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.sala.salaNombre)
+            </dd>
+        </dl>
+        <p>
+            @Html.ActionLink("Editar", "Editar", new { id = Model.sala.salaID }, new { @class = "btn btn-outline-success m-1" }) |
+            @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark m-1" })
+        </p>
+    </div>
+    <hr />
+    <div>
+        <h4>Libreria</h4>
+        @if (string.IsNullOrEmpty(ViewBag.SinLibreria))
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    RUC:
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.salaLibreria.libreriaRUC)
+                </dd>
+                <dt>
+                    Nombre:
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.salaLibreria.libreriaNombre)
+                </dd>
+            </dl>
+
+        }
+        else
+        {
+            <div class="m-1">
+                @if (!string.IsNullOrEmpty(@ViewBag.SinLibreria))
+                {
+                    <div class="alert alert-warning" role="alert">
+                        @MvcHtmlString.Create(ViewBag.SinLibreria.Replace("\n", "</br>"))
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+    <hr />
+    <div>
+        <h4>Libros</h4>
+        @if (string.IsNullOrEmpty(ViewBag.SinLibros))
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            ISBN
+                        </th>
+                        <th>
+                            Autor
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.librosSala)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.libroNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.libroISBN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.libroAutor)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", "Libros", new { id = item.libroID }, new { @class = "btn btn-outline-success" }) |
+                                @Html.ActionLink("Detalles", "Detalles", "Libros", new { id = item.libroID }, new { @class = "btn btn-outline-info" }) |
+                                @Html.ActionLink("Eliminar", "Eliminar", "Libros", new { id = item.libroID }, new { @class = "btn btn-outline-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="m-1">
+                @if (!string.IsNullOrEmpty(@ViewBag.SinLibros))
+                {
+                    <div class="alert alert-warning" role="alert">
+                        @MvcHtmlString.Create(ViewBag.SinLibros.Replace("\n", "</br>"))
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+
+</div>
+

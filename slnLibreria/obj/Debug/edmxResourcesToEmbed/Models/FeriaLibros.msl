@@ -67,6 +67,70 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ClienteLibreria">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.ClienteLibreria">
+        <MappingFragment StoreEntitySet="ClienteLibreria">
+          <ScalarProperty Name="clientelibreria_libreriaID" ColumnName="clientelibreria_libreriaID" />
+          <ScalarProperty Name="clientelibreria_clienteID" ColumnName="clientelibreria_clienteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Libros_Materia">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Libros_Materia">
+        <MappingFragment StoreEntitySet="View_Listar_Libros_Materia">
+          <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
+          <ScalarProperty Name="materiaID" ColumnName="materiaID" />
+          <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
+          <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
+          <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
+          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
+          <ScalarProperty Name="libroID" ColumnName="libroID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Libros_Materia_Sala_Libreria">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria">
+        <MappingFragment StoreEntitySet="View_Listar_Libros_Materia_Sala_Libreria">
+          <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
+          <ScalarProperty Name="libreriaID" ColumnName="libreriaID" />
+          <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+          <ScalarProperty Name="salaID" ColumnName="salaID" />
+          <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
+          <ScalarProperty Name="materiaID" ColumnName="materiaID" />
+          <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
+          <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
+          <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
+          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
+          <ScalarProperty Name="libroID" ColumnName="libroID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Libros_Sala">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Libros_Sala">
+        <MappingFragment StoreEntitySet="View_Listar_Libros_Sala">
+          <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+          <ScalarProperty Name="salaID" ColumnName="salaID" />
+          <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
+          <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
+          <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
+          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
+          <ScalarProperty Name="libroID" ColumnName="libroID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Sala_Libreria">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Sala_Libreria">
+        <MappingFragment StoreEntitySet="View_Listar_Sala_Libreria">
+          <ScalarProperty Name="libreriaDireccion" ColumnName="libreriaDireccion" />
+          <ScalarProperty Name="libreriaTelefono" ColumnName="libreriaTelefono" />
+          <ScalarProperty Name="libreriaRUC" ColumnName="libreriaRUC" />
+          <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
+          <ScalarProperty Name="libreriaID" ColumnName="libreriaID" />
+          <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+          <ScalarProperty Name="salaID" ColumnName="salaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="AspNetUserRoles" TypeName="dbFeriaLibroModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
       <EndProperty Name="AspNetUsers">
         <ScalarProperty Name="Id" ColumnName="UserId" />

@@ -32,13 +32,13 @@ namespace slnLibreria.Models
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<ClienteFeriaLibro> ClienteFeriaLibro { get; set; }
         public virtual DbSet<ClienteLibreria> ClienteLibreria { get; set; }
-        public virtual DbSet<Libreria> Libreria { get; set; }
-        public virtual DbSet<Libro> Libro { get; set; }
-        public virtual DbSet<Materia> Materia { get; set; }
-        public virtual DbSet<Sala> Sala { get; set; }
         public virtual DbSet<View_Listar_Libros_Materia> View_Listar_Libros_Materia { get; set; }
         public virtual DbSet<View_Listar_Libros_Materia_Sala_Libreria> View_Listar_Libros_Materia_Sala_Libreria { get; set; }
         public virtual DbSet<View_Listar_Libros_Sala> View_Listar_Libros_Sala { get; set; }
         public virtual DbSet<View_Listar_Sala_Libreria> View_Listar_Sala_Libreria { get; set; }
+        public virtual DbSet<Libreria> Libreria { get; set; }
+        public virtual DbSet<Libro> Libro { get; set; }
+        public virtual DbSet<Materia> Materia { get; set; }
+        public virtual DbSet<Sala> Sala { get; set; }
     }
 }

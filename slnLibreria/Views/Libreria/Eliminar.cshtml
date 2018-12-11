@@ -82,8 +82,14 @@
                 <div class="alert alert-danger">
                     @MvcHtmlString.Create(ViewBag.ErrorEliminarLibreriaRelacion.Replace("\n", "</br>"))
                 </div>
-                @Html.ActionLink("Ver detalle", "salasRelacionados", new { id = Model.libreriaID })
             }
+        </div>
+        <div class="m-1">
+            @Html.ActionLink("Ver salas relacionadas", "salasRelacionadas", new { id = Model.libreriaID }, new{ @class = "btn btn-outline-info" })
+        </div>
+
+        <div class="m-1">
+            @Html.ActionLink("Regresar", "Index", null , new { @class  = "btn btn-outline-dark"})
         </div>
 
     }

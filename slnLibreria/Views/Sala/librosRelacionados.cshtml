@@ -1,0 +1,55 @@
+﻿@model slnLibreria.ViewModels.SalaView
+@{
+    ViewBag.Title = "librosRelacionadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Libros Relacionadas</h2>
+<hr />
+<div>
+    <h4>Sala</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.sala.salaNombre)
+        </dd>>
+    </dl>
+</div>
+<hr />
+<div>
+    <h4>Libros</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    ISBN
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.librosMateria)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.libroISBN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.libroNombre)
+                </td>
+                <td class="">
+                    @Html.ActionLink("Editar", "Editar", "Libros", new { id = item.materiaID }, new { @class = "btn btn-outline-success" }) |
+                    @Html.ActionLink("Detalles", "Detalles", "Libros", new { id = item.materiaID }, new { @class = "btn btn-outline-info" }) |
+                    @Html.ActionLink("Eliminar", "Eliminar", "Libros", new { id = item.materiaID }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
