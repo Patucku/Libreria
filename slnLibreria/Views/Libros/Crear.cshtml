@@ -38,10 +38,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.libro.libroISBN, "ISBN: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.libro.libroAutor, "Autor: ", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.libro.libroISBN, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.libro.libroISBN, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.libro.libroAutor, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.libro.libroAutor, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -54,13 +54,28 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.selectedLibreria, "Libreria: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.libro.libroSinopsis, "Sinopsis: ", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.selectedLibreria, Model.librerias, "Seleccione una Libreria", new { @class = "form-control col-md-2" })
-            @Html.ValidationMessageFor(model => model.selectedLibreria, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.libro.libroSinopsis, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.libro.libroSinopsis, "", new { @class = "text-danger" })
         </div>
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.selectedMateria, "Materia: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.selectedMateria, Model.listaMaterias, "Seleccione una Materia", new { @class = "form-control col-md-2" })
+            @Html.ValidationMessageFor(model => model.selectedMateria, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.libro.libroIVA, "Aplica IVA: ", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(model => model.libro.libroIVA.Value, new { @checked = "checked" , @class = "form-control form-control-sm" })
+            @Html.ValidationMessageFor(model => model.libro.libroIVA, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Crear" class="btn btn-primary" />

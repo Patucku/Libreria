@@ -25,6 +25,8 @@ namespace slnLibreria.Controllers
             using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
             {
                 objLibro.libros = db.Libro.OrderBy(n => n.libroNombre).ToList();
+                var getMaterias = db.Materia.OrderBy(n => n.materiaNombre).ToList();
+                objLibro.listaMaterias = new SelectList(getMaterias, "libreriaId", "libreriaNombre");
             }
 
             return objLibro;
@@ -50,7 +52,13 @@ namespace slnLibreria.Controllers
 
         public ActionResult Crear()
         {
-            return View();
+            LibrosView objLibro = new LibrosView();
+            using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+            {
+                var getMaterias = db.Materia.OrderBy(n => n.materiaNombre).ToList();
+                objLibro.listaMaterias = new SelectList(getMaterias, "materiaId", "materiaNombre");
+            }
+            return View(objLibro);
         }
 
         [HttpPost]

@@ -49,6 +49,7 @@
     <EntitySetMapping Name="Cliente">
       <EntityTypeMapping TypeName="dbFeriaLibroModel.Cliente">
         <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="clienteFechaRegistro" ColumnName="clienteFechaRegistro" />
           <ScalarProperty Name="clienteTelefono" ColumnName="clienteTelefono" />
           <ScalarProperty Name="clienteCorreo" ColumnName="clienteCorreo" />
           <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
@@ -56,23 +57,6 @@
           <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
           <ScalarProperty Name="clienteCodigo" ColumnName="clienteCodigo" />
           <ScalarProperty Name="clienteID" ColumnName="clienteID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ClienteFeriaLibro">
-      <EntityTypeMapping TypeName="dbFeriaLibroModel.ClienteFeriaLibro">
-        <MappingFragment StoreEntitySet="ClienteFeriaLibro">
-          <ScalarProperty Name="clienteferialibroFechaCreacion" ColumnName="clienteferialibroFechaCreacion" />
-          <ScalarProperty Name="clienteferialibro_clienteID" ColumnName="clienteferialibro_clienteID" />
-          <ScalarProperty Name="clienteferialibroID" ColumnName="clienteferialibroID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ClienteLibreria">
-      <EntityTypeMapping TypeName="dbFeriaLibroModel.ClienteLibreria">
-        <MappingFragment StoreEntitySet="ClienteLibreria">
-          <ScalarProperty Name="clientelibreria_libreriaID" ColumnName="clientelibreria_libreriaID" />
-          <ScalarProperty Name="clientelibreria_clienteID" ColumnName="clientelibreria_clienteID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -104,7 +88,6 @@
           <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
           <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
           <ScalarProperty Name="libroMateria" ColumnName="libroMateria" />
-          <ScalarProperty Name="libroSala" ColumnName="libroSala" />
           <ScalarProperty Name="libroID" ColumnName="libroID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -169,6 +152,7 @@
         <MappingFragment StoreEntitySet="View_Listar_Libros_Materia">
           <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
           <ScalarProperty Name="materiaID" ColumnName="materiaID" />
+          <ScalarProperty Name="libroIVA" ColumnName="libroIVA" />
           <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
           <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
           <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />

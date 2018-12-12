@@ -203,6 +203,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibreriaController.cs" />
+    <Compile Include="Controllers\LibroSalaController.cs" />
     <Compile Include="Controllers\LibrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MateriaController.cs" />
@@ -440,6 +441,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LibroSala\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

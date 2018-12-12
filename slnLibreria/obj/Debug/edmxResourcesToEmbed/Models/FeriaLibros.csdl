@@ -6,8 +6,6 @@
     <EntitySet Name="AspNetUserLogins" EntityType="dbFeriaLibroModel.AspNetUserLogins" />
     <EntitySet Name="AspNetUsers" EntityType="dbFeriaLibroModel.AspNetUsers" />
     <EntitySet Name="Cliente" EntityType="dbFeriaLibroModel.Cliente" />
-    <EntitySet Name="ClienteFeriaLibro" EntityType="dbFeriaLibroModel.ClienteFeriaLibro" />
-    <EntitySet Name="ClienteLibreria" EntityType="dbFeriaLibroModel.ClienteLibreria" />
     <EntitySet Name="EstadoPedido" EntityType="dbFeriaLibroModel.EstadoPedido" />
     <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
     <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
@@ -32,21 +30,9 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Vendedor" EntitySet="Vendedor" />
     </AssociationSet>
-    <AssociationSet Name="FK_ClienteFeriaLibro_Cliente1" Association="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente1">
-      <End Role="Cliente" EntitySet="Cliente" />
-      <End Role="ClienteFeriaLibro" EntitySet="ClienteFeriaLibro" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ClienteLibreria_Cliente" Association="dbFeriaLibroModel.FK_ClienteLibreria_Cliente">
-      <End Role="Cliente" EntitySet="Cliente" />
-      <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
-    </AssociationSet>
     <AssociationSet Name="FK_Pedido_Cliente" Association="dbFeriaLibroModel.FK_Pedido_Cliente">
       <End Role="Cliente" EntitySet="Cliente" />
       <End Role="Pedido" EntitySet="Pedido" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ClienteLibreria_Libreria" Association="dbFeriaLibroModel.FK_ClienteLibreria_Libreria">
-      <End Role="Libreria" EntitySet="Libreria" />
-      <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
     </AssociationSet>
     <AssociationSet Name="FK_Pedido_EstadoPedido" Association="dbFeriaLibroModel.FK_Pedido_EstadoPedido">
       <End Role="EstadoPedido" EntitySet="EstadoPedido" />
@@ -136,34 +122,14 @@
       <PropertyRef Name="clienteID" />
     </Key>
     <Property Name="clienteID" Type="Int32" Nullable="false" />
-    <Property Name="clienteCodigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="clienteCodigo" Type="Int32" />
     <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
     <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
     <Property Name="clienteCorreo" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
     <Property Name="clienteTelefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="ClienteFeriaLibro" Relationship="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente1" FromRole="Cliente" ToRole="ClienteFeriaLibro" />
-    <NavigationProperty Name="ClienteLibreria" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Cliente" FromRole="Cliente" ToRole="ClienteLibreria" />
+    <Property Name="clienteFechaRegistro" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_Cliente" FromRole="Cliente" ToRole="Pedido" />
-  </EntityType>
-  <EntityType Name="ClienteFeriaLibro">
-    <Key>
-      <PropertyRef Name="clienteferialibroID" />
-    </Key>
-    <Property Name="clienteferialibroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="clienteferialibro_clienteID" Type="Int32" Nullable="false" />
-    <Property Name="clienteferialibroFechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Cliente" Relationship="dbFeriaLibroModel.FK_ClienteFeriaLibro_Cliente1" FromRole="ClienteFeriaLibro" ToRole="Cliente" />
-  </EntityType>
-  <EntityType Name="ClienteLibreria">
-    <Key>
-      <PropertyRef Name="clientelibreria_clienteID" />
-      <PropertyRef Name="clientelibreria_libreriaID" />
-    </Key>
-    <Property Name="clientelibreria_clienteID" Type="Int32" Nullable="false" />
-    <Property Name="clientelibreria_libreriaID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Cliente" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Cliente" FromRole="ClienteLibreria" ToRole="Cliente" />
-    <NavigationProperty Name="Libreria" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Libreria" FromRole="ClienteLibreria" ToRole="Libreria" />
   </EntityType>
   <EntityType Name="EstadoPedido">
     <Key>
@@ -182,7 +148,6 @@
     <Property Name="libreriaRUC" Type="String" Nullable="false" MaxLength="13" FixedLength="true" Unicode="false" />
     <Property Name="libreriaDireccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="ClienteLibreria" Relationship="dbFeriaLibroModel.FK_ClienteLibreria_Libreria" FromRole="Libreria" ToRole="ClienteLibreria" />
     <NavigationProperty Name="Sala" Relationship="dbFeriaLibroModel.FK_Sala_Libreria" FromRole="Libreria" ToRole="Sala" />
   </EntityType>
   <EntityType Name="Libro">
@@ -190,7 +155,6 @@
       <PropertyRef Name="libroID" />
     </Key>
     <Property Name="libroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="libroSala" Type="Int32" Nullable="false" />
     <Property Name="libroMateria" Type="Int32" Nullable="false" />
     <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
@@ -198,7 +162,7 @@
     <Property Name="libroIVA" Type="Boolean" />
     <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Materia" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Libro" ToRole="Materia" />
-    <NavigationProperty Name="LibroSala1" Relationship="dbFeriaLibroModel.FK_LibroSala_Libro" FromRole="Libro" ToRole="LibroSala" />
+    <NavigationProperty Name="LibroSala" Relationship="dbFeriaLibroModel.FK_LibroSala_Libro" FromRole="Libro" ToRole="LibroSala" />
   </EntityType>
   <EntityType Name="LibroSala">
     <Key>
@@ -280,6 +244,7 @@
     <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
     <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="libroIVA" Type="Boolean" />
     <Property Name="materiaID" Type="Int32" Nullable="false" />
     <Property Name="materiaNombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
   </EntityType>
@@ -397,30 +362,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_ClienteFeriaLibro_Cliente1">
-    <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="1" />
-    <End Type="dbFeriaLibroModel.ClienteFeriaLibro" Role="ClienteFeriaLibro" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Cliente">
-        <PropertyRef Name="clienteID" />
-      </Principal>
-      <Dependent Role="ClienteFeriaLibro">
-        <PropertyRef Name="clienteferialibro_clienteID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ClienteLibreria_Cliente">
-    <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="1" />
-    <End Type="dbFeriaLibroModel.ClienteLibreria" Role="ClienteLibreria" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Cliente">
-        <PropertyRef Name="clienteID" />
-      </Principal>
-      <Dependent Role="ClienteLibreria">
-        <PropertyRef Name="clientelibreria_clienteID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Pedido_Cliente">
     <End Type="dbFeriaLibroModel.Cliente" Role="Cliente" Multiplicity="0..1" />
     <End Type="dbFeriaLibroModel.Pedido" Role="Pedido" Multiplicity="*" />
@@ -430,18 +371,6 @@
       </Principal>
       <Dependent Role="Pedido">
         <PropertyRef Name="clienteID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ClienteLibreria_Libreria">
-    <End Type="dbFeriaLibroModel.Libreria" Role="Libreria" Multiplicity="1" />
-    <End Type="dbFeriaLibroModel.ClienteLibreria" Role="ClienteLibreria" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Libreria">
-        <PropertyRef Name="libreriaID" />
-      </Principal>
-      <Dependent Role="ClienteLibreria">
-        <PropertyRef Name="clientelibreria_clienteID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
