@@ -13,25 +13,25 @@
                 Id:
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.libroMateria.libroID)
+                @Html.DisplayFor(model => model.libro.libroID)
             </dd>
             <dt>
                 Nombre:
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.libroMateria.libroNombre)
+                @Html.DisplayFor(model => model.libro.libroNombre)
             </dd>
             <dt>
                 Autor:
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.libroMateria.libroAutor)
+                @Html.DisplayFor(model => model.libro.libroAutor)
             </dd>
             <dt>
                 ISBN:
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.libroMateria.libroISBN)
+                @Html.DisplayFor(model => model.libro.libroISBN)
             </dd>
             <dt>
                 Materia:
@@ -43,8 +43,13 @@
                 Aplica IVA:
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.libroMateria.libroIVA)
-
+                @Html.DisplayFor(model => model.aplicaIVA)
+            </dd>
+            <dt>
+                Sinopsis:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libro.libroSinopsis)
             </dd>
         </dl>
         <p>

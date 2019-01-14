@@ -1,0 +1,121 @@
+﻿@model slnLibreria.ViewModels.LibrosSalasView
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Relacionar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(6000).fadeOut();
+    });
+
+</script>
+<script>
+    //configure before calling webshims.polyfill
+    webshim.setOptions("forms-ext", {
+        "widgets": {
+            "toFixed": 2,
+            "stepfactor": 100
+        }
+    });
+
+//webshim.polyfill("forms forms-ext");
+</script>
+<h2>Relacionar</h2>
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorRelacionarLibroSala))
+    {
+        <div class="alert alert-danger" role="alert">
+            @MvcHtmlString.Create(ViewBag.ErrorRelacionarLibroSala.Replace("\n", "</br>"))
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(@ViewBag.RelacionarLibroSala))
+    {
+        <div class="alert alert-success" role="alert">
+            @MvcHtmlString.Create(ViewBag.RelacionarLibroSala.Replace("\n", "</br>"))
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(@ViewBag.RelacionarLibroSalaExsinte))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.RelacionarLibroSalaExsinte.Replace("\n", "</br>"))
+            @if (Model.libroSala != null)
+            {
+                @Html.ActionLink("Sí", "EliminarRepetido", new { id = Model.libroSala.librosalaID }, new { @class = "btn btn-outline-danger m-1" })
+            }
+        </div>
+    }
+</div>
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label for="dllSalas" class="">Sala: </label>
+                    @Html.DropDownListFor(m => m.selectedSala, Model.listSalas, null, new { @class = "form-control", @id = "dllSalas", @size = 10 })
+                </div>
+                <div class="col-6">
+                    <label for="dllLibros" class="">Libro: </label>
+                    @Html.DropDownListFor(m => m.selectedLibro, Model.listLibros, null, new { @class = "form-control", @id = "dllLibros", @size = 10 })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <label for="txtCantidad" class="">Cantidad de Libros: </label>
+                @Html.TextBoxFor(model => model.libroSala.cantidadLibroSala, new { @class = "form-control", @min = "0", @step = "10", @value = "10", @id = "txtCantidad", @type = "number"  })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">                
+                <label for="txtPrecio" class="">Precio Unitario: </label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div> <div class="input-group-append">
+                        <span class="input-group-text">0,00</span>
+                    </div>
+                    @Html.TextBoxFor(model => model.libroSala.precioLibroSala, new { @type = "number", @min = "0", @step = "0.01", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Relacionar" class="btn btn-outline-primary" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="code-cut">
+    @Html.Grid(Model.LibrosSalas).SetLanguage("es").Columns(Columns => {
+    Columns.Add(c => c.librosalaID).Titled("Codigo");
+    Columns.Add(c => c.libroNombre).Titled("Libro").Filterable(true);
+    Columns.Add(c => c.salaNombre).Titled("Sala").Filterable(true);
+    Columns.Add(c => c.cantidadLibroSala).Titled("Cantidad").Filterable(true);
+    Columns.Add(c => c.precioLibroSala).Titled("Precio").Filterable(true);
+    Columns.Add(c => c.estadoLibroSala).Titled("Estado").Filterable(true);
+    Columns.Add()
+    .Encoded(false)
+    .Sanitized(false)
+    .SetWidth(30)
+    .RenderValueAs(n => Html.ActionLink("Editar", "Editar", new { id = n.librosalaID }, new { @class = "btn btn-outline-success m-1" }));
+    Columns.Add()
+    .Encoded(false)
+    .Sanitized(false)
+    .SetWidth(30)
+    .RenderValueAs(n => Html.ActionLink("Detalles", "Detalles", new { id = n.librosalaID }, new { @class = "btn btn-outline-info m-1" })); Columns.Add()
+     .Encoded(false)
+     .Sanitized(false)
+     .SetWidth(30)
+     .RenderValueAs(n => Html.ActionLink("Eliminar", "Eliminar", new { id = n.librosalaID }, new { @class = "btn btn-outline-danger m-1" }));
+}).WithPaging(10).Sortable(true)
+
+</div>
+
+

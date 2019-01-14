@@ -12,7 +12,8 @@ namespace slnLibreria
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/_references.js", 
-                        "~/Scripts/popper.js"));
+                        "~/Scripts/popper.js",
+                        "~/Scripts/gridmvc.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -28,7 +29,8 @@ namespace slnLibreria
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/Gridmvc.css"));
         }
     }
 }

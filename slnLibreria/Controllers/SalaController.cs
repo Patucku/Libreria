@@ -72,7 +72,7 @@ namespace slnLibreria.Controllers
                 if(objSalaView.selectedLibreria == 0)
                     ViewBag.ErrorCrearSala = ViewBag.ErrorCrearSala + "\nSeleccione una libreria";
                 if(!string.IsNullOrEmpty(ViewBag.ErrorCrearSala))
-                    return View();
+                    return View(cargarIndex());
                 else
                 {
                     Sala nuevaSala = new Sala()
@@ -113,6 +113,7 @@ namespace slnLibreria.Controllers
                     return View("Index", cargarIndex());
                 }
                 var getLibrerias = db.Libreria.OrderBy(n => n.libreriaNombre).ToList();
+                objSalaView.selectedLibreria = objSalaView.sala.salaLibreria;
                 objSalaView.librerias = new SelectList(getLibrerias, "libreriaId", "libreriaNombre", objSalaView.sala.salaLibreria);
             }
             return View(objSalaView);

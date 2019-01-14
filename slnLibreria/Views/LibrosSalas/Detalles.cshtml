@@ -1,0 +1,120 @@
+﻿@model slnLibreria.ViewModels.LibrosSalasView
+@{
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalle</h2>
+<hr />
+<div>
+    <div>
+        <h4>Sala - Libro</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                Inventario:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.cantidadLibroSala)
+            </dd>
+            <dt>
+                Precio:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.precioLibroSala)
+            </dd>
+            <dt>
+                Estado:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.estadoLibroSala)
+            </dd>
+        </dl>
+
+        <p>
+            @Html.ActionLink("Editar", "Editar", new { id = Model.libroComplete.librosalaID }, new { @class = "btn btn-outline-success m-1" }) |
+            @Html.ActionLink("Regresar", "Relacionar", null, new { @class = "btn btn-outline-dark m-1" })
+        </p>
+    </div>
+    <hr />
+    <div>
+        <h4>Libro</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                Id:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.libroID)
+            </dd>
+            <dt>
+                Nombre:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.libroNombre)
+            </dd>
+            <dt>
+                Autor:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.libroAutor)
+            </dd>
+            <dt>
+                ISBN:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.libroISBN)
+            </dd>
+            <dt>
+                Materia:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.materiaNombre)
+            </dd>
+        </dl>
+        <p>
+            @Html.ActionLink("Editar", "Editar","Libros", new { id = Model.libroComplete.libroID }, new { @class = "btn btn-outline-success m-1" })
+        </p>
+
+    </div>
+    <hr />
+    <div>
+        <h4>Sala</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                ID:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.salaID)
+            </dd>
+            <dt>
+                Nombre:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.salaNombre)
+            </dd>
+        </dl>
+        <p>
+            @Html.ActionLink("Editar", "Editar", "Sala", new { id = Model.libroComplete.salaID }, new { @class = "btn btn-outline-success m-1" })
+        </p>
+    </div>
+    <div>
+        <h4>Libreria</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                ID:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.libreriaID)
+            </dd>
+            <dt>
+                Nombre:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.libroComplete.libroNombre)
+            </dd>
+        </dl>
+        <p>
+            @Html.ActionLink("Editar", "Editar", "Libreria", new { id = Model.libroComplete.libreriaID }, new { @class = "btn btn-outline-success m-1" })
+        </p>
+    </div>
+</div>
+

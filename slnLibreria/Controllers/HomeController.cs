@@ -71,7 +71,8 @@ namespace slnLibreria.Controllers
                     }
                 }
             }
-            return View(objCliente);
+            objCliente = new ClientesView();
+            return View("Index",objCliente);
         }
 
         public ActionResult IngresarClientes(ClientesView cv)

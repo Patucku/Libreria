@@ -20,6 +20,7 @@ namespace slnLibreria.Models
             this.Pedido = new HashSet<Pedido>();
         }
     
+        public int librosalaID { get; set; }
         public int salaID { get; set; }
         public int libroID { get; set; }
         public int cantidadLibroSala { get; set; }

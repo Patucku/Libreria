@@ -15,7 +15,7 @@
 <h2>Materias</h2>
 
 <p>
-    @Html.ActionLink("Nuevo", "Crear")
+    @Html.ActionLink("Agregar", "Crear",null, new { @class = "btn btn-outline-primary" })
 </p>
 <div class="m-1">
     @if (!string.IsNullOrEmpty(@ViewBag.ErrorMateria))
@@ -33,24 +33,31 @@
 </div>
 
 
-<table class="table">
-    <tr>
-        <th>
-            Nombre
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
     @foreach (var item in Model)
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.materiaID)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.materiaNombre)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Editar", new { id = item.materiaID }) |
-                @Html.ActionLink("Detalles", "Detalles", new { id = item.materiaID }) |
-                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.materiaID })
+                @Html.ActionLink("Editar", "Editar", "Materia", new { id = item.materiaID }, new { @class = "btn btn-outline-success" })|
+                @Html.ActionLink("Eliminar", "Eliminar", "Materia", new { id = item.materiaID }, new { @class = "btn btn-outline-danger" })
             </td>
         </tr>
     }

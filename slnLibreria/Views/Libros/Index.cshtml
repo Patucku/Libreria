@@ -7,16 +7,16 @@
 
 <h2>Libros</h2>
 <p>
-    @Html.ActionLink("Nuevo Libro", "Crear")
+    @Html.ActionLink("Agregar", "Crear", null, new { @class = "btn btn-outline-primary" })
 </p>
 <div class="m-1">
-    @if (!string.IsNullOrEmpty(@ViewBag.ErrorLibreria))
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorLibro))
     {
         <div class="alert alert-warning" role="alert">
             @MvcHtmlString.Create(ViewBag.ErrorLibro.Replace("\n", "</br>"))
         </div>
     }
-    @if (!string.IsNullOrEmpty(@ViewBag.Libreria))
+    @if (!string.IsNullOrEmpty(@ViewBag.Libro))
     {
         <div class="alert alert-success" role="alert">
             @MvcHtmlString.Create(ViewBag.Libro.Replace("\n", "</br>"))
@@ -35,6 +35,7 @@
             <th>
                 ISBN
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>

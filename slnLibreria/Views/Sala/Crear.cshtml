@@ -34,21 +34,19 @@
             @Html.LabelFor(model => model.sala.salaNombre, "Nombre: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.sala.salaNombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.sala.salaNombre, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.selectedLibreria, "Libreria: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.selectedLibreria, Model.librerias, "Seleccione una Libreria", new { @class = "form-control col-md-2" })
-                @Html.ValidationMessageFor(model => model.selectedLibreria, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.selectedLibreria, Model.librerias, "Seleccione una Libreria", new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Agregar" class="btn btn-primary" />
             </div>
         </div>
     </div>

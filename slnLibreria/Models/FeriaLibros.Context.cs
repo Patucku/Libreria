@@ -25,6 +25,7 @@ namespace slnLibreria.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
@@ -37,6 +38,7 @@ namespace slnLibreria.Models
         public virtual DbSet<Materia> Materia { get; set; }
         public virtual DbSet<Pedido> Pedido { get; set; }
         public virtual DbSet<Sala> Sala { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Vendedor> Vendedor { get; set; }
         public virtual DbSet<View_Listar_Libros_Materia> View_Listar_Libros_Materia { get; set; }
         public virtual DbSet<View_Listar_Libros_Materia_Sala_Libreria> View_Listar_Libros_Materia_Sala_Libreria { get; set; }

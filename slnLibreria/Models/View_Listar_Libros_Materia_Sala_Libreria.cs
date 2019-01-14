@@ -25,6 +25,7 @@ namespace slnLibreria.Models
         public string salaNombre { get; set; }
         public int libreriaID { get; set; }
         public string libreriaNombre { get; set; }
+        public int librosalaID { get; set; }
         public int cantidadLibroSala { get; set; }
         public decimal precioLibroSala { get; set; }
         public bool estadoLibroSala { get; set; }

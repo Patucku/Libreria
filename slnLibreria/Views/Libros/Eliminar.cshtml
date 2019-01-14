@@ -1,0 +1,71 @@
+﻿@model slnLibreria.ViewModels.LibrosView
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Eliminar Libro</h2>
+
+<h3>Está seguro de eliminar esta libro?</h3>
+<div>
+    <div class="m-1">
+        @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminarLibro))
+        {
+            <div class="alert alert-warning" role="alert">
+                @MvcHtmlString.Create(ViewBag.ErrorEliminarLibro.Replace("\n", "</br>"))
+            </div>
+        }
+    </div>
+    <h4>Detalles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libro.libroNombre)
+        </dd>
+        <dt>
+            Autor:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libro.libroAutor)
+        </dd>
+        <dt>
+            ISBN:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libro.libroISBN)
+        </dd>
+
+    </dl>
+
+    @if (string.IsNullOrEmpty(ViewBag.ErrorEliminarLibroRelacion))
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-warning" /> |
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark m-1" })
+            </div>
+        }
+    }
+    else
+    {
+        <div class="m-1">
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorEliminarLibroRelacion))
+            {
+                <div class="alert alert-danger">
+                    @MvcHtmlString.Create(ViewBag.ErrorEliminarLibroRelacion.Replace("\n", "</br>"))
+                </div>
+                @Html.ActionLink("Ver detalle", "salasRelacionadas", new { id = Model.libro.libroID }, new { @class = "btn btn-outline-info" })
+            }
+        </div>
+        <div class="m-1">
+            @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark" })
+        </div>
+
+    }
+</div>

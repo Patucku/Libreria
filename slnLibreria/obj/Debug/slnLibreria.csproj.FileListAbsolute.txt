@@ -118,6 +118,7 @@ E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\slnLibreria.pdb
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\Antlr3.Runtime.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\EntityFramework.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\EntityFramework.SqlServer.dll
+E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\GridMvc.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\Microsoft.AI.Agent.Intercept.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\Microsoft.AI.DependencyCollector.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -197,8 +198,8 @@ E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\es\Microsoft.Owin.Secu
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\es\Microsoft.Owin.Security.Google.resources.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\es\Microsoft.Owin.Security.Twitter.resources.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
-E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\obj\Debug\slnLibreria.csprojAssemblyReference.cache
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\obj\Debug\slnLibreria.csproj.CoreCompileInputs.cache
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\obj\Debug\slnLibreria.csproj.CopyComplete
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\obj\Debug\slnLibreria.dll
 E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\obj\Debug\slnLibreria.pdb
+E:\JuanViana\Documents\GitKraken\Libreria\slnLibreria\obj\Debug\slnLibreria.csprojAssemblyReference.cache

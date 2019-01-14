@@ -65,8 +65,8 @@ namespace slnLibreria.Controllers
                     ViewBag.ErrorCrearlibreria = ViewBag.ErrorCrearlibreria + "\nIngrese una cédula o ruc válida";
                 if (string.IsNullOrEmpty(objLibreria.libreriaTelefono))
                     ViewBag.ErrorCrearlibreria = ViewBag.ErrorCrearlibreria + "\nIngrese un  teléfono";
-                else if (objLibreria.libreriaTelefono.Length != 8)
-                    ViewBag.ErrorCrearlibreria = ViewBag.ErrorCrearlibreria + "\nIngrese un  teléfono valido por ejmplo: 23331470";
+                else if (objLibreria.libreriaTelefono.Length != 9)
+                    ViewBag.ErrorCrearlibreria = ViewBag.ErrorCrearlibreria + "\nIngrese un  teléfono valido por ejmplo: 023331470";
                 if (string.IsNullOrEmpty(objLibreria.libreriaDireccion))
                     ViewBag.ErrorCrearlibreria = ViewBag.ErrorCrearlibreria + "\nIngrese una dirección";
                 if (!string.IsNullOrEmpty(ViewBag.ErrorCrearlibreria))
@@ -136,8 +136,8 @@ namespace slnLibreria.Controllers
                         ViewBag.ErrorActualizarLibreria = ViewBag.ErrorActualizarLibreria + "\nIngrese una cédula o ruc válida";
                     if (string.IsNullOrEmpty(objLibreria.libreriaTelefono))
                         ViewBag.ErrorActualizarLibreria = ViewBag.ErrorActualizarLibreria + "\nIngrese un  teléfono";
-                    else if (objLibreria.libreriaTelefono.Length != 8)
-                        ViewBag.ErrorActualizarLibreria = ViewBag.ErrorActualizarLibreria + "\nIngrese un  teléfono valido";
+                    else if (objLibreria.libreriaTelefono.Length != 9)
+                        ViewBag.ErrorActualizarLibreria = ViewBag.ErrorActualizarLibreria + "\nIngrese un  teléfono valido por ejmplo: 023331470";
                     if (string.IsNullOrEmpty(objLibreria.libreriaDireccion))
                         ViewBag.ErrorActualizarLibreria = ViewBag.ErrorActualizarLibreria + "\nIngrese una dirección";
                     if (!string.IsNullOrEmpty(ViewBag.ErrorActualizarLibreria))

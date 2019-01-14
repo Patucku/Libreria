@@ -14,7 +14,7 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.sala.salaNombre)
-        </dd>>
+        </dd>
     </dl>
 </div>
 <hr />
@@ -33,7 +33,7 @@
             </tr>
         </thead>
 
-        @foreach (var item in Model.librosMateria)
+        @foreach (var item in Model.librosSala)
         {
             <tr>
                 <td>
@@ -43,13 +43,13 @@
                     @Html.DisplayFor(modelItem => item.libroNombre)
                 </td>
                 <td class="">
-                    @Html.ActionLink("Editar", "Editar", "Libros", new { id = item.materiaID }, new { @class = "btn btn-outline-success" }) |
-                    @Html.ActionLink("Detalles", "Detalles", "Libros", new { id = item.materiaID }, new { @class = "btn btn-outline-info" }) |
-                    @Html.ActionLink("Eliminar", "Eliminar", "Libros", new { id = item.materiaID }, new { @class = "btn btn-outline-danger" })
+                    @Html.ActionLink("Editar", "Editar", "Libros", new { id = item.libroID }, new { @class = "btn btn-outline-success" }) |
+                    @Html.ActionLink("Detalles", "Detalles", "Libros", new { id = item.libroID }, new { @class = "btn btn-outline-info" }) |
+                    @Html.ActionLink("Eliminar", "Eliminar", "Libros", new { id = item.libroID }, new { @class = "btn btn-outline-danger" })
                 </td>
             </tr>
         }
-
     </table>
+    @Html.ActionLink("Regresar", "Eliminar", "Materia", new { id = Model.librosSala.salaID }, new { @class = "btn btn-outline-success" })
 </div>
 

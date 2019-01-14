@@ -15,8 +15,7 @@ namespace slnLibreria.Models
     public partial class Pedido
     {
         public int pedidoID { get; set; }
-        public int salaID { get; set; }
-        public int libroID { get; set; }
+        public int librosalaID { get; set; }
         public Nullable<int> clienteID { get; set; }
         public string vendedorID { get; set; }
         public int estadopedidoID { get; set; }

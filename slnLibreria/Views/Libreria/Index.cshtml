@@ -13,7 +13,7 @@
 <h2>Librerias</h2>
 
 <p>
-    @Html.ActionLink("Nueva", "Crear")
+    @Html.ActionLink("Agregar", "Crear", null, new { @class = "btn btn-outline-primary" })
 </p>
 <div class="m-1">
     @if (!string.IsNullOrEmpty(@ViewBag.ErrorLibreria))
@@ -64,9 +64,9 @@
                     @Html.DisplayFor(modelItem => item.libreriaTelefono)
                 </td>
                 <td>
-                    @Html.ActionLink("Editar", "Editar", new { id = item.libreriaID }) |
-                    @Html.ActionLink("Detalles", "Detalles", new { id = item.libreriaID }) |
-                    @Html.ActionLink("Eliminar", "Eliminar", new { id = item.libreriaID })
+                    @Html.ActionLink("Editar", "Editar", "Libreria", new { id = item.libreriaID}, new { @class = "btn btn-outline-success" }) |
+                    @Html.ActionLink("Detalles", "Detalles", "Libreria", new { id = item.libreriaID }, new { @class = "btn btn-outline-info" }) |
+                    @Html.ActionLink("Eliminar", "Eliminar", "Libreria", new { id = item.libreriaID }, new { @class = "btn btn-outline-danger" })
                 </td>
             </tr>
         }

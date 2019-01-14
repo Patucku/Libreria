@@ -50,6 +50,7 @@
             </div>
         }
     }
+
     else
     {
         <div class="m-1">
@@ -58,8 +59,14 @@
                 <div class="alert alert-danger">
                     @MvcHtmlString.Create(ViewBag.ErrorEliminarMateriaRelacion.Replace("\n", "</br>"))
                 </div>
-                @Html.ActionLink("Ver detalle", "librosRelacionados", new { id = Model.materiaID })
             }
+        </div>
+        <div class="m-1">
+            @Html.ActionLink("Ver libros relacionadas", "librosRelacionados", new { id = Model.materiaID }, new { @class = "btn btn-outline-info" })
+        </div>
+
+        <div class="m-1">
+            @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark" })
         </div>
 
     }

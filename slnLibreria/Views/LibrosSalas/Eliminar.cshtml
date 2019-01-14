@@ -1,0 +1,71 @@
+﻿@model slnLibreria.Models.View_Listar_Libros_Sala
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Eliminar</h2>
+<h3>Está seguro de eliminar esta relación?</h3>
+<div>
+    <div class="m-1">
+        @if (!string.IsNullOrEmpty(@ViewBag.ErrorElRelacionarLibroSala))
+        {
+            <div class="alert alert-warning" role="alert">
+                @MvcHtmlString.Create(ViewBag.ErrorElRelacionarLibroSala.Replace("\n", "</br>"))
+            </div>
+        }
+    </div>
+    <h4>Detalles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Código:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.librosalaID)
+        </dd>
+        <dt>
+            Libro:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libroNombre)
+        </dd>
+        <dt>
+            Sala:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.salaNombre)
+        </dd>
+
+    </dl>
+
+    @if (string.IsNullOrEmpty(ViewBag.PedidoRelacionados))
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-warning" /> |
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark m-1" })
+            </div>
+        }
+    }
+    else
+    {
+        <div class="m-1">
+            @if (!string.IsNullOrEmpty(ViewBag.PedidoRelacionados))
+            {
+                <div class="alert alert-danger">
+                    @MvcHtmlString.Create(ViewBag.ViewBag.PedidoRelacionados.Replace("\n", "</br>"))
+                </div>
+                @Html.ActionLink("Editar", "Editar", new { id = Model.librosalaID },new { @class = "btn btn-outline-success" })
+            }
+        </div>
+        <div class="m-1">
+            @Html.ActionLink("Regresar", "Relacionar", null, new { @class = "btn btn-outline-dark" })
+        </div>
+
+    }
+</div>
+
