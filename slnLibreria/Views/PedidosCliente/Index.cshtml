@@ -1,0 +1,90 @@
+﻿@model slnLibreria.ViewModels.PedidosView
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#alertMessage').delay(15000).fadeOut();
+    });
+</script>
+<h2>Buscar</h2><div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.Resultados))
+    {
+        <div class="alert alert-warning" role="alert">
+            @MvcHtmlString.Create(ViewBag.Resultados.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+<hr />
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-5">
+                <label for="dllSalas" class="">Salas: </label>
+                @Html.DropDownListFor(m => m.selectedSala, Model.listSalas, "Todas", new { @class = "form-control", @id = "dllSalas", @size = 15 })
+            </div>
+            <div class="col-5">
+                <label for="dllLibros" class="">Materias: </label>
+                @Html.DropDownListFor(m => m.selectedMateria, Model.listMaterias, "Todas", new { @class = "form-control", @id = "dllMaterias", @size = 15 })
+            </div>
+            <div class="col-2">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Buscar" class="btn btn-outline-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.pedidosCliente.Count != 0)
+{
+    <hr />
+    <div>
+        <label for="datosEnCurso" class="font-weight-bold">Pedido En Curso</label>
+        <div class="input-group mb-3 ml-lg-2" id="datosEnCurso">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">N° de Libros</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.cantidadEnCurso</span>
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon3">Total</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.totalEnCurso</span>
+            @using (Html.BeginForm("detalleCompraEnCurso", "PedidosCliente"))
+            {
+                <div class="input-group-append">
+                    <input type="submit" value="Detalle" class="btn btn-outline-info" />
+                </div>
+            }@using (Html.BeginForm("finalizarCompraEnCurso", "PedidosCliente"))
+            {
+                <div class="input-group-append">
+                    <input type="submit" value="Finalizar Compra en Curso" class="btn btn-outline-success" />
+                </div>
+            }
+        </div>
+        <br />
+        <label for="datosPorRetirar" class="font-weight-bold">Pedido Por Retirar</label>
+        <div class="input-group mb-3 ml-lg-2" id="datosPorRetirar">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">N° de Libros</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.cantidadPorRetirar</span>
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon3">Total</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.totalPorRetirar</span>
+            @using (Html.BeginForm("detalleCompraEnCurso", "PedidosCliente"))
+            {
+                <div class="input-group-append">
+                    <input type="submit" value="Detalle" class="btn btn-outline-info" />
+                </div>
+            }
+        </div>
+    </div>
+
+ }
+
+

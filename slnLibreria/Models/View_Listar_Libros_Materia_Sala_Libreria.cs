@@ -19,6 +19,7 @@ namespace slnLibreria.Models
         public string libroAutor { get; set; }
         public string libroISBN { get; set; }
         public string libroSinopsis { get; set; }
+        public Nullable<bool> libroIVA { get; set; }
         public int materiaID { get; set; }
         public string materiaNombre { get; set; }
         public int salaID { get; set; }

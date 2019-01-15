@@ -1,0 +1,82 @@
+﻿@model slnLibreria.ViewModels.PedidosView
+@{
+    ViewBag.Title = "Detalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Libro</h2>
+<hr />
+<div>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                Id:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.libroID)
+            </dd>
+            <dt>
+                Nombre:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.libroNombre)
+            </dd>
+            <dt>
+                Autor:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.libroAutor)
+            </dd>
+            <dt>
+                ISBN:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.libroISBN)
+            </dd>
+            <dt>
+                Materia:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.materiaNombre)
+            </dd>
+            <dt>
+                Sinopsis:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.libroSinopsis)
+            </dd>
+        </dl>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Cantidad Disponible:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.cantidadLibroSala)
+            </dd>
+            <dt>
+                Sub Total Unitario:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Libro.precioLibroSala)
+            </dd>
+            <dt>
+                Total Unitario:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.precioTotal)
+            </dd>
+        </dl>
+
+        <p class="form-inline">
+            @using (Html.BeginForm("Comprar", "PedidosCliente"))
+            {
+                @Html.HiddenFor(model =>model.Libro.librosalaID)
+                @Html.TextBoxFor(model => model.cantidadComprada, new { @class = "form-control col-sm-1", @min = "1", @step = "1", @value = "1", @id = "txtCantidad", @type = "number" })
+
+                <input type="submit" value="Comprar" class="btn btn-success" />
+            }
+            | @Html.ActionLink("Regresar", "resultadoBusqueda", null, new { @class = "btn btn-outline-dark m-1 ml-4" })
+        </p>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+﻿@model slnLibreria.ViewModels.PedidosView
+@using GridMvc.Html
+@{
+    ViewBag.Title = "resultadoBusqueda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Resultado Búsqueda</h2>
+<h4>Libros</h4>
+<hr />
+<div>
+    <div class="code-cut table-sm small">
+        @Html.Grid(Model.listaBusqueda).SetLanguage("es").Columns(Columns =>{
+       Columns.Add(c => c.libroNombre).Titled("Libro").Filterable(true);
+       Columns.Add(c => c.libreriaNombre).Titled("Libreria").Filterable(true); ;
+       Columns.Add(c => c.salaNombre).Titled("Sala").Filterable(true); ;
+       Columns.Add(c => c.materiaNombre).Titled("Materia").Filterable(true);
+       Columns.Add(c => c.precioLibroSala).Titled("Precio(sin iva)").Filterable(true);
+       Columns.Add()
+       .Encoded(false)
+       .Sanitized(false)
+       .SetWidth(30)
+       .RenderValueAs(n => Html.ActionLink("Detalles", "Detalles", new { id = n.librosalaID }, new { @class = "btn btn-sm btn-outline-info m-1" }));
+   }).WithPaging(15).Sortable(true)
+    </div>
+</div>
+@if (Model.pedidosCliente.Count != 0)
+{
+    <hr />
+    <div>
+        <label for="datosEnCurso" class="font-weight-bold">Pedido En Curso</label>
+        <div class="input-group mb-3 ml-lg-2" id="datosEnCurso">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">N° de Libros</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.cantidadEnCurso</span>
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon3">Total</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.totalEnCurso</span>
+            @using (Html.BeginForm("detalleCompraEnCurso", "PedidosCliente"))
+            {
+                <div class="input-group-append">
+                    <input type="submit" value="Detalle" class="btn btn-outline-info" />
+                </div>
+            }@using (Html.BeginForm("finalizarCompraEnCurso", "PedidosCliente"))
+            {
+                <div class="input-group-append">
+                    <input type="submit" value="Finalizar Compra en Curso" class="btn btn-outline-success" />
+                </div>
+            }
+        </div>
+        <br />
+        <label for="datosPorRetirar" class="font-weight-bold">Pedido Por Retirar</label>
+        <div class="input-group mb-3 ml-lg-2" id="datosPorRetirar">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">N° de Libros</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.cantidadPorRetirar</span>
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon3">Total</span>
+            </div>
+            <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Model.totalPorRetirar</span>
+            @using (Html.BeginForm("detalleCompraEnCurso", "PedidosCliente"))
+            {
+                <div class="input-group-append">
+                    <input type="submit" value="Detalle" class="btn btn-outline-info" />
+                </div>
+            }
+        </div>
+    </div>
+
+}
+

@@ -210,6 +210,8 @@
     <Compile Include="Controllers\LibrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MateriaController.cs" />
+    <Compile Include="Controllers\PedidosClienteController.cs" />
+    <Compile Include="Controllers\PedidosVendedorController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -228,6 +230,9 @@
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cliente.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClienteLibreria.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
@@ -272,6 +277,9 @@
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Variables.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Vendedor.cs">
@@ -461,6 +469,10 @@
     <Content Include="Views\LibrosSalas\Detalles.cshtml" />
     <Content Include="Views\LibrosSalas\Editar.cshtml" />
     <Content Include="Views\LibrosSalas\Eliminar.cshtml" />
+    <Content Include="Views\PedidosVendedor\Index.cshtml" />
+    <Content Include="Views\PedidosCliente\Index.cshtml" />
+    <Content Include="Views\PedidosCliente\resultadoBusqueda.cshtml" />
+    <Content Include="Views\PedidosCliente\Detalles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

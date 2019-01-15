@@ -17,6 +17,7 @@ namespace slnLibreria.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
+            this.ClienteLibreria = new HashSet<ClienteLibreria>();
             this.Pedido = new HashSet<Pedido>();
         }
     
@@ -29,6 +30,8 @@ namespace slnLibreria.Models
         public string clienteTelefono { get; set; }
         public Nullable<System.DateTime> clienteFechaRegistro { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClienteLibreria> ClienteLibreria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pedido> Pedido { get; set; }
     }

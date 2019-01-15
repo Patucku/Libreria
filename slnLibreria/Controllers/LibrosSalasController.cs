@@ -170,7 +170,7 @@ namespace slnLibreria.Controllers
                 else
                     ViewBag.ErrorRelacionarLibroSala = "Seleccione una relación";
                 ModelState.Clear();
-                return RedirectToAction("Relacionar", ViewBag);
+                return View("Relacionar",cargarDatosRelacion());
             }
             catch (Exception ex)
             {

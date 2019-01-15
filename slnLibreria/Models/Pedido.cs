@@ -16,7 +16,7 @@ namespace slnLibreria.Models
     {
         public int pedidoID { get; set; }
         public int librosalaID { get; set; }
-        public Nullable<int> clienteID { get; set; }
+        public int clienteID { get; set; }
         public string vendedorID { get; set; }
         public int estadopedidoID { get; set; }
         public int cantidadPedido { get; set; }

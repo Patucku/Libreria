@@ -70,6 +70,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ClienteLibreria">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.ClienteLibreria">
+        <MappingFragment StoreEntitySet="ClienteLibreria">
+          <ScalarProperty Name="clientelibreriaFechaRegistro" ColumnName="clientelibreriaFechaRegistro" />
+          <ScalarProperty Name="libreriaID" ColumnName="libreriaID" />
+          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="EstadoPedido">
       <EntityTypeMapping TypeName="dbFeriaLibroModel.EstadoPedido">
         <MappingFragment StoreEntitySet="EstadoPedido">
@@ -119,23 +128,6 @@
         <MappingFragment StoreEntitySet="Materia">
           <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
           <ScalarProperty Name="materiaID" ColumnName="materiaID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Pedido">
-      <EntityTypeMapping TypeName="dbFeriaLibroModel.Pedido">
-        <MappingFragment StoreEntitySet="Pedido">
-          <ScalarProperty Name="fechaFinPedido" ColumnName="fechaFinPedido" />
-          <ScalarProperty Name="fechaInicioPedido" ColumnName="fechaInicioPedido" />
-          <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
-          <ScalarProperty Name="ivaPedido" ColumnName="ivaPedido" />
-          <ScalarProperty Name="subTotalPedido" ColumnName="subTotalPedido" />
-          <ScalarProperty Name="cantidadPedido" ColumnName="cantidadPedido" />
-          <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
-          <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
-          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
-          <ScalarProperty Name="librosalaID" ColumnName="librosalaID" />
-          <ScalarProperty Name="pedidoID" ColumnName="pedidoID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -195,6 +187,7 @@
           <ScalarProperty Name="salaID" ColumnName="salaID" />
           <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
           <ScalarProperty Name="materiaID" ColumnName="materiaID" />
+          <ScalarProperty Name="libroIVA" ColumnName="libroIVA" />
           <ScalarProperty Name="libroSinopsis" ColumnName="libroSinopsis" />
           <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
           <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
@@ -241,5 +234,32 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Variables">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.Variables">
+        <MappingFragment StoreEntitySet="Variables">
+          <ScalarProperty Name="variableValorString" ColumnName="variableValorString" />
+          <ScalarProperty Name="variableValorNumerico" ColumnName="variableValorNumerico" />
+          <ScalarProperty Name="variableNombre" ColumnName="variableNombre" />
+          <ScalarProperty Name="variableID" ColumnName="variableID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pedido">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.Pedido">
+        <MappingFragment StoreEntitySet="Pedido">
+          <ScalarProperty Name="fechaFinPedido" ColumnName="fechaFinPedido" />
+          <ScalarProperty Name="fechaInicioPedido" ColumnName="fechaInicioPedido" />
+          <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+          <ScalarProperty Name="ivaPedido" ColumnName="ivaPedido" />
+          <ScalarProperty Name="subTotalPedido" ColumnName="subTotalPedido" />
+          <ScalarProperty Name="cantidadPedido" ColumnName="cantidadPedido" />
+          <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+          <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
+          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+          <ScalarProperty Name="librosalaID" ColumnName="librosalaID" />
+          <ScalarProperty Name="pedidoID" ColumnName="pedidoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

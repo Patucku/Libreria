@@ -74,6 +74,15 @@
     <Property Name="clienteTelefono" Type="nchar" MaxLength="10" />
     <Property Name="clienteFechaRegistro" Type="datetime" />
   </EntityType>
+  <EntityType Name="ClienteLibreria">
+    <Key>
+      <PropertyRef Name="clienteID" />
+      <PropertyRef Name="libreriaID" />
+    </Key>
+    <Property Name="clienteID" Type="int" Nullable="false" />
+    <Property Name="libreriaID" Type="int" Nullable="false" />
+    <Property Name="clientelibreriaFechaRegistro" Type="date" />
+  </EntityType>
   <EntityType Name="EstadoPedido">
     <Key>
       <PropertyRef Name="estadopedidoID" />
@@ -127,8 +136,8 @@
     </Key>
     <Property Name="pedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="librosalaID" Type="int" Nullable="false" />
-    <Property Name="clienteID" Type="int" />
-    <Property Name="vendedorID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="clienteID" Type="int" Nullable="false" />
+    <Property Name="vendedorID" Type="nvarchar" MaxLength="128" />
     <Property Name="estadopedidoID" Type="int" Nullable="false" />
     <Property Name="cantidadPedido" Type="int" Nullable="false" />
     <Property Name="subTotalPedido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -154,6 +163,15 @@
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Variables">
+    <Key>
+      <PropertyRef Name="variableID" />
+    </Key>
+    <Property Name="variableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="variableNombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="variableValorNumerico" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="variableValorString" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Vendedor">
     <Key>
@@ -209,6 +227,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Materia_
     <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
     <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
     <Property Name="libroSinopsis" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="libroIVA" Type="bit" />
     <Property Name="materiaID" Type="int" Nullable="false" />
     <Property Name="materiaNombre" Type="varchar" MaxLength="75" Nullable="false" />
     <Property Name="salaID" Type="int" Nullable="false" />
@@ -268,6 +287,30 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     <Property Name="libreriaTelefono" Type="char" MaxLength="8" Nullable="false" />
     <Property Name="libreriaDireccion" Type="varchar" MaxLength="250" Nullable="false" />
   </EntityType>
+  <Association Name="FK_ClienteLibreria_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="ClienteLibreria" Type="Self.ClienteLibreria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="clienteID" />
+      </Principal>
+      <Dependent Role="ClienteLibreria">
+        <PropertyRef Name="clienteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClienteLibreria_Libreria">
+    <End Role="Libreria" Type="Self.Libreria" Multiplicity="1" />
+    <End Role="ClienteLibreria" Type="Self.ClienteLibreria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libreria">
+        <PropertyRef Name="libreriaID" />
+      </Principal>
+      <Dependent Role="ClienteLibreria">
+        <PropertyRef Name="libreriaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -361,7 +404,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Pedido_Cliente">
-    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
     <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Cliente">
@@ -397,7 +440,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Pedido_Vendedor">
-    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="1" />
+    <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
     <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Vendedor">
@@ -440,6 +483,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClienteLibreria" EntityType="Self.ClienteLibreria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EstadoPedido" EntityType="Self.EstadoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Libreria" EntityType="Self.Libreria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
@@ -448,6 +492,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sala" EntityType="Self.Sala" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Variables" EntityType="Self.Variables" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Vendedor" EntityType="Self.Vendedor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="View_Listar_Libros_Materia" EntityType="Self.View_Listar_Libros_Materia" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -468,6 +513,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     [View_Listar_Libros_Materia_Sala_Libreria].[libroAutor] AS [libroAutor], 
     [View_Listar_Libros_Materia_Sala_Libreria].[libroISBN] AS [libroISBN], 
     [View_Listar_Libros_Materia_Sala_Libreria].[libroSinopsis] AS [libroSinopsis], 
+    [View_Listar_Libros_Materia_Sala_Libreria].[libroIVA] AS [libroIVA], 
     [View_Listar_Libros_Materia_Sala_Libreria].[materiaID] AS [materiaID], 
     [View_Listar_Libros_Materia_Sala_Libreria].[materiaNombre] AS [materiaNombre], 
     [View_Listar_Libros_Materia_Sala_Libreria].[salaID] AS [salaID], 
@@ -506,6 +552,14 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
     [View_Listar_Sala_Libreria].[libreriaDireccion] AS [libreriaDireccion]
     FROM [dbo].[View_Listar_Sala_Libreria] AS [View_Listar_Sala_Libreria]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK_ClienteLibreria_Cliente" Association="Self.FK_ClienteLibreria_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClienteLibreria_Libreria" Association="Self.FK_ClienteLibreria_Libreria">
+      <End Role="Libreria" EntitySet="Libreria" />
+      <End Role="ClienteLibreria" EntitySet="ClienteLibreria" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
