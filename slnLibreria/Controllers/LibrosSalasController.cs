@@ -94,7 +94,7 @@ namespace slnLibreria.Controllers
                             db.SaveChanges();
                             ViewBag.RelacionarLibroSala = "Se actualizó la relacion";
                             ModelState.Clear();
-                            return View("Relacionar", cargarDatosRelacion());
+                            return RedirectToAction("Relacionar", ViewBag);
                         }
                     }
                 }
@@ -170,7 +170,7 @@ namespace slnLibreria.Controllers
                 else
                     ViewBag.ErrorRelacionarLibroSala = "Seleccione una relación";
                 ModelState.Clear();
-                return View("Relacionar", cargarDatosRelacion());
+                return RedirectToAction("Relacionar", ViewBag);
             }
             catch (Exception ex)
             {
@@ -195,7 +195,7 @@ namespace slnLibreria.Controllers
                         {
                             ViewBag.ErrorRelacionarLibroSala = "No existe la relación";
                         }
-                        else if (objPedido != null)
+                        else if (objPedido == null)
                         {
                             db.LibroSala.Remove(objLibroSalaEliminar);
                             db.SaveChanges();
@@ -205,12 +205,12 @@ namespace slnLibreria.Controllers
                             ViewBag.ErrorRelacionarLibroSala = "No se puede eliminar la relación mantiene alguna dependencia\nSe recomienda desactivar la relación";
                     }
                 }
-                return View("Relacionar", cargarDatosRelacion());
+                return RedirectToAction("Relacionar", ViewBag);
             }
             catch
             {
                 ViewBag.ErrorRelacionarLibroSala = "Sucedió un error al eliminar la relación";
-                return View("Relacionar", cargarDatosRelacion());
+                return RedirectToAction("Relacionar", ViewBag);
             }
         }
 
