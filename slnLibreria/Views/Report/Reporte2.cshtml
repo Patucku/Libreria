@@ -1,0 +1,39 @@
+﻿@model IEnumerable<slnLibreria.Models.Vvendedores>
+
+@{
+    ViewBag.Title = "Reporte2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reporte 2</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre del Vendedor
+            </th>
+            <th>
+                Precio del Total
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.vendedorNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>

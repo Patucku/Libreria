@@ -1,0 +1,66 @@
+﻿﻿@model slnLibreria.ViewModels.Report4
+
+@{
+    ViewBag.Title = "Reporte4";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reporte 4</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre del Autor
+            </th>
+            <th>
+                Total de libros
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.objReport)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.libroAutor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.numero)
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre de la materia
+            </th>
+            <th>
+                Total de libros
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.objReport2)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.materiaNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.numero)
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
