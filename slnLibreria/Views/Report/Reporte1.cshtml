@@ -1,0 +1,49 @@
+﻿@model IEnumerable<slnLibreria.Models.Vimporte_total>
+@{
+    ViewBag.Title = "Reporte1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.alertMessage').delay(5000).fadeOut();
+    });
+
+</script>
+
+
+
+<h2>Reporte 1</h2>
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nombre del libro
+            </th>
+            <th>
+                Precio del libro
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.libroNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.precioLibroSala)
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
