@@ -22,7 +22,7 @@ namespace slnLibreria.Models
     
         public int vendedorID { get; set; }
         public string aspUserID { get; set; }
-        public string vendedorNombre { get; set; }
+        public bool vendedorEstado { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

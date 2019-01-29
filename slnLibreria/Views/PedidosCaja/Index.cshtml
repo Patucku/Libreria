@@ -1,0 +1,72 @@
+﻿@model slnLibreria.ViewModels.PedidosView
+@{
+    ViewBag.Title = "Pedidos por Liquidar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorFinalizar))
+    {
+        <div class="alert alert-warning" role="alert" id="warning-alert">
+            @MvcHtmlString.Create(ViewBag.ErrorFinalizar.Replace("\n", "</br>"))
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(@ViewBag.Finalizado))
+    {
+        <div class="alert alert-success" role="alert" id="success-alert">
+            @MvcHtmlString.Create(ViewBag.Finalizado.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="">
+        <h4>Buscar<i class="fas fa-search m-1"></i></h4>
+        <div class="form-group col-8">
+            <label for="txtIdCliente" class="">Código: </label>
+            @Html.TextBoxFor(m => m.clienteID, new { @class = "form-control  col-6", @id = "txtIdCliente", @size = 15, @placeholder = "Código del CLiente" })
+        </div>
+        <input type="submit" value="Buscar" class="btn btn-outline-primary col-3" />
+    </div>
+}
+<hr />
+
+@using (Html.BeginForm("Index", "PedidosCaja"))
+{
+    <input type="submit" value="Actualizar" class="btn btn-sm btn-outline-info ml-1 mb-1 float-right" />
+}
+<h5>Pedidos por liquidar <i class="fas fa-money-bill m-1"></i></h5>
+<table class="table table-sm table-striped">
+    <thead class="text-center">
+        <tr>
+            <th>Cliente</th>
+            <th>CI-RUC</th>
+            <th>N° Pedidos</th>
+            <th>N° Libros</th>
+            <th>Subtotal</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var cliente in Model.pedidosPorLiquidar)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => cliente.clienteID)</td>
+                <td>@Html.DisplayFor(modelItem => cliente.clienteCI_RUC)</td>
+                <td>@Html.DisplayFor(modelItem => cliente.totalPedidos)</td>
+                <td>@Html.DisplayFor(modelItem => cliente.totalCantidadPedido)</td>
+                <td>@Html.DisplayFor(modelItem => cliente.totalSubTotal)</td>
+                <td>@Html.DisplayFor(modelItem => cliente.totalPedido)</td>
+                <td>
+                    @Html.ActionLink("Liquidar Pedido", "liquidarPedidos", "PedidosCaja", new { id = cliente.clienteID }, new { @class = "btn btn-outline-success" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

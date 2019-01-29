@@ -1,0 +1,66 @@
+﻿@model slnLibreria.ViewModels.PedidosView
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Pedidos Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="mt-2">
+    @using (Html.BeginForm("salirCliente", "PedidosCliente"))
+    {
+        <input type="submit" value="Salir" class="ml-2 btn btn-outline-dark float-right" />
+    }
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark float-right" })
+</div>
+<div class="m-1 col-10">
+
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorEliminar))
+    {
+        <div class="alert alert-danger" role="alert" id="danger-alert">
+            @MvcHtmlString.Create(ViewBag.ErrorEliminar.Replace("\n", "</br>"))
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(@ViewBag.PedidoEliminado))
+    {
+        <div class="alert alert-success" role="alert" id="success-alert">
+            @MvcHtmlString.Create(ViewBag.PedidoEliminado.Replace("\n", "</br>"))
+        </div>
+    }
+
+</div>
+<h3>Pedidos en Tramite</h3>
+<div>
+    <div class="code-cut table-sm small">
+        @Html.Grid(Model.DetallePedidos).SetLanguage("es").Columns(Columns =>{
+           Columns.Add(c => c.libroNombre).Titled("Nombre Libro").Filterable(true);
+           Columns.Add(c => c.libroAutor).Titled("Autor Libro").Filterable(true);
+           Columns.Add(c => c.materiaNombre).Titled("Materia Libro").Filterable(true);
+           Columns.Add(c => c.salaNombre).Titled("Sala").Filterable(true);
+           Columns.Add(c => c.libreriaNombre).Titled("Libreria").Filterable(true);
+           Columns.Add(c => c.cantidadPedido).Titled("Cantidad").Filterable(true);
+           Columns.Add(c => c.totalPedido).Titled("Total a Pagar").Filterable(true);
+           Columns.Add(c => c.estadopedidoNombre).Titled("Estado").Filterable(true);
+           Columns.Add()
+               .Encoded(false)
+               .Sanitized(false)
+               .SetWidth(30)
+               .RenderValueAs(n => Html.ActionLink("Cancelar Pedido", "cancelarPedido", new { id = n.pedidoID }, new { @class = "btn btn-sm btn-outline-info m-1" }));
+   }).WithPaging(10).Sortable(true)
+    </div>
+</div>
+<h3>Pedidos Terminados o Cancelados</h3>
+<div>
+    <div class="code-cut table-sm small">
+        @Html.Grid(Model.DetallePedidosFinCan).SetLanguage("es").Columns(Columns => {
+           Columns.Add(c => c.libroNombre).Titled("Nombre Libro").Filterable(true);
+           Columns.Add(c => c.libroAutor).Titled("Autor Libro").Filterable(true);
+           Columns.Add(c => c.materiaNombre).Titled("Materia Libro").Filterable(true);
+           Columns.Add(c => c.salaNombre).Titled("Sala").Filterable(true);
+           Columns.Add(c => c.libreriaNombre).Titled("Libreria").Filterable(true);
+           Columns.Add(c => c.cantidadPedido).Titled("Cantidad").Filterable(true);
+           Columns.Add(c => c.totalPedido).Titled("Total a Pagar").Filterable(true);
+           Columns.Add(c => c.estadopedidoNombre).Titled("Estado").Filterable(true);
+       }).WithPaging(10).Sortable(true)
+    </div>
+</div>
+

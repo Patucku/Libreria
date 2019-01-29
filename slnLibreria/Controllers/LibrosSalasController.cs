@@ -170,7 +170,7 @@ namespace slnLibreria.Controllers
                 else
                     ViewBag.ErrorRelacionarLibroSala = "Seleccione una relación";
                 ModelState.Clear();
-                return View("Relacionar",cargarDatosRelacion());
+                return View("Relacionar", cargarDatosRelacion());
             }
             catch (Exception ex)
             {
@@ -283,9 +283,14 @@ namespace slnLibreria.Controllers
             {
                 objLibroSala.LibrosSalas = db.View_Listar_Libros_Sala.OrderBy(n => n.salaNombre).ToList();
                 var getLibros = db.Libro.OrderBy(n => n.libroNombre).ToList();
-                var getSalas = db.Sala.OrderBy(n => n.salaNombre).ToList();
+                var getSalas = from sa in db.View_Listar_Sala_Libreria
+                               select new
+                               {
+                                   salaId = sa.salaID,
+                                   nombre = sa.libreriaNombre + " - " + sa.salaNombre
+                               };
                 objLibroSala.listLibros = new SelectList(getLibros, "libroId", "libroNombre");
-                objLibroSala.listSalas = new SelectList(getSalas, "salaId", "salaNombre");
+                objLibroSala.listSalas = new SelectList(getSalas.ToList(), "salaId", "nombre");
             }
             return objLibroSala;
         }
@@ -296,9 +301,14 @@ namespace slnLibreria.Controllers
             {
                 objLibroSala.LibrosSalas = db.View_Listar_Libros_Sala.OrderBy(n => n.salaNombre).ToList();
                 var getLibros = db.Libro.OrderBy(n => n.libroNombre).ToList();
-                var getSalas = db.Sala.OrderBy(n => n.salaNombre).ToList();
+                var getSalas = from sa in db.View_Listar_Sala_Libreria
+                               select new
+                               {
+                                   salaId = sa.salaID,
+                                   nombre = sa.libreriaNombre + " - " + sa.salaNombre
+                               };
                 objLibroSala.listLibros = new SelectList(getLibros, "libroId", "libroNombre");
-                objLibroSala.listSalas = new SelectList(getSalas, "salaId", "salaNombre");
+                objLibroSala.listSalas = new SelectList(getSalas.ToList(), "salaId", "nombre");
                 objLibroSala.libroSala = db.View_Listar_Libros_Sala.Where(n => n.librosalaID == librosalaID).FirstOrDefault();
             }
             return objLibroSala;

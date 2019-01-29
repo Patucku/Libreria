@@ -21,24 +21,24 @@
 
 //webshim.polyfill("forms forms-ext");
 </script>
-<h2>Relacionar</h2>
+<h2>Ingresar Producto</h2>
 <div class="m-1">
     @if (!string.IsNullOrEmpty(@ViewBag.ErrorRelacionarLibroSala))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert" id="danger-alter">
             @MvcHtmlString.Create(ViewBag.ErrorRelacionarLibroSala.Replace("\n", "</br>"))
         </div>
     }
     @if (!string.IsNullOrEmpty(@ViewBag.RelacionarLibroSala))
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert" id="success-alert">
             @MvcHtmlString.Create(ViewBag.RelacionarLibroSala.Replace("\n", "</br>"))
         </div>
     }
 
     @if (!string.IsNullOrEmpty(@ViewBag.RelacionarLibroSalaExsinte))
     {
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning" role="alert" id="warning-alert">
             @MvcHtmlString.Create(ViewBag.RelacionarLibroSalaExsinte.Replace("\n", "</br>"))
             @if (Model.libroSala != null)
             {
@@ -47,7 +47,7 @@
         </div>
     }
 </div>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Relacionar","LibrosSalas"))
 {
 
     @Html.AntiForgeryToken()
@@ -55,19 +55,19 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-6">
-                    <label for="dllSalas" class="">Sala: </label>
-                    @Html.DropDownListFor(m => m.selectedSala, Model.listSalas, null, new { @class = "form-control", @id = "dllSalas", @size = 10 })
+                    <label for="dllSalas" class="text-center font-weight-bold col-12">Salas <i class="fas fa-store"></i> </label>
+                    @Html.DropDownListFor(m => m.selectedSala, Model.listSalas, null, new { @class = "form-control col-12", @id = "dllSalas", @size = 10 })
                 </div>
                 <div class="col-6">
-                    <label for="dllLibros" class="">Libro: </label>
-                    @Html.DropDownListFor(m => m.selectedLibro, Model.listLibros, null, new { @class = "form-control", @id = "dllLibros", @size = 10 })
+                    <label for="dllLibros" class="text-center font-weight-bold col-12">Libros <i class="fas fa-book"></i> </label>
+                    @Html.DropDownListFor(m => m.selectedLibro, Model.listLibros, null, new { @class = "form-control col-12", @id = "dllLibros", @size = 10 })
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <label for="txtCantidad" class="">Cantidad de Libros: </label>
-                @Html.TextBoxFor(model => model.libroSala.cantidadLibroSala, new { @class = "form-control", @min = "0", @step = "1", @value = "10", @id = "txtCantidad", @type = "number"  })
+                @Html.TextBoxFor(model => model.libroSala.cantidadLibroSala, new { @class = "form-control col-6", @min = "0", @step = "1", @value = "10", @id = "txtCantidad", @type = "number"  })
             </div>
         </div>
         <div class="form-group">
@@ -79,19 +79,20 @@
                     </div> <div class="input-group-append">
                         <span class="input-group-text">0,00</span>
                     </div>
-                    @Html.TextBoxFor(model => model.libroSala.precioLibroSala, new { @type = "number", @min = "0", @step = "0.01", @class = "form-control" })
+                    @Html.TextBoxFor(model => model.libroSala.precioLibroSala, new { @type = "number", @min = "0", @step = "0.01", @class = "form-control col-5" })
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Relacionar" class="btn btn-outline-primary" />
+                <input type="submit" value="Relacionar" class="btn btn-outline-primary col-5" />
             </div>
         </div>
     </div>
 
 }
-
+<br />
+<hr />
 <div class="code-cut">
     @Html.Grid(Model.LibrosSalas).SetLanguage("es").Columns(Columns => {
     Columns.Add(c => c.librosalaID).Titled("Codigo");

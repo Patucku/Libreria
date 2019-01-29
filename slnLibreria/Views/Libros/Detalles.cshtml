@@ -62,35 +62,35 @@
         <h4>Salas</h4>
         @if (string.IsNullOrEmpty(ViewBag.SinSalas))
         {<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Nombre Sala
-            </th>
-            <th>
-                Libreria
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.librosMateriSalaLibreria)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.salaNombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.libreriaNombre)
-                </td>
-                <td>
-                    @Html.ActionLink("Editar", "Editar", "Libros", new { id = item.salaID }, new { @class = "btn btn-outline-success" }) |
-                    @Html.ActionLink("Detalles", "Detalles", "Libros", new { id = item.salaID }, new { @class = "btn btn-outline-info" }) |
-                    @Html.ActionLink("Eliminar", "Eliminar", "Libros", new { id = item.salaID }, new { @class = "btn btn-outline-danger" })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                <thead>
+                    <tr>
+                        <th>
+                            Nombre Sala
+                        </th>
+                        <th>
+                            Libreria
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.librosMateriSalaLibreria)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.salaNombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.libreriaNombre)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", "Libros", new { id = item.salaID }, new { @class = "btn btn-outline-success" }) |
+                                @Html.ActionLink("Detalles", "Detalles", "Libros", new { id = item.salaID }, new { @class = "btn btn-outline-info" }) |
+                                @Html.ActionLink("Eliminar", "Eliminar", "Libros", new { id = item.salaID }, new { @class = "btn btn-outline-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
         }
         else

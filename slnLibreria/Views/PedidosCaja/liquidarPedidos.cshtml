@@ -1,0 +1,143 @@
+﻿@model slnLibreria.ViewModels.PedidosView
+@{
+    ViewBag.Title = "Detalle Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-1">
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorDespachar))
+    {
+        <div class="alert alert-warning" role="alert" id="warning-alert">
+            @MvcHtmlString.Create(ViewBag.ErrorDespachar.Replace("\n", "</br>"))
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(@ViewBag.Despachado))
+    {
+        <div class="alert alert-success" role="alert" id="success-alert">
+            @MvcHtmlString.Create(ViewBag.Despachado.Replace("\n", "</br>"))
+        </div>
+    }
+</div>
+<h4>Pedidos por Liquidar</h4>
+<hr />
+@using (Html.BeginForm("Index", "PedidosCaja"))
+{
+    <input type="submit" value="Regresar" class="btn btn-sm btn-outline-info ml-1 float-right" />
+}
+<table class="table table-sm table-striped">
+    <thead class="text-center">
+        <tr>
+            <th>Pedido</th>
+            <th>Libreria</th>
+            <th>Sala</th>
+            <th>Libro</th>
+            <th>Autor</th>
+            <th>Cantidad</th>
+            <th>SubTotal</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var pedido in Model.DetallePedidos)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => pedido.pedidoID)</td>
+                <td>@Html.DisplayFor(modelItem => pedido.libreriaNombre)</td>
+                <td>@Html.DisplayFor(modelItem => pedido.salaNombre)</td>
+                <td>@Html.DisplayFor(modelItem => pedido.libroNombre)</td>
+                <td>@Html.DisplayFor(modelItem => pedido.libroAutor)</td>
+                <td>@Html.DisplayFor(modelItem => pedido.cantidadPedido)</td>
+                <td>@Html.DisplayFor(modelItem => pedido.subTotalPedido)</td>
+                <td>@Html.DisplayFor(modelItem => pedido.totalPedido)</td>
+                <td>
+                    @Html.ActionLink("Cancelar", "cancelarPedido", "PedidosCaja", new { id = pedido.pedidoID }, new { @class = "btn btn-outline-warning" })
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot class=" text-center">
+        @foreach (var total in Model.pedidosPorLiquidar)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => total.totalPedidos)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.DisplayFor(modelItem => total.totalCantidadPedido)</td>
+                <td>@Html.DisplayFor(modelItem => total.totalSubTotal)</td>
+                <td>@Html.DisplayFor(modelItem => total.totalPedido)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.ActionLink("Liquidar Pedido", "liquidarPedidosConfirmado", "PedidosCaja", new { usuario = total.clienteID }, new { @class = "btn btn-outline-success" })</td>
+            </tr>
+        }
+    </tfoot>
+
+</table>
+@if (Model.DetallePedidosFinCan.Count() != 0)
+{
+    <hr />
+    <h4>Pedidos por Despachar</h4>
+    <table class="table table-sm table-striped">
+        <thead class="text-center">
+            <tr>
+                <th>Pedido</th>
+                <th>Libreria</th>
+                <th>Sala</th>
+                <th>Libro</th>
+                <th>Autor</th>
+                <th>Cantidad</th>
+                <th>SubTotal</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var pedido in Model.DetallePedidosFinCan)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => pedido.pedidoID)</td>
+                    <td>@Html.DisplayFor(modelItem => pedido.libreriaNombre)</td>
+                    <td>@Html.DisplayFor(modelItem => pedido.salaNombre)</td>
+                    <td>@Html.DisplayFor(modelItem => pedido.libroNombre)</td>
+                    <td>@Html.DisplayFor(modelItem => pedido.libroAutor)</td>
+                    <td>@Html.DisplayFor(modelItem => pedido.cantidadPedido)</td>
+                    <td>@Html.DisplayFor(modelItem => pedido.subTotalPedido)</td>
+                    <td>@Html.DisplayFor(modelItem => pedido.totalPedido)</td>
+                    <td>
+                        @Html.ActionLink("Cancelar", "cancelarPedido", "PedidosCaja", new { id = pedido.pedidoID }, new { @class = "btn btn-outline-warning" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot class=" text-center">
+            @foreach (var total in Model.pedidosClientePorEstado)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => total.totalPedidos)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayFor(modelItem => total.totalCantidadPedido)</td>
+                    <td>@Html.DisplayFor(modelItem => total.totalSubTotal)</td>
+                    <td>@Html.DisplayFor(modelItem => total.totalPedido)</td>
+                </tr>
+            }
+        </tfoot>
+    </table>
+}
+
+
+
+

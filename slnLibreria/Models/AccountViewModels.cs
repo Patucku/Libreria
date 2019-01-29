@@ -65,6 +65,15 @@ namespace slnLibreria.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Nombre")]
+        public string  Nombre { get; set; }
+        [Required]
+        [Display(Name = "Apeliido")]
+        public string LastName { get; set; }
+
+        public string Name { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }

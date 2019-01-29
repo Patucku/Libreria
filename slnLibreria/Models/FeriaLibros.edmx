@@ -65,12 +65,14 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="clienteID" />
           </Key>
-          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="clienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="clienteCodigo" Type="int" />
           <Property Name="clienteCI_RUC" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="clienteNombre" Type="varchar" MaxLength="25" Nullable="false" />
@@ -94,6 +96,14 @@
           </Key>
           <Property Name="estadopedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="estadopedidoNombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Imagen">
+          <Key>
+            <PropertyRef Name="imagenID" />
+          </Key>
+          <Property Name="imagenID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imagenLibro" Type="int" Nullable="false" />
+          <Property Name="imagenArchivo" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Libreria">
           <Key>
@@ -184,7 +194,7 @@
           </Key>
           <Property Name="vendedorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="aspUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="vendedorNombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="vendedorEstado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6013: La tabla o vista 'dbFeriaLibro.dbo.suma' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
@@ -296,6 +306,138 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Libros_Sala' no
           <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Pedidos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="View_Listar_Pedidos">
+          <Key>
+            <PropertyRef Name="pedidoID" />
+            <PropertyRef Name="librosalaID" />
+            <PropertyRef Name="libroID" />
+            <PropertyRef Name="libroNombre" />
+            <PropertyRef Name="libroAutor" />
+            <PropertyRef Name="libroISBN" />
+            <PropertyRef Name="libroMateria" />
+            <PropertyRef Name="materiaNombre" />
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="salaNombre" />
+            <PropertyRef Name="salaLibreria" />
+            <PropertyRef Name="libreriaNombre" />
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="clienteNombre" />
+            <PropertyRef Name="clienteCI_RUC" />
+            <PropertyRef Name="estadopedidoID" />
+            <PropertyRef Name="estadopedidoNombre" />
+            <PropertyRef Name="cantidadPedido" />
+            <PropertyRef Name="subTotalPedido" />
+            <PropertyRef Name="ivaPedido" />
+            <PropertyRef Name="totalPedido" />
+            <PropertyRef Name="fechaInicioPedido" />
+          </Key>
+          <Property Name="pedidoID" Type="int" Nullable="false" />
+          <Property Name="librosalaID" Type="int" Nullable="false" />
+          <Property Name="libroID" Type="int" Nullable="false" />
+          <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="libroAutor" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="libroISBN" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="libroMateria" Type="int" Nullable="false" />
+          <Property Name="materiaNombre" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="salaID" Type="int" Nullable="false" />
+          <Property Name="salaNombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="salaLibreria" Type="int" Nullable="false" />
+          <Property Name="libreriaNombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="clienteNombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="clienteApellido" Type="varchar" MaxLength="25" />
+          <Property Name="clienteCI_RUC" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="vendedorID" Type="nvarchar" MaxLength="128" />
+          <Property Name="vendedorEstado" Type="bit" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="estadopedidoID" Type="int" Nullable="false" />
+          <Property Name="estadopedidoNombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cantidadPedido" Type="int" Nullable="false" />
+          <Property Name="subTotalPedido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ivaPedido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="totalPedido" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="fechaInicioPedido" Type="datetime" Nullable="false" />
+          <Property Name="fechaFinPedido" Type="datetime" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Pedidos_Por_Lq_Clientes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="View_Listar_Pedidos_Por_Lq_Clientes">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="clienteCI_RUC" />
+            <PropertyRef Name="clienteNombre" />
+            <PropertyRef Name="clienteCorreo" />
+          </Key>
+          <Property Name="totalSubTotal" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedidos" Type="int" />
+          <Property Name="totalCantidadPedido" Type="int" />
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="clienteCodigo" Type="int" />
+          <Property Name="clienteCI_RUC" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="clienteNombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="clienteApellido" Type="varchar" MaxLength="25" />
+          <Property Name="clienteCorreo" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="clienteTelefono" Type="nchar" MaxLength="10" />
+          <Property Name="clienteFechaRegistro" Type="datetime" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Pedidos_PorLiquidar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="View_Listar_Pedidos_PorLiquidar">
+          <Key>
+            <PropertyRef Name="clienteID" />
+          </Key>
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="totalSubTotal" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalCantidadPedido" Type="int" />
+          <Property Name="totalPedidos" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Pedidos_Resumen' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="View_Listar_Pedidos_Resumen">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="estadopedidoID" />
+          </Key>
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="estadopedidoID" Type="int" Nullable="false" />
+          <Property Name="totalSubTotal" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalCantidadPedido" Type="int" />
+          <Property Name="totalPedidos" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Pedidos_ResumenCliente' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="View_Listar_Pedidos_ResumenCliente">
+          <Key>
+            <PropertyRef Name="estadopedidoID" />
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="clienteCI_RUC" />
+            <PropertyRef Name="clienteNombre" />
+            <PropertyRef Name="clienteCorreo" />
+          </Key>
+          <Property Name="estadopedidoID" Type="int" Nullable="false" />
+          <Property Name="totalSubTotal" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="decimal" Precision="38" Scale="2" />
+          <Property Name="totalCantidadPedido" Type="int" />
+          <Property Name="totalPedidos" Type="int" />
+          <Property Name="clienteID" Type="int" Nullable="false" />
+          <Property Name="clienteCodigo" Type="int" />
+          <Property Name="clienteCI_RUC" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="clienteNombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="clienteApellido" Type="varchar" MaxLength="25" />
+          <Property Name="clienteCorreo" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="clienteTelefono" Type="nchar" MaxLength="10" />
+          <Property Name="clienteFechaRegistro" Type="datetime" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="View_Listar_Sala_Libreria">
           <Key>
@@ -312,14 +454,9 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.View_Listar_Sala_Libreria' 
           <Property Name="libreriaID" Type="int" Nullable="false" />
           <Property Name="libreriaNombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="libreriaRUC" Type="char" MaxLength="13" Nullable="false" />
-          <Property Name="libreriaTelefono" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="libreriaTelefono" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="libreriaDireccion" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'dbFeriaLibro.dbo.Vimporte_suma' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Vimporte_suma">
-          <Property Name="Total" Type="decimal" Precision="38" Scale="2" />
-        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vimporte_total' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Vimporte_total">
@@ -330,11 +467,6 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vimporte_total' no tiene de
           <Property Name="libroNombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="precioLibroSala" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'dbFeriaLibro.dbo.Vimporte_total_suma' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="Vimporte_total_suma">
-          <Property Name="Total" Type="decimal" Precision="38" Scale="2" />
-        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.VMaterias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VMaterias">
@@ -452,6 +584,18 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Imagen_Libro">
+          <End Role="Libro" Type="Self.Libro" Multiplicity="1" />
+          <End Role="Imagen" Type="Self.Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
+              <PropertyRef Name="libroID" />
+            </Principal>
+            <Dependent Role="Imagen">
+              <PropertyRef Name="imagenLibro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Libro_Materia">
           <End Role="Materia" Type="Self.Materia" Multiplicity="1" />
           <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
@@ -560,13 +704,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="Autor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="Dia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="importe_total" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="importe_total_suma" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="Materias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="recaudado_titulo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -597,8 +735,6 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="titulos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="vendedores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="dbFeriaLibroModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -609,6 +745,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ClienteLibreria" EntityType="Self.ClienteLibreria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoPedido" EntityType="Self.EstadoPedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagen" EntityType="Self.Imagen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libreria" EntityType="Self.Libreria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LibroSala" EntityType="Self.LibroSala" Schema="dbo" store:Type="Tables" />
@@ -677,6 +814,94 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
     [View_Listar_Libros_Sala].[libroNombre] AS [libroNombre]
     FROM [dbo].[View_Listar_Libros_Sala] AS [View_Listar_Libros_Sala]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="View_Listar_Pedidos" EntityType="Self.View_Listar_Pedidos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Listar_Pedidos].[pedidoID] AS [pedidoID], 
+    [View_Listar_Pedidos].[librosalaID] AS [librosalaID], 
+    [View_Listar_Pedidos].[libroID] AS [libroID], 
+    [View_Listar_Pedidos].[libroNombre] AS [libroNombre], 
+    [View_Listar_Pedidos].[libroAutor] AS [libroAutor], 
+    [View_Listar_Pedidos].[libroISBN] AS [libroISBN], 
+    [View_Listar_Pedidos].[libroMateria] AS [libroMateria], 
+    [View_Listar_Pedidos].[materiaNombre] AS [materiaNombre], 
+    [View_Listar_Pedidos].[salaID] AS [salaID], 
+    [View_Listar_Pedidos].[salaNombre] AS [salaNombre], 
+    [View_Listar_Pedidos].[salaLibreria] AS [salaLibreria], 
+    [View_Listar_Pedidos].[libreriaNombre] AS [libreriaNombre], 
+    [View_Listar_Pedidos].[clienteID] AS [clienteID], 
+    [View_Listar_Pedidos].[clienteNombre] AS [clienteNombre], 
+    [View_Listar_Pedidos].[clienteApellido] AS [clienteApellido], 
+    [View_Listar_Pedidos].[clienteCI_RUC] AS [clienteCI_RUC], 
+    [View_Listar_Pedidos].[vendedorID] AS [vendedorID], 
+    [View_Listar_Pedidos].[vendedorEstado] AS [vendedorEstado], 
+    [View_Listar_Pedidos].[Name] AS [Name], 
+    [View_Listar_Pedidos].[LastName] AS [LastName], 
+    [View_Listar_Pedidos].[estadopedidoID] AS [estadopedidoID], 
+    [View_Listar_Pedidos].[estadopedidoNombre] AS [estadopedidoNombre], 
+    [View_Listar_Pedidos].[cantidadPedido] AS [cantidadPedido], 
+    [View_Listar_Pedidos].[subTotalPedido] AS [subTotalPedido], 
+    [View_Listar_Pedidos].[ivaPedido] AS [ivaPedido], 
+    [View_Listar_Pedidos].[totalPedido] AS [totalPedido], 
+    [View_Listar_Pedidos].[fechaInicioPedido] AS [fechaInicioPedido], 
+    [View_Listar_Pedidos].[fechaFinPedido] AS [fechaFinPedido]
+    FROM [dbo].[View_Listar_Pedidos] AS [View_Listar_Pedidos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Listar_Pedidos_Por_Lq_Clientes" EntityType="Self.View_Listar_Pedidos_Por_Lq_Clientes" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[totalSubTotal] AS [totalSubTotal], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[totalIva] AS [totalIva], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[totalPedido] AS [totalPedido], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[totalPedidos] AS [totalPedidos], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[totalCantidadPedido] AS [totalCantidadPedido], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteID] AS [clienteID], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteCodigo] AS [clienteCodigo], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteCI_RUC] AS [clienteCI_RUC], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteNombre] AS [clienteNombre], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteApellido] AS [clienteApellido], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteCorreo] AS [clienteCorreo], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteTelefono] AS [clienteTelefono], 
+    [View_Listar_Pedidos_Por_Lq_Clientes].[clienteFechaRegistro] AS [clienteFechaRegistro]
+    FROM [dbo].[View_Listar_Pedidos_Por_Lq_Clientes] AS [View_Listar_Pedidos_Por_Lq_Clientes]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Listar_Pedidos_PorLiquidar" EntityType="Self.View_Listar_Pedidos_PorLiquidar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Listar_Pedidos_PorLiquidar].[clienteID] AS [clienteID], 
+    [View_Listar_Pedidos_PorLiquidar].[totalSubTotal] AS [totalSubTotal], 
+    [View_Listar_Pedidos_PorLiquidar].[totalIva] AS [totalIva], 
+    [View_Listar_Pedidos_PorLiquidar].[totalPedido] AS [totalPedido], 
+    [View_Listar_Pedidos_PorLiquidar].[totalCantidadPedido] AS [totalCantidadPedido], 
+    [View_Listar_Pedidos_PorLiquidar].[totalPedidos] AS [totalPedidos]
+    FROM [dbo].[View_Listar_Pedidos_PorLiquidar] AS [View_Listar_Pedidos_PorLiquidar]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Listar_Pedidos_Resumen" EntityType="Self.View_Listar_Pedidos_Resumen" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Listar_Pedidos_Resumen].[clienteID] AS [clienteID], 
+    [View_Listar_Pedidos_Resumen].[estadopedidoID] AS [estadopedidoID], 
+    [View_Listar_Pedidos_Resumen].[totalSubTotal] AS [totalSubTotal], 
+    [View_Listar_Pedidos_Resumen].[totalIva] AS [totalIva], 
+    [View_Listar_Pedidos_Resumen].[totalPedido] AS [totalPedido], 
+    [View_Listar_Pedidos_Resumen].[totalCantidadPedido] AS [totalCantidadPedido], 
+    [View_Listar_Pedidos_Resumen].[totalPedidos] AS [totalPedidos]
+    FROM [dbo].[View_Listar_Pedidos_Resumen] AS [View_Listar_Pedidos_Resumen]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Listar_Pedidos_ResumenCliente" EntityType="Self.View_Listar_Pedidos_ResumenCliente" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Listar_Pedidos_ResumenCliente].[estadopedidoID] AS [estadopedidoID], 
+    [View_Listar_Pedidos_ResumenCliente].[totalSubTotal] AS [totalSubTotal], 
+    [View_Listar_Pedidos_ResumenCliente].[totalIva] AS [totalIva], 
+    [View_Listar_Pedidos_ResumenCliente].[totalPedido] AS [totalPedido], 
+    [View_Listar_Pedidos_ResumenCliente].[totalCantidadPedido] AS [totalCantidadPedido], 
+    [View_Listar_Pedidos_ResumenCliente].[totalPedidos] AS [totalPedidos], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteID] AS [clienteID], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteCodigo] AS [clienteCodigo], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteCI_RUC] AS [clienteCI_RUC], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteNombre] AS [clienteNombre], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteApellido] AS [clienteApellido], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteCorreo] AS [clienteCorreo], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteTelefono] AS [clienteTelefono], 
+    [View_Listar_Pedidos_ResumenCliente].[clienteFechaRegistro] AS [clienteFechaRegistro]
+    FROM [dbo].[View_Listar_Pedidos_ResumenCliente] AS [View_Listar_Pedidos_ResumenCliente]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="View_Listar_Sala_Libreria" EntityType="Self.View_Listar_Sala_Libreria" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [View_Listar_Sala_Libreria].[salaID] AS [salaID], 
@@ -742,6 +967,10 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Imagen_Libro" Association="Self.FK_Imagen_Libro">
+            <End Role="Libro" EntitySet="Libro" />
+            <End Role="Imagen" EntitySet="Imagen" />
           </AssociationSet>
           <AssociationSet Name="FK_Libro_Materia" Association="Self.FK_Libro_Materia">
             <End Role="Materia" EntitySet="Materia" />
@@ -832,6 +1061,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <EntitySet Name="Cliente" EntityType="dbFeriaLibroModel.Cliente" />
           <EntitySet Name="ClienteLibreria" EntityType="dbFeriaLibroModel.ClienteLibreria" />
           <EntitySet Name="EstadoPedido" EntityType="dbFeriaLibroModel.EstadoPedido" />
+          <EntitySet Name="Imagen" EntityType="dbFeriaLibroModel.Imagen" />
           <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
           <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
           <EntitySet Name="LibroSala" EntityType="dbFeriaLibroModel.LibroSala" />
@@ -846,6 +1076,11 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <EntitySet Name="View_Listar_Libros_Materia" EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia" />
           <EntitySet Name="View_Listar_Libros_Materia_Sala_Libreria" EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria" />
           <EntitySet Name="View_Listar_Libros_Sala" EntityType="dbFeriaLibroModel.View_Listar_Libros_Sala" />
+          <EntitySet Name="View_Listar_Pedidos" EntityType="dbFeriaLibroModel.View_Listar_Pedidos" />
+          <EntitySet Name="View_Listar_Pedidos_Por_Lq_Clientes" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_Por_Lq_Clientes" />
+          <EntitySet Name="View_Listar_Pedidos_PorLiquidar" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_PorLiquidar" />
+          <EntitySet Name="View_Listar_Pedidos_Resumen" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_Resumen" />
+          <EntitySet Name="View_Listar_Pedidos_ResumenCliente" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_ResumenCliente" />
           <EntitySet Name="View_Listar_Sala_Libreria" EntityType="dbFeriaLibroModel.View_Listar_Sala_Libreria" />
           <EntitySet Name="Vimporte_total" EntityType="dbFeriaLibroModel.Vimporte_total" />
           <EntitySet Name="VMaterias" EntityType="dbFeriaLibroModel.VMaterias" />
@@ -880,6 +1115,10 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
             <End Role="EstadoPedido" EntitySet="EstadoPedido" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
+          <AssociationSet Name="FK_Imagen_Libro" Association="dbFeriaLibroModel.FK_Imagen_Libro">
+            <End Role="Libro" EntitySet="Libro" />
+            <End Role="Imagen" EntitySet="Imagen" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sala_Libreria" Association="dbFeriaLibroModel.FK_Sala_Libreria">
             <End Role="Libreria" EntitySet="Libreria" />
             <End Role="Sala" EntitySet="Sala" />
@@ -908,7 +1147,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="Autor_Result">
           <Property Type="String" Name="libroAutor" Nullable="false" MaxLength="75" />
           <Property Type="Int32" Name="Column1" Nullable="true" />
@@ -1004,6 +1243,8 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="dbFeriaLibroModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="dbFeriaLibroModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Vendedor" Relationship="dbFeriaLibroModel.FK_Vendedor_AspNetUsers" FromRole="AspNetUsers" ToRole="Vendedor" />
@@ -1013,7 +1254,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <Key>
             <PropertyRef Name="clienteID" />
           </Key>
-          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="clienteCodigo" Type="Int32" />
           <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
@@ -1043,6 +1284,15 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <Property Name="estadopedidoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_EstadoPedido" FromRole="EstadoPedido" ToRole="Pedido" />
         </EntityType>
+        <EntityType Name="Imagen">
+          <Key>
+            <PropertyRef Name="imagenID" />
+          </Key>
+          <Property Name="imagenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imagenLibro" Type="Int32" Nullable="false" />
+          <Property Name="imagenArchivo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Imagen_Libro" FromRole="Imagen" ToRole="Libro" />
+        </EntityType>
         <EntityType Name="Libreria">
           <Key>
             <PropertyRef Name="libreriaID" />
@@ -1066,6 +1316,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="libroIVA" Type="Boolean" />
           <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Imagen" Relationship="dbFeriaLibroModel.FK_Imagen_Libro" FromRole="Libro" ToRole="Imagen" />
           <NavigationProperty Name="Materia" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Libro" ToRole="Materia" />
           <NavigationProperty Name="LibroSala" Relationship="dbFeriaLibroModel.FK_LibroSala_Libro" FromRole="Libro" ToRole="LibroSala" />
         </EntityType>
@@ -1146,7 +1397,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           </Key>
           <Property Name="vendedorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="aspUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="vendedorNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="vendedorEstado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="dbFeriaLibroModel.FK_Vendedor_AspNetUsers" FromRole="Vendedor" ToRole="AspNetUsers" />
           <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_Vendedor" FromRole="Vendedor" ToRole="Pedido" />
         </EntityType>
@@ -1244,6 +1495,128 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="View_Listar_Pedidos">
+          <Key>
+            <PropertyRef Name="pedidoID" />
+            <PropertyRef Name="librosalaID" />
+            <PropertyRef Name="libroID" />
+            <PropertyRef Name="libroNombre" />
+            <PropertyRef Name="libroAutor" />
+            <PropertyRef Name="libroISBN" />
+            <PropertyRef Name="libroMateria" />
+            <PropertyRef Name="materiaNombre" />
+            <PropertyRef Name="salaID" />
+            <PropertyRef Name="salaNombre" />
+            <PropertyRef Name="salaLibreria" />
+            <PropertyRef Name="libreriaNombre" />
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="clienteNombre" />
+            <PropertyRef Name="clienteCI_RUC" />
+            <PropertyRef Name="estadopedidoID" />
+            <PropertyRef Name="estadopedidoNombre" />
+            <PropertyRef Name="cantidadPedido" />
+            <PropertyRef Name="subTotalPedido" />
+            <PropertyRef Name="ivaPedido" />
+            <PropertyRef Name="totalPedido" />
+            <PropertyRef Name="fechaInicioPedido" />
+          </Key>
+          <Property Name="pedidoID" Type="Int32" Nullable="false" />
+          <Property Name="librosalaID" Type="Int32" Nullable="false" />
+          <Property Name="libroID" Type="Int32" Nullable="false" />
+          <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="libroMateria" Type="Int32" Nullable="false" />
+          <Property Name="materiaNombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="salaID" Type="Int32" Nullable="false" />
+          <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="salaLibreria" Type="Int32" Nullable="false" />
+          <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="vendedorID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="vendedorEstado" Type="Boolean" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="estadopedidoID" Type="Int32" Nullable="false" />
+          <Property Name="estadopedidoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cantidadPedido" Type="Int32" Nullable="false" />
+          <Property Name="subTotalPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ivaPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="totalPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="fechaInicioPedido" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fechaFinPedido" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="View_Listar_Pedidos_Por_Lq_Clientes">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="clienteCI_RUC" />
+            <PropertyRef Name="clienteNombre" />
+            <PropertyRef Name="clienteCorreo" />
+          </Key>
+          <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedidos" Type="Int32" />
+          <Property Name="totalCantidadPedido" Type="Int32" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="clienteCodigo" Type="Int32" />
+          <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="clienteCorreo" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="clienteTelefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="clienteFechaRegistro" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="View_Listar_Pedidos_PorLiquidar">
+          <Key>
+            <PropertyRef Name="clienteID" />
+          </Key>
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalCantidadPedido" Type="Int32" />
+          <Property Name="totalPedidos" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_Listar_Pedidos_Resumen">
+          <Key>
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="estadopedidoID" />
+          </Key>
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="estadopedidoID" Type="Int32" Nullable="false" />
+          <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalCantidadPedido" Type="Int32" />
+          <Property Name="totalPedidos" Type="Int32" />
+        </EntityType>
+        <EntityType Name="View_Listar_Pedidos_ResumenCliente">
+          <Key>
+            <PropertyRef Name="estadopedidoID" />
+            <PropertyRef Name="clienteID" />
+            <PropertyRef Name="clienteCI_RUC" />
+            <PropertyRef Name="clienteNombre" />
+            <PropertyRef Name="clienteCorreo" />
+          </Key>
+          <Property Name="estadopedidoID" Type="Int32" Nullable="false" />
+          <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="totalCantidadPedido" Type="Int32" />
+          <Property Name="totalPedidos" Type="Int32" />
+          <Property Name="clienteID" Type="Int32" Nullable="false" />
+          <Property Name="clienteCodigo" Type="Int32" />
+          <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="clienteCorreo" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="clienteTelefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="clienteFechaRegistro" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="View_Listar_Sala_Libreria">
           <Key>
             <PropertyRef Name="salaID" />
@@ -1259,7 +1632,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <Property Name="libreriaID" Type="Int32" Nullable="false" />
           <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="libreriaRUC" Type="String" Nullable="false" MaxLength="13" FixedLength="true" Unicode="false" />
-          <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
           <Property Name="libreriaDireccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Vimporte_total">
@@ -1387,6 +1760,18 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Imagen_Libro">
+          <End Type="dbFeriaLibroModel.Libro" Role="Libro" Multiplicity="1" />
+          <End Type="dbFeriaLibroModel.Imagen" Role="Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
+              <PropertyRef Name="libroID" />
+            </Principal>
+            <Dependent Role="Imagen">
+              <PropertyRef Name="imagenLibro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sala_Libreria">
           <End Type="dbFeriaLibroModel.Libreria" Role="Libreria" Multiplicity="1" />
           <End Type="dbFeriaLibroModel.Sala" Role="Sala" Multiplicity="*" />
@@ -1469,48 +1854,6 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="dbFeriaLibroModelStoreContainer" CdmEntityContainer="dbFeriaLibroEntities" >
-          <FunctionImportMapping FunctionImportName="Autor" FunctionName="dbFeriaLibroModel.Store.Autor">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbFeriaLibroModel.Autor_Result">
-                <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
-                <ScalarProperty Name="Column1" ColumnName="Column1" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Dia" FunctionName="dbFeriaLibroModel.Store.Dia">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbFeriaLibroModel.Dia_Result">
-                <ScalarProperty Name="fechaInicioPedido" ColumnName="fechaInicioPedido" />
-                <ScalarProperty Name="NumeroPedido" ColumnName="NumeroPedido" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="importe_total" FunctionName="dbFeriaLibroModel.Store.importe_total">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbFeriaLibroModel.importe_total_Result">
-                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
-                <ScalarProperty Name="precioLibroSala" ColumnName="precioLibroSala" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="importe_total_suma" FunctionName="dbFeriaLibroModel.Store.importe_total_suma" />
-          <FunctionImportMapping FunctionImportName="Materias" FunctionName="dbFeriaLibroModel.Store.Materias">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbFeriaLibroModel.Materias_Result">
-                <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
-                <ScalarProperty Name="Column1" ColumnName="Column1" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="recaudado_titulo" FunctionName="dbFeriaLibroModel.Store.recaudado_titulo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbFeriaLibroModel.recaudado_titulo_Result">
-                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
-                <ScalarProperty Name="libros" ColumnName="libros" />
-                <ScalarProperty Name="total" ColumnName="total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="dbFeriaLibroModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="dbFeriaLibroModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="dbFeriaLibroModel.Store.sp_dropdiagram" />
@@ -1535,23 +1878,6 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="dbFeriaLibroModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="dbFeriaLibroModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="titulos" FunctionName="dbFeriaLibroModel.Store.titulos">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbFeriaLibroModel.titulos_Result">
-                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
-                <ScalarProperty Name="totalpedido" ColumnName="totalpedido" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="vendedores" FunctionName="dbFeriaLibroModel.Store.vendedores">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="dbFeriaLibroModel.vendedores_Result">
-                <ScalarProperty Name="vendedorNombre" ColumnName="vendedorNombre" />
-                <ScalarProperty Name="total" ColumnName="total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="importe_total_suma1" FunctionName="dbFeriaLibroModel.Store.importe_total_suma" />
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="dbFeriaLibroModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -1592,6 +1918,8 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="dbFeriaLibroModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
@@ -1635,6 +1963,15 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
               <MappingFragment StoreEntitySet="EstadoPedido">
                 <ScalarProperty Name="estadopedidoNombre" ColumnName="estadopedidoNombre" />
                 <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imagen">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.Imagen">
+              <MappingFragment StoreEntitySet="Imagen">
+                <ScalarProperty Name="imagenArchivo" ColumnName="imagenArchivo" />
+                <ScalarProperty Name="imagenLibro" ColumnName="imagenLibro" />
+                <ScalarProperty Name="imagenID" ColumnName="imagenID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1732,7 +2069,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
           <EntitySetMapping Name="Vendedor">
             <EntityTypeMapping TypeName="dbFeriaLibroModel.Vendedor">
               <MappingFragment StoreEntitySet="Vendedor">
-                <ScalarProperty Name="vendedorNombre" ColumnName="vendedorNombre" />
+                <ScalarProperty Name="vendedorEstado" ColumnName="vendedorEstado" />
                 <ScalarProperty Name="aspUserID" ColumnName="aspUserID" />
                 <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
               </MappingFragment>
@@ -1807,6 +2144,104 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="View_Listar_Pedidos">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos">
+              <MappingFragment StoreEntitySet="View_Listar_Pedidos">
+                <ScalarProperty Name="fechaFinPedido" ColumnName="fechaFinPedido" />
+                <ScalarProperty Name="fechaInicioPedido" ColumnName="fechaInicioPedido" />
+                <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+                <ScalarProperty Name="ivaPedido" ColumnName="ivaPedido" />
+                <ScalarProperty Name="subTotalPedido" ColumnName="subTotalPedido" />
+                <ScalarProperty Name="cantidadPedido" ColumnName="cantidadPedido" />
+                <ScalarProperty Name="estadopedidoNombre" ColumnName="estadopedidoNombre" />
+                <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="vendedorEstado" ColumnName="vendedorEstado" />
+                <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
+                <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
+                <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
+                <ScalarProperty Name="clienteNombre" ColumnName="clienteNombre" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
+                <ScalarProperty Name="salaLibreria" ColumnName="salaLibreria" />
+                <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+                <ScalarProperty Name="salaID" ColumnName="salaID" />
+                <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
+                <ScalarProperty Name="libroMateria" ColumnName="libroMateria" />
+                <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
+                <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
+                <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
+                <ScalarProperty Name="libroID" ColumnName="libroID" />
+                <ScalarProperty Name="librosalaID" ColumnName="librosalaID" />
+                <ScalarProperty Name="pedidoID" ColumnName="pedidoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Listar_Pedidos_Por_Lq_Clientes">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_Por_Lq_Clientes">
+              <MappingFragment StoreEntitySet="View_Listar_Pedidos_Por_Lq_Clientes">
+                <ScalarProperty Name="clienteFechaRegistro" ColumnName="clienteFechaRegistro" />
+                <ScalarProperty Name="clienteTelefono" ColumnName="clienteTelefono" />
+                <ScalarProperty Name="clienteCorreo" ColumnName="clienteCorreo" />
+                <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
+                <ScalarProperty Name="clienteNombre" ColumnName="clienteNombre" />
+                <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
+                <ScalarProperty Name="clienteCodigo" ColumnName="clienteCodigo" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+                <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+                <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+                <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+                <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Listar_Pedidos_PorLiquidar">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_PorLiquidar">
+              <MappingFragment StoreEntitySet="View_Listar_Pedidos_PorLiquidar">
+                <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+                <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+                <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+                <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+                <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Listar_Pedidos_Resumen">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_Resumen">
+              <MappingFragment StoreEntitySet="View_Listar_Pedidos_Resumen">
+                <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+                <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+                <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+                <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+                <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+                <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Listar_Pedidos_ResumenCliente">
+            <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_ResumenCliente">
+              <MappingFragment StoreEntitySet="View_Listar_Pedidos_ResumenCliente">
+                <ScalarProperty Name="clienteFechaRegistro" ColumnName="clienteFechaRegistro" />
+                <ScalarProperty Name="clienteTelefono" ColumnName="clienteTelefono" />
+                <ScalarProperty Name="clienteCorreo" ColumnName="clienteCorreo" />
+                <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
+                <ScalarProperty Name="clienteNombre" ColumnName="clienteNombre" />
+                <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
+                <ScalarProperty Name="clienteCodigo" ColumnName="clienteCodigo" />
+                <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+                <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+                <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+                <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+                <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+                <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+                <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="View_Listar_Sala_Libreria">
             <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Sala_Libreria">
               <MappingFragment StoreEntitySet="View_Listar_Sala_Libreria">
@@ -1869,7 +2304,7 @@ advertencia 6002: La tabla o vista 'dbFeriaLibro.dbo.Vvendedores' no tiene defin
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

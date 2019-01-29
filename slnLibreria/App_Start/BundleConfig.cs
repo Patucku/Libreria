@@ -13,6 +13,7 @@ namespace slnLibreria
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/_references.js", 
                         "~/Scripts/popper.js",
+                        "~/Scripts/alertMessages.js",
                         "~/Scripts/gridmvc.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,7 +31,8 @@ namespace slnLibreria
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/Gridmvc.css"));
+                      "~/Content/Gridmvc.css",
+                      "~/Content/all.css"));
         }
     }
 }

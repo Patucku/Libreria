@@ -17,6 +17,7 @@ namespace slnLibreria.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Libro()
         {
+            this.Imagen = new HashSet<Imagen>();
             this.LibroSala = new HashSet<LibroSala>();
         }
     
@@ -28,6 +29,8 @@ namespace slnLibreria.Models
         public Nullable<bool> libroIVA { get; set; }
         public string libroSinopsis { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Imagen> Imagen { get; set; }
         public virtual Materia Materia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LibroSala> LibroSala { get; set; }

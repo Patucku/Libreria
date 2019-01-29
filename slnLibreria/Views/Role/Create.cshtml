@@ -1,0 +1,27 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<style type="text/css">
+    #tbrole, .c {
+        border: double;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    <label for="datosEnCurso" class="font-weight-bold">Pedido En Curso</label>
+    <div class="input-group mb-3 ml-lg-2" id="datosEnCurso">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">Rol</span>
+        </div>
+        <span type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">@Html.EditorFor(m => m.Name)</span>
+        <div class="input-group-append">
+            <input type="submit" value="Create Role" class="btn btn-outline-info"/>
+        </div>
+    </div>
+}

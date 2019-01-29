@@ -68,15 +68,14 @@
             </dd>
         </dl>
 
-        <p class="form-inline">
+        <div class="form-inline">
             @using (Html.BeginForm("Comprar", "PedidosCliente"))
             {
                 @Html.HiddenFor(model =>model.Libro.librosalaID)
-                @Html.TextBoxFor(model => model.cantidadComprada, new { @class = "form-control col-sm-1", @min = "1", @step = "1", @value = "1", @id = "txtCantidad", @type = "number" })
-
-                <input type="submit" value="Comprar" class="btn btn-success" />
+                @Html.TextBoxFor(model => model.cantidadComprada, new { @class = "form-control small", @min = "1", @step = "1", @value = "1", @id = "txtCantidad", @type = "number" })
+                <input type="submit" value="Comprar" class="btn btn-success mr-2" />
             }
-            | @Html.ActionLink("Regresar", "resultadoBusqueda", null, new { @class = "btn btn-outline-dark m-1 ml-4" })
-        </p>
+            @Html.ActionLink("Regresar", "resultadoBusqueda", null, new { @class = "btn btn-outline-dark mr-2" })
+        </div>
     </div>
 </div>

@@ -35,6 +35,7 @@ namespace slnLibreria.Models
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<ClienteLibreria> ClienteLibreria { get; set; }
         public virtual DbSet<EstadoPedido> EstadoPedido { get; set; }
+        public virtual DbSet<Imagen> Imagen { get; set; }
         public virtual DbSet<Libreria> Libreria { get; set; }
         public virtual DbSet<Libro> Libro { get; set; }
         public virtual DbSet<LibroSala> LibroSala { get; set; }
@@ -49,6 +50,11 @@ namespace slnLibreria.Models
         public virtual DbSet<View_Listar_Libros_Materia> View_Listar_Libros_Materia { get; set; }
         public virtual DbSet<View_Listar_Libros_Materia_Sala_Libreria> View_Listar_Libros_Materia_Sala_Libreria { get; set; }
         public virtual DbSet<View_Listar_Libros_Sala> View_Listar_Libros_Sala { get; set; }
+        public virtual DbSet<View_Listar_Pedidos> View_Listar_Pedidos { get; set; }
+        public virtual DbSet<View_Listar_Pedidos_Por_Lq_Clientes> View_Listar_Pedidos_Por_Lq_Clientes { get; set; }
+        public virtual DbSet<View_Listar_Pedidos_PorLiquidar> View_Listar_Pedidos_PorLiquidar { get; set; }
+        public virtual DbSet<View_Listar_Pedidos_Resumen> View_Listar_Pedidos_Resumen { get; set; }
+        public virtual DbSet<View_Listar_Pedidos_ResumenCliente> View_Listar_Pedidos_ResumenCliente { get; set; }
         public virtual DbSet<View_Listar_Sala_Libreria> View_Listar_Sala_Libreria { get; set; }
         public virtual DbSet<Vimporte_total> Vimporte_total { get; set; }
         public virtual DbSet<VMaterias> VMaterias { get; set; }

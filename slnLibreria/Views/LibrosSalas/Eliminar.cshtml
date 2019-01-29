@@ -47,20 +47,17 @@
 
             <div class="form-actions no-color">
                 <input type="submit" value="Eliminar" class="btn btn-warning" /> |
-                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-dark m-1" })
+                @Html.ActionLink("Regresar", "Relacionar", null, new { @class = "btn btn-outline-dark m-1" })
             </div>
         }
     }
     else
     {
         <div class="m-1">
-            @if (!string.IsNullOrEmpty(ViewBag.PedidoRelacionados))
-            {
-                <div class="alert alert-danger">
-                    @MvcHtmlString.Create(ViewBag.ViewBag.PedidoRelacionados.Replace("\n", "</br>"))
-                </div>
+            <div class="alert alert-danger" role="alert" id="danger-alert">
+                @MvcHtmlString.Create(ViewBag.PedidoRelacionados.Replace("\n", "</br>"))
+            </div>
                 @Html.ActionLink("Editar", "Editar", new { id = Model.librosalaID },new { @class = "btn btn-outline-success" })
-            }
         </div>
         <div class="m-1">
             @Html.ActionLink("Regresar", "Relacionar", null, new { @class = "btn btn-outline-dark" })

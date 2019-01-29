@@ -1,0 +1,86 @@
+﻿@model slnLibreria.ViewModels.LibrosSalasView
+@{
+    ViewBag.Title = "salasRelacionadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Salas Relacionadas</h2>
+<hr />
+<div>
+    <h4>Libro</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libro.libroNombre)
+        </dd>
+        <dt>
+            Autor:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libro.libroAutor)
+        </dd>
+        <dt>
+            ISBN:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libro.libroISBN)
+        </dd>
+
+        <dt>
+            Sinopsis:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.libro.libroSinopsis)
+        </dd>
+    </dl>
+</div>
+<hr />
+<div>
+    <h4>Salas</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Libreria
+                </th>
+                <th>
+                    Sala
+                </th>
+                <th>
+                    Cantidad
+                </th>
+                <th>
+                    Precio
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.LibrosComplete)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.libreriaNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.salaNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidadLibroSala)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioLibroSala)
+            </td>
+            <td class="">
+                @Html.ActionLink("Editar", "Editar", "LibrosSalas", new { id = item.librosalaID }, new { @class = "btn btn-outline-success" }) |
+                @Html.ActionLink("Detalles", "Detalles", "LibrosSalas", new { id = item.librosalaID }, new { @class = "btn btn-outline-info" }) |
+                @Html.ActionLink("Eliminar", "Eliminar", "LibrosSalas", new { id = item.librosalaID }, new { @class = "btn btn-outline-danger" })
+            </td>
+        </tr>
+        }
+    </table>
+    @Html.ActionLink("Regresar", "Eliminar", "Libros", new { id = Model.libro.libroID }, new { @class = "btn btn-outline-success" })
+</div>
+

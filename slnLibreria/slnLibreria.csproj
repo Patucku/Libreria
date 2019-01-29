@@ -83,6 +83,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ShutterPrism.MVC.FontAwesome, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ShutterPrism.MVC.FontAwsome.1.0.1\lib\ShutterPrism.MVC.FontAwesome.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -210,9 +213,11 @@
     <Compile Include="Controllers\LibrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MateriaController.cs" />
+    <Compile Include="Controllers\PedidosCajaController.cs" />
     <Compile Include="Controllers\PedidosClienteController.cs" />
     <Compile Include="Controllers\PedidosVendedorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -264,6 +269,9 @@
       <DependentUpon>FeriaLibros.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Imagen.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\importe_total_Result.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
@@ -328,6 +336,21 @@
     <Compile Include="Models\View_Listar_Libros_Sala.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\View_Listar_Pedidos.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Pedidos_PorLiquidar.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Pedidos_Por_Lq_Clientes.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Pedidos_Resumen.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\View_Listar_Pedidos_ResumenCliente.cs">
+      <DependentUpon>FeriaLibros.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\View_Listar_Sala_Libreria.cs">
       <DependentUpon>FeriaLibros.tt</DependentUpon>
     </Compile>
@@ -357,12 +380,18 @@
     <Compile Include="ViewModels\SalaView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\all.css" />
+    <Content Include="Content\all.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Scripts\alertMessages.js" />
+    <Content Include="webfonts\fontawesome-webfont.svg" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -380,6 +409,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="webfonts\fa-brands-400.svg" />
+    <Content Include="webfonts\fa-regular-400.svg" />
+    <Content Include="webfonts\fa-solid-900.svg" />
     <EntityDeploy Include="Models\FeriaLibros.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FeriaLibros.Designer.cs</LastGenOutput>
@@ -410,6 +442,11 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Grid.mvc.readme" />
+    <Content Include="webfonts\FontAwesome.otf" />
+    <Content Include="webfonts\fontawesome-webfont.woff2" />
+    <Content Include="webfonts\fontawesome-webfont.woff" />
+    <Content Include="webfonts\fontawesome-webfont.ttf" />
+    <Content Include="webfonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
@@ -531,6 +568,26 @@
     <Content Include="Views\Report\Reporte6.cshtml" />
     <Content Include="Views\Report\Reporte7.cshtml" />
     <Content Include="Views\Report\Reporte8.cshtml" />
+    <Content Include="Views\PedidosCliente\detalleCompraEnCurso.cshtml" />
+    <Content Include="Views\PedidosCliente\detalleCompraPorRetirar.cshtml" />
+    <Content Include="Views\PedidosCliente\detalleLibrosCliente.cshtml" />
+    <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="webfonts\fa-brands-400.ttf" />
+    <Content Include="webfonts\fa-brands-400.woff" />
+    <Content Include="webfonts\fa-brands-400.woff2" />
+    <Content Include="webfonts\fa-regular-400.eot" />
+    <Content Include="webfonts\fa-regular-400.ttf" />
+    <Content Include="webfonts\fa-regular-400.woff" />
+    <Content Include="webfonts\fa-regular-400.woff2" />
+    <Content Include="webfonts\fa-solid-900.eot" />
+    <Content Include="webfonts\fa-solid-900.ttf" />
+    <Content Include="webfonts\fa-solid-900.woff" />
+    <Content Include="webfonts\fa-solid-900.woff2" />
+    <Content Include="Views\Libros\salasRelacionadas.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\PedidosCaja\Index.cshtml" />
+    <Content Include="Views\PedidosCaja\liquidarPedidos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

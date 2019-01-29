@@ -1,48 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="dbFeriaLibroModelStoreContainer" CdmEntityContainer="dbFeriaLibroEntities">
-    <FunctionImportMapping FunctionImportName="Autor" FunctionName="dbFeriaLibroModel.Store.Autor">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbFeriaLibroModel.Autor_Result">
-          <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
-          <ScalarProperty Name="Column1" ColumnName="Column1" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="Dia" FunctionName="dbFeriaLibroModel.Store.Dia">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbFeriaLibroModel.Dia_Result">
-          <ScalarProperty Name="fechaInicioPedido" ColumnName="fechaInicioPedido" />
-          <ScalarProperty Name="NumeroPedido" ColumnName="NumeroPedido" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="importe_total" FunctionName="dbFeriaLibroModel.Store.importe_total">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbFeriaLibroModel.importe_total_Result">
-          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
-          <ScalarProperty Name="precioLibroSala" ColumnName="precioLibroSala" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="importe_total_suma" FunctionName="dbFeriaLibroModel.Store.importe_total_suma" />
-    <FunctionImportMapping FunctionImportName="Materias" FunctionName="dbFeriaLibroModel.Store.Materias">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbFeriaLibroModel.Materias_Result">
-          <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
-          <ScalarProperty Name="Column1" ColumnName="Column1" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="recaudado_titulo" FunctionName="dbFeriaLibroModel.Store.recaudado_titulo">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbFeriaLibroModel.recaudado_titulo_Result">
-          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
-          <ScalarProperty Name="libros" ColumnName="libros" />
-          <ScalarProperty Name="total" ColumnName="total" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="dbFeriaLibroModel.Store.sp_alterdiagram" />
     <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="dbFeriaLibroModel.Store.sp_creatediagram" />
     <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="dbFeriaLibroModel.Store.sp_dropdiagram" />
@@ -67,23 +25,6 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="dbFeriaLibroModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="dbFeriaLibroModel.Store.sp_upgraddiagrams" />
-    <FunctionImportMapping FunctionImportName="titulos" FunctionName="dbFeriaLibroModel.Store.titulos">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbFeriaLibroModel.titulos_Result">
-          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
-          <ScalarProperty Name="totalpedido" ColumnName="totalpedido" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="vendedores" FunctionName="dbFeriaLibroModel.Store.vendedores">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="dbFeriaLibroModel.vendedores_Result">
-          <ScalarProperty Name="vendedorNombre" ColumnName="vendedorNombre" />
-          <ScalarProperty Name="total" ColumnName="total" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="importe_total_suma1" FunctionName="dbFeriaLibroModel.Store.importe_total_suma" />
     <EntitySetMapping Name="C__MigrationHistory">
       <EntityTypeMapping TypeName="dbFeriaLibroModel.C__MigrationHistory">
         <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -124,6 +65,8 @@
     <EntitySetMapping Name="AspNetUsers">
       <EntityTypeMapping TypeName="dbFeriaLibroModel.AspNetUsers">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
           <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
@@ -167,6 +110,15 @@
         <MappingFragment StoreEntitySet="EstadoPedido">
           <ScalarProperty Name="estadopedidoNombre" ColumnName="estadopedidoNombre" />
           <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Imagen">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.Imagen">
+        <MappingFragment StoreEntitySet="Imagen">
+          <ScalarProperty Name="imagenArchivo" ColumnName="imagenArchivo" />
+          <ScalarProperty Name="imagenLibro" ColumnName="imagenLibro" />
+          <ScalarProperty Name="imagenID" ColumnName="imagenID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -264,7 +216,7 @@
     <EntitySetMapping Name="Vendedor">
       <EntityTypeMapping TypeName="dbFeriaLibroModel.Vendedor">
         <MappingFragment StoreEntitySet="Vendedor">
-          <ScalarProperty Name="vendedorNombre" ColumnName="vendedorNombre" />
+          <ScalarProperty Name="vendedorEstado" ColumnName="vendedorEstado" />
           <ScalarProperty Name="aspUserID" ColumnName="aspUserID" />
           <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
         </MappingFragment>
@@ -336,6 +288,104 @@
           <ScalarProperty Name="estadoLibroSala" ColumnName="estadoLibroSala" />
           <ScalarProperty Name="precioLibroSala" ColumnName="precioLibroSala" />
           <ScalarProperty Name="cantidadLibroSala" ColumnName="cantidadLibroSala" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Pedidos">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos">
+        <MappingFragment StoreEntitySet="View_Listar_Pedidos">
+          <ScalarProperty Name="fechaFinPedido" ColumnName="fechaFinPedido" />
+          <ScalarProperty Name="fechaInicioPedido" ColumnName="fechaInicioPedido" />
+          <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+          <ScalarProperty Name="ivaPedido" ColumnName="ivaPedido" />
+          <ScalarProperty Name="subTotalPedido" ColumnName="subTotalPedido" />
+          <ScalarProperty Name="cantidadPedido" ColumnName="cantidadPedido" />
+          <ScalarProperty Name="estadopedidoNombre" ColumnName="estadopedidoNombre" />
+          <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="vendedorEstado" ColumnName="vendedorEstado" />
+          <ScalarProperty Name="vendedorID" ColumnName="vendedorID" />
+          <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
+          <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
+          <ScalarProperty Name="clienteNombre" ColumnName="clienteNombre" />
+          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+          <ScalarProperty Name="libreriaNombre" ColumnName="libreriaNombre" />
+          <ScalarProperty Name="salaLibreria" ColumnName="salaLibreria" />
+          <ScalarProperty Name="salaNombre" ColumnName="salaNombre" />
+          <ScalarProperty Name="salaID" ColumnName="salaID" />
+          <ScalarProperty Name="materiaNombre" ColumnName="materiaNombre" />
+          <ScalarProperty Name="libroMateria" ColumnName="libroMateria" />
+          <ScalarProperty Name="libroISBN" ColumnName="libroISBN" />
+          <ScalarProperty Name="libroAutor" ColumnName="libroAutor" />
+          <ScalarProperty Name="libroNombre" ColumnName="libroNombre" />
+          <ScalarProperty Name="libroID" ColumnName="libroID" />
+          <ScalarProperty Name="librosalaID" ColumnName="librosalaID" />
+          <ScalarProperty Name="pedidoID" ColumnName="pedidoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Pedidos_Por_Lq_Clientes">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_Por_Lq_Clientes">
+        <MappingFragment StoreEntitySet="View_Listar_Pedidos_Por_Lq_Clientes">
+          <ScalarProperty Name="clienteFechaRegistro" ColumnName="clienteFechaRegistro" />
+          <ScalarProperty Name="clienteTelefono" ColumnName="clienteTelefono" />
+          <ScalarProperty Name="clienteCorreo" ColumnName="clienteCorreo" />
+          <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
+          <ScalarProperty Name="clienteNombre" ColumnName="clienteNombre" />
+          <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
+          <ScalarProperty Name="clienteCodigo" ColumnName="clienteCodigo" />
+          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+          <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+          <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+          <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+          <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+          <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Pedidos_PorLiquidar">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_PorLiquidar">
+        <MappingFragment StoreEntitySet="View_Listar_Pedidos_PorLiquidar">
+          <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+          <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+          <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+          <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+          <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Pedidos_Resumen">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_Resumen">
+        <MappingFragment StoreEntitySet="View_Listar_Pedidos_Resumen">
+          <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+          <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+          <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+          <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+          <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+          <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
+          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="View_Listar_Pedidos_ResumenCliente">
+      <EntityTypeMapping TypeName="dbFeriaLibroModel.View_Listar_Pedidos_ResumenCliente">
+        <MappingFragment StoreEntitySet="View_Listar_Pedidos_ResumenCliente">
+          <ScalarProperty Name="clienteFechaRegistro" ColumnName="clienteFechaRegistro" />
+          <ScalarProperty Name="clienteTelefono" ColumnName="clienteTelefono" />
+          <ScalarProperty Name="clienteCorreo" ColumnName="clienteCorreo" />
+          <ScalarProperty Name="clienteApellido" ColumnName="clienteApellido" />
+          <ScalarProperty Name="clienteNombre" ColumnName="clienteNombre" />
+          <ScalarProperty Name="clienteCI_RUC" ColumnName="clienteCI_RUC" />
+          <ScalarProperty Name="clienteCodigo" ColumnName="clienteCodigo" />
+          <ScalarProperty Name="clienteID" ColumnName="clienteID" />
+          <ScalarProperty Name="totalPedidos" ColumnName="totalPedidos" />
+          <ScalarProperty Name="totalCantidadPedido" ColumnName="totalCantidadPedido" />
+          <ScalarProperty Name="totalPedido" ColumnName="totalPedido" />
+          <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+          <ScalarProperty Name="totalSubTotal" ColumnName="totalSubTotal" />
+          <ScalarProperty Name="estadopedidoID" ColumnName="estadopedidoID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

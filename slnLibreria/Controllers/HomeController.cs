@@ -15,7 +15,6 @@ namespace slnLibreria.Controllers
             return View(clientesView);
         }
 
-
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Index(ClientesView cv)
@@ -25,7 +24,7 @@ namespace slnLibreria.Controllers
                 ViewBag.ErrorCedula = "Ingrese un número de Cédula o RUC";
             else
             {
-                if (cv.clienteCI_RUC.Length == 9 || cv.clienteCI_RUC.Length == 12)
+                if (cv.clienteCI_RUC.Length != 10 && cv.clienteCI_RUC.Length != 13)
                     ViewBag.ErrorCedula = "Ingrese un número de Cédula o RUC válido";
                 else
                 {
@@ -33,56 +32,58 @@ namespace slnLibreria.Controllers
                     {
                         objCliente.cliente = db.Cliente.Where(n => n.clienteCI_RUC == cv.clienteCI_RUC).FirstOrDefault();
                         if (objCliente.cliente == null)
-                            ViewBag.ErrorCedula = "Usted no es Cliente";
+                            ViewBag.ErrorUsuarioNoCliente = "El número de Cédula o RUC: "+cv.clienteCI_RUC+" no está registrado\n";
                         else
                         {
                             ClienteLibreria objClienteLibreria = db.ClienteLibreria.Where(n => n.clienteID == objCliente.cliente.clienteID).FirstOrDefault();
-                            if(objClienteLibreria == null)
-                                ViewBag.ErrorCedula = "Usted no es Cliente de niguna libreria";
+                            if (objClienteLibreria == null && objCliente.cliente.clienteCodigo == null)
+                                ViewBag.ErrorUsuarioNoCliente = "Usted no es Cliente de niguna libreria\n";
                             else
                             {
                                 if (objCliente.cliente.clienteCodigo != null)
                                 {
                                     ViewBag.ErrorCedula = "Usted ya está registrado en el sistema \n Sú codigo es: " + objCliente.cliente.clienteCodigo;
                                     ModelState.Clear();
+                                    return View("Index");
                                 }
                                 else
                                 {
                                     try
                                     {
-                                        Cliente objUltimoCliente = db.Cliente.Where(n => n.clienteCodigo != null).Last();
+                                        Cliente objUltimoCliente = db.Cliente.OrderByDescending(n => n.clienteFechaRegistro).FirstOrDefault();
                                         int codigoCliente = 100;
                                         if (objUltimoCliente != null)
                                             codigoCliente = objUltimoCliente.clienteCodigo.Value + 1;
-                                        Cliente objClienteFeriaLibro = new Cliente();
-                                        objClienteFeriaLibro.clienteFechaRegistro = DateTime.Now;
-                                        objClienteFeriaLibro.clienteCodigo = codigoCliente;
-                                        db.Entry(objClienteFeriaLibro).State = EntityState.Modified;
+                                        Cliente clienteActualizar = db.Cliente.Where(n => n.clienteCI_RUC == cv.clienteCI_RUC).FirstOrDefault();
+                                        clienteActualizar.clienteFechaRegistro = DateTime.Now;
+                                        clienteActualizar.clienteCodigo = codigoCliente;
+                                        db.Entry(clienteActualizar).State = EntityState.Modified;
                                         db.SaveChanges();
 
                                         objCliente.cliente = db.Cliente.Where(n => n.clienteCodigo == codigoCliente).FirstOrDefault();
                                         ViewBag.CodigoUsuario = "Se ha generado su código. " +
                                             "\n Cliente: " + objCliente.cliente.clienteNombre + " " + objCliente.cliente.clienteApellido +
-                                            "\n Su código identificador es: " + objCliente.cliente.clienteCodigo + " Anótelo o memorizelo, el mismo le servirá para reservar y comprar libros";
+                                            "\n Su código identificador es: " + objCliente.cliente.clienteCodigo + "\nAnótelo o memorizelo, el mismo le servirá para reservar y comprar libros";
 
-                                        PedidosView objPedido = new PedidosView();
-                                        Session["ClienteIngresado"] = objCliente.cliente;
-                                        objPedido.clienteFeriaLibro = objCliente.cliente;
                                         ModelState.Clear();
-                                        return View("Index", "Pedidos", objPedido);
+                                        return View("Index");
                                     }
                                     catch (Exception ex)
                                     {
                                         ViewBag.ErrorCedula = "Ha ocurrido un error al intentar generar su código \n Error: " + ex.Message;
                                     }
-                                }                           
+                                }
                             }
                         }
                     }
                 }
             }
-            objCliente = new ClientesView();
-            return View("Index");
+            objCliente = new ClientesView()
+            {
+                clienteCI_RUC = cv.clienteCI_RUC
+            };
+            Session["cedulaTemporal"] = cv.clienteCI_RUC;
+            return View("Index", objCliente);
         }
 
         [HttpPost]
@@ -95,7 +96,7 @@ namespace slnLibreria.Controllers
                 if (string.IsNullOrEmpty(cv.codigoUsuario))
                 {
                     ViewBag.ErrorIngresar = "Ingrese un código";
-                    return View();
+                    return View("Index");
                 }
                 else
                 {
@@ -113,9 +114,9 @@ namespace slnLibreria.Controllers
                         {
                             Session["ClienteIngresado"] = objClienteFeriaLibro;
                             objPedido.clienteFeriaLibro = objClienteFeriaLibro;
+                            return RedirectToAction("Index", "PedidosCliente", objPedido);
                         }
                     }
-                    return RedirectToAction("Index", "PedidosCliente", objPedido);
                 }
             }
             catch (Exception ex)
@@ -125,73 +126,96 @@ namespace slnLibreria.Controllers
             }
         }
 
-
-        public ActionResult About()
+        [AllowAnonymous]
+        public ActionResult GenerarClienteAnonimo()
         {
-            ViewBag.Message = "Your application description page.";
+            string cv = Session["cedulaTemporal"].ToString();
+            ClientesView objCliente = new ClientesView();
+            if (string.IsNullOrEmpty(cv))
+            {
+                ViewBag.ErrorCedula = "Ingrese un número de Cédula o RUC";
+                return View("Index");
+            }
+            else
+            {
+                if (cv.Length != 10 && cv.Length != 13)
+                {
+                    ViewBag.ErrorCedula = "Ingrese un número de Cédula o RUC válido";
+                    return View("Index");
+                }
+                else
+                {
+                    using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+                    {
+                        objCliente.cliente = db.Cliente.Where(n => n.clienteCI_RUC == cv).FirstOrDefault();
+                        if (objCliente.cliente != null)
+                        {
+                            if(objCliente.cliente.clienteCodigo != null)
+                            {
+                                ViewBag.ErrorCedula = "Usted ya está registrado en el sistema \n Sú codigo es: " + objCliente.cliente.clienteCodigo;
+                                ModelState.Clear();
+                                return View("Index");
+                            }
+                            else
+                            {
+                                Cliente objUltimoCliente = db.Cliente.OrderByDescending(n => n.clienteFechaRegistro).FirstOrDefault();
+                                int codigoCliente = 100;
+                                if (objUltimoCliente != null)
+                                    codigoCliente = objUltimoCliente.clienteCodigo.Value + 1;
+                                Cliente actualizarCliente = db.Cliente.Where(n => n.clienteCI_RUC == cv).FirstOrDefault();
+                                actualizarCliente.clienteFechaRegistro = DateTime.Now;
+                                actualizarCliente.clienteCodigo = codigoCliente;
+                                db.Entry(actualizarCliente).State = EntityState.Modified;
+                                db.SaveChanges();
+                                ViewBag.CodigoUsuario = "Se ha generado su código. " +
+                                             "\n Cliente: " + objCliente.cliente.clienteNombre + " " + objCliente.cliente.clienteApellido +
+                                             "\n Su código identificador es: " + objCliente.cliente.clienteCodigo + "\nAnótelo o memorizelo, el mismo le servirá para reservar y comprar libros";
 
-            return View();
-        }
+                                ModelState.Clear();
+                                return View("Index");
+                            }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                Cliente objUltimoCliente = db.Cliente.OrderByDescending(n=> n.clienteFechaRegistro).FirstOrDefault();
+                                int codigoCliente = 100;
+                                if (objUltimoCliente != null)
+                                    codigoCliente = objUltimoCliente.clienteCodigo.Value + 1;
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+                                Cliente nuevoCliente = new Cliente()
+                                {
+                                    clienteCodigo = codigoCliente,
+                                    clienteCI_RUC = cv,
+                                    clienteNombre = "Anónimo",
+                                    clienteApellido = "N. " + codigoCliente.ToString().PadLeft(8, '0'),
+                                    clienteCorreo = "anonimo@anonimo.com",
+                                    clienteTelefono = "0999999999",
+                                    clienteFechaRegistro = DateTime.Now
+                                };
+                                db.Cliente.Add(nuevoCliente);
+                                db.SaveChanges();
 
-            return View();
-        }
+                                ViewBag.CodigoUsuario = "Se ha generado su código. " +
+                                            "\n Cliente: " + nuevoCliente.clienteNombre + " " + nuevoCliente.clienteApellido +
+                                            "\n Su código identificador es: " + nuevoCliente.clienteCodigo + " Anótelo o memorizelo, el mismo le servirá para reservar y comprar libros";
 
-        public ActionResult Verificar()
-        {
+                                ModelState.Clear();
+                                return View("Index");
+                            }
+                            catch (Exception ex)
+                            {
+                                ViewBag.ErrorCedula = "Ha ocurrido un error al intentar generar su código como usuario anónimo \n Error: " + ex.Message;
+                                return View("Index");
+                            }
 
-            return View();
-        }
+                        }
 
-        public ActionResult Salas()
-        {
+                    }
+                }
+            }
 
-            return View();
-        }
-
-        public ActionResult verSala()
-        {
-
-            return View();
-        }
-
-        public ActionResult Materias()
-        {
-
-            return View();
-        }
-
-        public ActionResult verMateria()
-        {
-
-            return View();
-        }
-
-        public ActionResult Libros()
-        {
-
-            return View();
-        }
-
-        public ActionResult verLibro()
-        {
-
-            return View();
-        }
-
-        public ActionResult Reportes()
-        {
-
-            return View();
-        }
-
-        public ActionResult Pedidos()
-        {
-
-            return View();
         }
     }
 }

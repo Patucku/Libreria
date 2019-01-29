@@ -1,12 +1,12 @@
-﻿using System;
+﻿using slnLibreria.Models;
+using slnLibreria.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using slnLibreria.ViewModels;
-using slnLibreria.Models;
-﻿using Microsoft.AspNet.Identity;
-using System.Data.Entity;
 
 namespace slnLibreria.Controllers
 {
@@ -32,12 +32,13 @@ namespace slnLibreria.Controllers
             return objLibro;
         }
 
-        public ActionResult Detalles(int ?id)
+        public ActionResult Detalles(int? id)
         {
             LibrosView objLibroView = new LibrosView();
             using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
             {
                 objLibroView.libro = db.Libro.Where(m => m.libroID == id).FirstOrDefault();
+                objLibroView.imagenesLibros = db.Imagen.Where(n => n.imagenLibro == id).ToList();
                 objLibroView.libroMateria = db.View_Listar_Libros_Materia.Where(n => n.libroID == id).FirstOrDefault();
                 objLibroView.librosMateriSalaLibreria = db.View_Listar_Libros_Materia_Sala_Libreria.Where(n => n.libroID == id).ToList();
                 if (objLibroView.librosMateriSalaLibreria == null)
@@ -67,7 +68,7 @@ namespace slnLibreria.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(LibrosView objLibroView)
+        public ActionResult Crear(LibrosView objLibroView, HttpPostedFileBase[] file)
         {
             if (string.IsNullOrEmpty(objLibroView.libro.libroNombre))
                 ViewBag.ErrorCrearLibro = "Ingrese un nombre";
@@ -77,8 +78,10 @@ namespace slnLibreria.Controllers
                 ViewBag.ErrorCrearLibro = ViewBag.ErrorCrearLibro + "\nIngrese un código ISBN";
             if (string.IsNullOrEmpty(objLibroView.libro.libroSinopsis))
                 ViewBag.ErrorCrearLibro = ViewBag.ErrorCrearLibro + "\nIngrese una sinopsis";
-            if(objLibroView.selectedMateria == 0)
+            if (objLibroView.selectedMateria == 0)
                 ViewBag.ErrorCrearLibro = ViewBag.ErrorCrearLibro + "\nSeleccione una materia";
+            if (file[0] == null && file[1] == null && file[2] == null)
+                ViewBag.ErrorCrearLibro = ViewBag.ErrorCrearLibro + "\nCargue por lo menos una imagen";
             if (!string.IsNullOrEmpty(ViewBag.ErrorCrearLibro))
             {
                 using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
@@ -90,6 +93,11 @@ namespace slnLibreria.Controllers
             }
             else
             {
+                Libro ultimoLibro = new Libro();
+                using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+                {
+                    ultimoLibro = db.Libro.OrderByDescending(n => n.libroID).FirstOrDefault();
+                }
                 Libro nuevoLibro = new Libro()
                 {
                     libroNombre = objLibroView.libro.libroNombre,
@@ -99,13 +107,35 @@ namespace slnLibreria.Controllers
                     libroSinopsis = objLibroView.libro.libroSinopsis,
                     libroMateria = objLibroView.selectedMateria
                 };
-                using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+                int libroID = ultimoLibro.libroID + 1;
+                List<Imagen> imagenesLibro = subirImagen(file, libroID);
+                try
                 {
-                    db.Libro.Add(nuevoLibro);
-                    db.SaveChanges();
+                    using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+                    {
+                        
+                        db.Libro.Add(nuevoLibro);
+                        db.SaveChanges();
+                        foreach (Imagen nuevaImagen in imagenesLibro)
+                        {
+                            if (nuevaImagen != null)
+                                db.Imagen.Add(nuevaImagen);
+                        }
+                        db.SaveChanges();
+                    }
+                    ViewBag.Libro = "Se creó un nuevo libro";
+                    return View("Index", cargarIndex());
                 }
-                ViewBag.Libro = "Se creó un nuevo libro";
-                return View("Index", cargarIndex());
+                catch (Exception ex)
+                {
+                    using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+                    {
+                        ViewBag.ErrorCrearLibro = "Error al ingresar libro\n" + ex.Message;
+                        var getMaterias = db.Materia.OrderBy(n => n.materiaNombre).ToList();
+                        objLibroView.listaMaterias = new SelectList(getMaterias, "materiaId", "materiaNombre");
+                        return View(objLibroView);
+                    }
+                }
             }
 
         }
@@ -134,7 +164,7 @@ namespace slnLibreria.Controllers
         }
 
         [HttpPost]
-        public ActionResult Editar(int ?id, LibrosView objLibroView)
+        public ActionResult Editar(int? id, LibrosView objLibroView)
         {
             try
             {
@@ -204,7 +234,7 @@ namespace slnLibreria.Controllers
                 }
                 List<LibroSala> objSalasLibro = db.LibroSala.Where(n => n.libroID == objLibroView.libroMateria.libroID).ToList();
                 int salasAfectadas = objSalasLibro.Count();
-                if(salasAfectadas!=0)
+                if (salasAfectadas != 0)
                     ViewBag.ErrorEliminarLibroRelacion = "El libro tiene: " + salasAfectadas + " salas relacionadas, no se puede borrar el libro";
 
             }
@@ -250,5 +280,86 @@ namespace slnLibreria.Controllers
                 return View();
             }
         }
+
+        public ActionResult salasRelacionadas(int? id)
+        {
+            LibrosSalasView objSalaLibro = new LibrosSalasView();
+            using (dbFeriaLibroEntities db = new dbFeriaLibroEntities())
+            {
+                objSalaLibro.libro = db.Libro.Where(n => n.libroID == id).FirstOrDefault();
+                if (objSalaLibro.libro == null)
+                {
+                    ViewBag.ErrorLibreria = "No se encuentra esa libreria";
+                    return View("Index", cargarIndex());
+                }
+                objSalaLibro.LibrosComplete = db.View_Listar_Libros_Materia_Sala_Libreria.Where(n => n.libroID == objSalaLibro.libro.libroID).OrderBy(n => n.salaNombre).ToList();
+                return View(objSalaLibro);
+            }
+        }
+
+        private List<Imagen> subirImagen(HttpPostedFileBase[] imagenes, int id)
+        {
+            try
+            {
+                List<Imagen> imagenesAGuardar = new List<Imagen>();
+                foreach (HttpPostedFileBase file in imagenes)
+                {
+
+                    if (file != null)
+                    {
+                        if (file.ContentLength > 0)
+                        {
+
+                            var fileName = Path.GetFileName(file.FileName);
+                            var extension = Path.GetExtension(fileName);
+
+                            //VALIDACIONES
+                            if (extension.ToUpper() != ".JPG" && extension.ToUpper() != ".JPEG" && extension.ToUpper() != ".PNG")
+                            {
+                                ViewBag.ErrorCierre = "\nError al Cargar Informe. Solo puede subir achivos JPG, JPEG o PNG.";
+                                return null;
+                            }
+
+                            //string serverpath = Server.MapPath("~/App_Data/Informes");
+                            string referencia = "LIBR" + id.ToString("D6");
+                            string serverfile = Path.Combine(Server.MapPath("~/App_Data/images"), referencia);
+
+                            int cont = 1;
+                            string texto = "";
+
+                            while (System.IO.File.Exists(serverfile + texto + extension))
+                            {
+                                texto = "_" + cont.ToString();
+                                cont++;
+                            }
+
+                            serverfile += texto + extension;
+
+                            file.SaveAs(serverfile);
+
+                            Imagen objImagen = new Imagen()
+                            {
+                                imagenLibro = id,
+                                imagenArchivo = referencia + texto + extension
+                            };
+                            imagenesAGuardar.Add(objImagen);
+                        }
+                        else
+                        {
+                            ViewBag.ErrorCierre = ViewBag.ErrorCierre + "\nDebe seleccionar un Archivo Válido.";
+                            return null;
+                        }
+                    }
+                }
+                return imagenesAGuardar;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorCierre = ViewBag.ErrorCierre + "\nError al algún archivo\n " + ex.Message;
+                return null;
+            }
+
+        }
+
     }
 }

@@ -2,11 +2,6 @@
 @{
     ViewBag.Title = "Inicio";
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#alertMessage').delay(15000).fadeOut();
-    });
-</script>
 
 <div class="jumbotron">
     <h1>Bienvenido a la feria del libro</h1>
@@ -14,16 +9,25 @@
 <div class="m-1">
     @if (!string.IsNullOrEmpty(@ViewBag.ErrorCedula))
     {
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning" role="alert" id="warning-alert">
             @MvcHtmlString.Create(ViewBag.ErrorCedula.Replace("\n", "</br>"))
         </div>
     }
-</div>
-<div class="m-1">
     @if (!string.IsNullOrEmpty(@ViewBag.CodigoUsuario))
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert" id="success-alert">
             @MvcHtmlString.Create(ViewBag.CodigoUsuario.Replace("\n", "</br>"))
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(@ViewBag.ErrorUsuarioNoCliente))
+    {
+        
+        <div class="alert alert-primary" role="alert" id="primary-alert">
+            @MvcHtmlString.Create(ViewBag.ErrorUsuarioNoCliente.Replace("\n", "</br>"))
+            @if (Model.clienteCI_RUC != null)
+            {
+                @Html.ActionLink("Registrarse", "GenerarClienteAnonimo", "Home", new { id = Model.clienteCI_RUC }, new { @class = "btn btn-outline-secondary" })
+            }
         </div>
     }
 </div>
@@ -37,16 +41,15 @@
     </div>
 }
 
+<hr />
 <div class="m-1">
     @if (!string.IsNullOrEmpty(@ViewBag.ErrorIngresar))
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-warning" role="alert" id="warning-alert">
             @MvcHtmlString.Create(ViewBag.ErrorIngresar.Replace("\n", "</br>"))
         </div>
     }
 </div>
-<hr />
-
 @using (Html.BeginForm("IngresarClientes", "Home"))
 {
     <div class="form-group">

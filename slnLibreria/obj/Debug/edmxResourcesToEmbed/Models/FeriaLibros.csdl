@@ -48,6 +48,7 @@
     <EntitySet Name="Cliente" EntityType="dbFeriaLibroModel.Cliente" />
     <EntitySet Name="ClienteLibreria" EntityType="dbFeriaLibroModel.ClienteLibreria" />
     <EntitySet Name="EstadoPedido" EntityType="dbFeriaLibroModel.EstadoPedido" />
+    <EntitySet Name="Imagen" EntityType="dbFeriaLibroModel.Imagen" />
     <EntitySet Name="Libreria" EntityType="dbFeriaLibroModel.Libreria" />
     <EntitySet Name="Libro" EntityType="dbFeriaLibroModel.Libro" />
     <EntitySet Name="LibroSala" EntityType="dbFeriaLibroModel.LibroSala" />
@@ -62,6 +63,11 @@
     <EntitySet Name="View_Listar_Libros_Materia" EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia" />
     <EntitySet Name="View_Listar_Libros_Materia_Sala_Libreria" EntityType="dbFeriaLibroModel.View_Listar_Libros_Materia_Sala_Libreria" />
     <EntitySet Name="View_Listar_Libros_Sala" EntityType="dbFeriaLibroModel.View_Listar_Libros_Sala" />
+    <EntitySet Name="View_Listar_Pedidos" EntityType="dbFeriaLibroModel.View_Listar_Pedidos" />
+    <EntitySet Name="View_Listar_Pedidos_Por_Lq_Clientes" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_Por_Lq_Clientes" />
+    <EntitySet Name="View_Listar_Pedidos_PorLiquidar" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_PorLiquidar" />
+    <EntitySet Name="View_Listar_Pedidos_Resumen" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_Resumen" />
+    <EntitySet Name="View_Listar_Pedidos_ResumenCliente" EntityType="dbFeriaLibroModel.View_Listar_Pedidos_ResumenCliente" />
     <EntitySet Name="View_Listar_Sala_Libreria" EntityType="dbFeriaLibroModel.View_Listar_Sala_Libreria" />
     <EntitySet Name="Vimporte_total" EntityType="dbFeriaLibroModel.Vimporte_total" />
     <EntitySet Name="VMaterias" EntityType="dbFeriaLibroModel.VMaterias" />
@@ -95,6 +101,10 @@
     <AssociationSet Name="FK_Pedido_EstadoPedido" Association="dbFeriaLibroModel.FK_Pedido_EstadoPedido">
       <End Role="EstadoPedido" EntitySet="EstadoPedido" />
       <End Role="Pedido" EntitySet="Pedido" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Imagen_Libro" Association="dbFeriaLibroModel.FK_Imagen_Libro">
+      <End Role="Libro" EntitySet="Libro" />
+      <End Role="Imagen" EntitySet="Imagen" />
     </AssociationSet>
     <AssociationSet Name="FK_Sala_Libreria" Association="dbFeriaLibroModel.FK_Sala_Libreria">
       <End Role="Libreria" EntitySet="Libreria" />
@@ -220,6 +230,8 @@
     <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
     <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
     <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUserClaims" Relationship="dbFeriaLibroModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
     <NavigationProperty Name="AspNetUserLogins" Relationship="dbFeriaLibroModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
     <NavigationProperty Name="Vendedor" Relationship="dbFeriaLibroModel.FK_Vendedor_AspNetUsers" FromRole="AspNetUsers" ToRole="Vendedor" />
@@ -229,7 +241,7 @@
     <Key>
       <PropertyRef Name="clienteID" />
     </Key>
-    <Property Name="clienteID" Type="Int32" Nullable="false" />
+    <Property Name="clienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="clienteCodigo" Type="Int32" />
     <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
@@ -259,6 +271,15 @@
     <Property Name="estadopedidoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_EstadoPedido" FromRole="EstadoPedido" ToRole="Pedido" />
   </EntityType>
+  <EntityType Name="Imagen">
+    <Key>
+      <PropertyRef Name="imagenID" />
+    </Key>
+    <Property Name="imagenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="imagenLibro" Type="Int32" Nullable="false" />
+    <Property Name="imagenArchivo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Libro" Relationship="dbFeriaLibroModel.FK_Imagen_Libro" FromRole="Imagen" ToRole="Libro" />
+  </EntityType>
   <EntityType Name="Libreria">
     <Key>
       <PropertyRef Name="libreriaID" />
@@ -282,6 +303,7 @@
     <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="libroIVA" Type="Boolean" />
     <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Imagen" Relationship="dbFeriaLibroModel.FK_Imagen_Libro" FromRole="Libro" ToRole="Imagen" />
     <NavigationProperty Name="Materia" Relationship="dbFeriaLibroModel.FK_Libro_Materia" FromRole="Libro" ToRole="Materia" />
     <NavigationProperty Name="LibroSala" Relationship="dbFeriaLibroModel.FK_LibroSala_Libro" FromRole="Libro" ToRole="LibroSala" />
   </EntityType>
@@ -362,7 +384,7 @@
     </Key>
     <Property Name="vendedorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="aspUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="vendedorNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="vendedorEstado" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="AspNetUsers" Relationship="dbFeriaLibroModel.FK_Vendedor_AspNetUsers" FromRole="Vendedor" ToRole="AspNetUsers" />
     <NavigationProperty Name="Pedido" Relationship="dbFeriaLibroModel.FK_Pedido_Vendedor" FromRole="Vendedor" ToRole="Pedido" />
   </EntityType>
@@ -460,6 +482,128 @@
     <Property Name="libroSinopsis" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="View_Listar_Pedidos">
+    <Key>
+      <PropertyRef Name="pedidoID" />
+      <PropertyRef Name="librosalaID" />
+      <PropertyRef Name="libroID" />
+      <PropertyRef Name="libroNombre" />
+      <PropertyRef Name="libroAutor" />
+      <PropertyRef Name="libroISBN" />
+      <PropertyRef Name="libroMateria" />
+      <PropertyRef Name="materiaNombre" />
+      <PropertyRef Name="salaID" />
+      <PropertyRef Name="salaNombre" />
+      <PropertyRef Name="salaLibreria" />
+      <PropertyRef Name="libreriaNombre" />
+      <PropertyRef Name="clienteID" />
+      <PropertyRef Name="clienteNombre" />
+      <PropertyRef Name="clienteCI_RUC" />
+      <PropertyRef Name="estadopedidoID" />
+      <PropertyRef Name="estadopedidoNombre" />
+      <PropertyRef Name="cantidadPedido" />
+      <PropertyRef Name="subTotalPedido" />
+      <PropertyRef Name="ivaPedido" />
+      <PropertyRef Name="totalPedido" />
+      <PropertyRef Name="fechaInicioPedido" />
+    </Key>
+    <Property Name="pedidoID" Type="Int32" Nullable="false" />
+    <Property Name="librosalaID" Type="Int32" Nullable="false" />
+    <Property Name="libroID" Type="Int32" Nullable="false" />
+    <Property Name="libroNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="libroAutor" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="libroISBN" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="libroMateria" Type="Int32" Nullable="false" />
+    <Property Name="materiaNombre" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="salaID" Type="Int32" Nullable="false" />
+    <Property Name="salaNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="salaLibreria" Type="Int32" Nullable="false" />
+    <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="clienteID" Type="Int32" Nullable="false" />
+    <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="vendedorID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="vendedorEstado" Type="Boolean" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="estadopedidoID" Type="Int32" Nullable="false" />
+    <Property Name="estadopedidoNombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="cantidadPedido" Type="Int32" Nullable="false" />
+    <Property Name="subTotalPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="ivaPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="totalPedido" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="fechaInicioPedido" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fechaFinPedido" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="View_Listar_Pedidos_Por_Lq_Clientes">
+    <Key>
+      <PropertyRef Name="clienteID" />
+      <PropertyRef Name="clienteCI_RUC" />
+      <PropertyRef Name="clienteNombre" />
+      <PropertyRef Name="clienteCorreo" />
+    </Key>
+    <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalPedidos" Type="Int32" />
+    <Property Name="totalCantidadPedido" Type="Int32" />
+    <Property Name="clienteID" Type="Int32" Nullable="false" />
+    <Property Name="clienteCodigo" Type="Int32" />
+    <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="clienteCorreo" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="clienteTelefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="clienteFechaRegistro" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="View_Listar_Pedidos_PorLiquidar">
+    <Key>
+      <PropertyRef Name="clienteID" />
+    </Key>
+    <Property Name="clienteID" Type="Int32" Nullable="false" />
+    <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalCantidadPedido" Type="Int32" />
+    <Property Name="totalPedidos" Type="Int32" />
+  </EntityType>
+  <EntityType Name="View_Listar_Pedidos_Resumen">
+    <Key>
+      <PropertyRef Name="clienteID" />
+      <PropertyRef Name="estadopedidoID" />
+    </Key>
+    <Property Name="clienteID" Type="Int32" Nullable="false" />
+    <Property Name="estadopedidoID" Type="Int32" Nullable="false" />
+    <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalCantidadPedido" Type="Int32" />
+    <Property Name="totalPedidos" Type="Int32" />
+  </EntityType>
+  <EntityType Name="View_Listar_Pedidos_ResumenCliente">
+    <Key>
+      <PropertyRef Name="estadopedidoID" />
+      <PropertyRef Name="clienteID" />
+      <PropertyRef Name="clienteCI_RUC" />
+      <PropertyRef Name="clienteNombre" />
+      <PropertyRef Name="clienteCorreo" />
+    </Key>
+    <Property Name="estadopedidoID" Type="Int32" Nullable="false" />
+    <Property Name="totalSubTotal" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalIva" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalPedido" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="totalCantidadPedido" Type="Int32" />
+    <Property Name="totalPedidos" Type="Int32" />
+    <Property Name="clienteID" Type="Int32" Nullable="false" />
+    <Property Name="clienteCodigo" Type="Int32" />
+    <Property Name="clienteCI_RUC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="clienteNombre" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="clienteApellido" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="clienteCorreo" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="clienteTelefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="clienteFechaRegistro" Type="DateTime" Precision="3" />
+  </EntityType>
   <EntityType Name="View_Listar_Sala_Libreria">
     <Key>
       <PropertyRef Name="salaID" />
@@ -475,7 +619,7 @@
     <Property Name="libreriaID" Type="Int32" Nullable="false" />
     <Property Name="libreriaNombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="libreriaRUC" Type="String" Nullable="false" MaxLength="13" FixedLength="true" Unicode="false" />
-    <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="libreriaTelefono" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
     <Property Name="libreriaDireccion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Vimporte_total">
@@ -600,6 +744,18 @@
       </Principal>
       <Dependent Role="Pedido">
         <PropertyRef Name="estadopedidoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Imagen_Libro">
+    <End Type="dbFeriaLibroModel.Libro" Role="Libro" Multiplicity="1" />
+    <End Type="dbFeriaLibroModel.Imagen" Role="Imagen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libro">
+        <PropertyRef Name="libroID" />
+      </Principal>
+      <Dependent Role="Imagen">
+        <PropertyRef Name="imagenLibro" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
